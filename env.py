@@ -57,6 +57,8 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         derivative_filter_tau_s: float | None = None,
         legacy_derivative_kick: bool | None = None,
         physics_trace: bool = False,
+        history_length: int | None = None,
+        train_noise_log_range_m: tuple[float, float] | None = None,
     ) -> None:
         super().__init__()
         if mode not in MODES:
@@ -86,6 +88,19 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             False if legacy_derivative_kick is None else bool(legacy_derivative_kick)
         )
         self.physics_trace = bool(physics_trace)
+        # Post-hoc options. Both default to the sealed behaviour: the profile's
+        # history length, and the sealed noise-severity draw.
+        self.history_length = int(history_length or self.profile.history_length)
+        if self.history_length < 1:
+            raise ValueError("history_length must be at least 1")
+        self.train_noise_log_range_m = (
+            None if train_noise_log_range_m is None
+            else (float(train_noise_log_range_m[0]), float(train_noise_log_range_m[1]))
+        )
+        if self.train_noise_log_range_m is not None and not (
+            0.0 < self.train_noise_log_range_m[0] <= self.train_noise_log_range_m[1]
+        ):
+            raise ValueError("train_noise_log_range_m must be positive and ordered")
         if self.gain_rate_limit.shape != (3,) or np.any(self.gain_rate_limit <= 0):
             raise ValueError("gain_rate_limit must contain three positive values")
         if self.derivative_filter_tau_s < 0:
@@ -96,11 +111,11 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         self.observation_space = spaces.Box(
             -1.0,
             1.0,
-            shape=(self.profile.observation_size,),
+            shape=(len(self.profile.frame_fields) * self.history_length,),
             dtype=np.float32,
         )
         self.render_mode = None
-        self._history: deque[np.ndarray] = deque(maxlen=self.profile.history_length)
+        self._history: deque[np.ndarray] = deque(maxlen=self.history_length)
         self._needs_reset = True
 
     @property
@@ -132,6 +147,18 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             return float(declared)
         return float(self.np_random.uniform(*train_range))
 
+    def _sample_noise(self) -> float:
+        """Noise severity for one disturbance change.
+
+        Sealed behaviour: the declared severity half the time, otherwise uniform
+        in TRAIN_NOISE_RANGE_M. With train_noise_log_range_m set (post-hoc E4),
+        log-uniform in that range instead; the delay channel is untouched.
+        """
+        if self.train_noise_log_range_m is None:
+            return self._sample_severity(config.TRAIN_NOISE_RANGE_M, config.CONFIG.noise_severity_m)
+        low, high = np.log(self.train_noise_log_range_m)
+        return float(np.exp(self.np_random.uniform(low, high)))
+
     def _sample_disturbance(self, episode: dict[str, Any]) -> None:
         """Mirror the evaluation condition grid with randomized severity and timing.
 
@@ -153,7 +180,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         wants_delay = condition in {"delay", "combined"}
         wants_noise = condition in {"noise", "combined"}
         delay = self._sample_severity(config.TRAIN_DELAY_RANGE_S, config.CONFIG.delay_severity_s)
-        noise = self._sample_severity(config.TRAIN_NOISE_RANGE_M, config.CONFIG.noise_severity_m)
+        noise = self._sample_noise()
         if self.np_random.random() >= config.DISTURBANCE_TRANSIENT_PROB:
             episode["initial_delay_s"] = delay if wants_delay else 0.0
             episode["initial_noise_std_m"] = noise if wants_noise else 0.0
@@ -177,10 +204,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
                     "kind": "noise_step",
                     "start_fraction": start_fraction,
                     "value": 0.0 if recovered else (
-                        noise if position == 0 else
-                        self._sample_severity(
-                            config.TRAIN_NOISE_RANGE_M, config.CONFIG.noise_severity_m
-                        )
+                        noise if position == 0 else self._sample_noise()
                     ),
                 })
 
@@ -327,7 +351,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         zero = self._zero_control()
         frame = self._frame(state, measured, 0.0, zero)
         self._history.clear()
-        for _ in range(self.profile.history_length):
+        for _ in range(self.history_length):
             self._history.append(frame.copy())
         return self._observation(), self._base_info(state)
 

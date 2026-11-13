@@ -79,7 +79,9 @@ def build_jobs(args: argparse.Namespace, seeds: tuple[int, ...]) -> list[Job]:
         profile = profile_for(mode)
         timesteps = args.scheduler_timesteps if mode == "scheduled" else args.direct_timesteps
         timesteps = timesteps or profile.default_timesteps
-        arm = f"ppo_{'scheduler' if mode == 'scheduled' else 'direct'}_{regime}"
+        kind = "scheduler" if mode == "scheduled" else "direct"
+        template = getattr(args, "arm_template", None)
+        arm = template.format(kind=kind, regime=regime) if template else f"ppo_{kind}_{regime}"
         for seed in seeds:
             run_dir = output / arm / f"seed_{seed}"
             command = [
@@ -99,6 +101,10 @@ def build_jobs(args: argparse.Namespace, seeds: tuple[int, ...]) -> list[Job]:
             ]
             if mode == "scheduled":
                 command += ["--calibration", str(Path(args.scheduler_calibration).resolve())]
+            if template:
+                command += ["--arm", arm]
+            for extra in getattr(args, "train_arg", []):
+                command += extra.split("=", 1) if extra.startswith("--") and "=" in extra else [extra]
             jobs.append(
                 Job(arm, mode, regime, seed, command, run_dir / "train.log", timesteps)
             )
@@ -138,6 +144,11 @@ def main() -> None:
     parser.add_argument("--only-mode", choices=("scheduled", "direct"))
     parser.add_argument("--only-regime", choices=("nominal", "disturbed"))
     parser.add_argument("--dry-run", action="store_true")
+    # Post-hoc: name the arms and forward extra train.py flags. Defaults keep
+    # the sealed matrix unchanged.
+    parser.add_argument("--arm-template", help="e.g. ppo_{kind}_noisetrained; {kind} is scheduler or direct")
+    parser.add_argument("--train-arg", action="append", default=[], metavar="--FLAG=VALUE",
+                        help="extra train.py argument, repeatable")
     args = parser.parse_args()
     if args.threads_per_job < 1:
         parser.error("--threads-per-job must be at least 1")
@@ -190,6 +201,8 @@ def main() -> None:
                 "seeds": list(seeds),
                 "arms": [f"{mode}/{regime}" for mode, regime in ARMS],
                 "sampler_profile": args.sampler_profile,
+                "arm_template": args.arm_template,
+                "train_args": args.train_arg,
                 "threads_per_job": args.threads_per_job,
                 "max_parallel": max_parallel,
                 "granted_cores": cores,

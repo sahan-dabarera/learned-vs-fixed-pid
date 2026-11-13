@@ -114,3 +114,87 @@ def test_sealed_check_flags_completion_and_ignores_failed_padding():
     assert result["rows_checked"] == 2
     assert result["completion_mismatches"] == []
     assert result["max_abs_diff_finished_rows"]["failure_adjusted_error_m"] == pytest.approx(0.001)
+
+
+def test_env_defaults_keep_the_sealed_observation_sizes():
+    from env import PathFollowingEnv
+
+    assert PathFollowingEnv(mode="scheduled", training=False).observation_space.shape == (170,)
+    assert PathFollowingEnv(mode="direct", training=False).observation_space.shape == (130,)
+
+
+def test_history_length_one_shrinks_the_observation_to_one_frame():
+    from env import PathFollowingEnv
+
+    for mode, frame in (("scheduled", 17), ("direct", 13)):
+        env = PathFollowingEnv(mode=mode, training=False, history_length=1)
+        observation, _ = env.reset(seed=0, options=build_manifest("validation").scenarios[0].to_options())
+        assert observation.shape == (frame,)
+        assert env.observation_space.shape == (frame,)
+
+
+def test_default_noise_draws_are_unchanged_by_the_posthoc_option():
+    from env import PathFollowingEnv
+
+    def episodes(**kwargs):
+        env = PathFollowingEnv(mode="scheduled", training=True, disturbance_training=True, **kwargs)
+        env.reset(seed=7)
+        return [env._sample_episode({}) for _ in range(50)]
+
+    assert repr(episodes()) == repr(episodes(train_noise_log_range_m=None))
+
+
+def test_log_uniform_noise_range_bounds_every_draw():
+    from env import PathFollowingEnv
+
+    env = PathFollowingEnv(
+        mode="direct", training=True, disturbance_training=True,
+        train_noise_log_range_m=(0.0003, 0.01),
+    )
+    env.reset(seed=3)
+    values = []
+    for _ in range(400):
+        episode = env._sample_episode({})
+        if episode["initial_noise_std_m"]:
+            values.append(episode["initial_noise_std_m"])
+        values.extend(e["value"] for e in episode["events"] if e["kind"] == "noise_step" and e["value"])
+    assert values
+    assert min(values) >= 0.0003 and max(values) <= 0.01
+    assert max(values) > 0.003
+
+
+def test_pid_retune_injects_sigma_only_into_noise_scenarios():
+    from posthoc_pid_retune import with_noise
+    from calibrate_pid import _subset
+
+    for scenario in _subset(build_manifest("validation"), robust=True):
+        noisy = with_noise(scenario, 0.01)
+        if scenario.condition in {"noise", "combined"}:
+            carried = noisy.initial_noise_std_m or max(
+                e.value for e in noisy.events if e.kind == "noise_step"
+            )
+            assert carried == 0.01
+        else:
+            assert noisy == scenario
+
+
+def test_fine_level_rule_brackets_the_first_break_and_triggers_e4():
+    from posthoc_fine_levels import breaking_points, cells, fine_levels
+
+    def row(arm, level, finished, e_fa):
+        return {"controller": arm, "condition": "noise", "level": str(level),
+                "finished": str(finished), "failure_adjusted_error_m": str(e_fa)}
+
+    rows = [
+        row("ppo_direct_disturbed", 0.0003, True, 0.002),
+        row("ppo_direct_disturbed", 0.001, True, 0.003),
+        row("ppo_direct_disturbed", 0.003, True, 0.005),  # > 2x baseline
+        row("pid_global_robust", 0.0003, True, 0.002),
+        row("pid_global_robust", 0.001, True, 0.002),
+        row("pid_global_robust", 0.003, True, 0.002),
+    ]
+    points = breaking_points(cells(rows))
+    assert points[("ppo_direct_disturbed", "noise")]["bracket_m"] == (0.001, 0.003)
+    assert points[("pid_global_robust", "noise")]["breaks_at_m"] is None
+    levels = fine_levels(points)
+    assert len(levels) == 3 and all(0.001 < value < 0.003 for value in levels)

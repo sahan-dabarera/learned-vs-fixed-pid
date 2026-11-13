@@ -145,6 +145,27 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
                         f"{arm}_frozen_{variant}", int(seed), "scheduled", scheduler_calibration,
                         constant_gains=(gains["kp"], gains["ki"], gains["kd"]),
                     ))
+    for entry in args.extra_arm:
+        arm, raw_root = entry.split("=", 1)
+        mode = "scheduled" if arm.startswith("ppo_scheduler_") else "direct"
+        for seed in config.CONFIG.final_training_seeds:
+            path = Path(raw_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
+            if not path.is_file():
+                raise FileNotFoundError(path)
+            specs.append(ControllerSpec(
+                arm, seed, mode,
+                scheduler_calibration if mode == "scheduled" else calibration,
+                model_path=str(path),
+            ))
+    for entry in args.pid:
+        name, raw_values = entry.split("=", 1)
+        values = [float(item) for item in raw_values.split(",")]
+        if len(values) not in (3, 4) or not name.startswith("pid_"):
+            raise ValueError("--pid format is pid_NAME=KP,KI,KD[,TAU_D]")
+        specs.append(ControllerSpec(
+            name, None, "fixed", calibration, tuple(values[:3]),
+            derivative_filter_tau_s=values[3] if len(values) == 4 else None,
+        ))
     for entry in args.model:
         identity, raw_path = entry.split("=", 1)
         arm, raw_seed = identity.rsplit(":", 1)
@@ -188,6 +209,15 @@ def _controller(spec: ControllerSpec) -> tuple[Any, Any]:
         from stable_baselines3 import PPO
 
         model = PPO.load(spec.model_path, device="cpu")
+        # A post-hoc H=1 checkpoint carries a shorter input; read it off the
+        # network rather than trusting a name. Sealed checkpoints give 10.
+        from controller_profiles import profile_for
+
+        frame = len(profile_for(spec.mode).frame_fields)
+        size = int(model.observation_space.shape[0])
+        if size % frame:
+            raise ValueError(f"{spec.model_path}: input {size} is not a multiple of frame {frame}")
+        history_length = size // frame
     kwargs: dict[str, Any] = {}
     if history_length is not None:
         kwargs["history_length"] = history_length
@@ -279,6 +309,9 @@ def main() -> None:
     parser.add_argument("--arms", nargs="*", default=[], help="restrict the default learned arms")
     parser.add_argument("--no-default", action="store_true", help="skip PID-N, PID-R and the sealed checkpoints")
     parser.add_argument("--model", action="append", default=[], metavar="ARM:SEED=PATH")
+    parser.add_argument("--extra-arm", action="append", default=[], metavar="ARM=MODELS_ROOT",
+                        help="a post-hoc arm with all five seeds under MODELS_ROOT/ARM/seed_N")
+    parser.add_argument("--pid", action="append", default=[], metavar="pid_NAME=KP,KI,KD[,TAU_D]")
     parser.add_argument("--robust-tau-d", type=float, action="append", default=[])
     parser.add_argument("--frozen-gains")
     parser.add_argument("--frozen-variants", nargs="+", default=["clean", "delay"])

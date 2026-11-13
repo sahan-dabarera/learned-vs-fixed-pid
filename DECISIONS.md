@@ -539,3 +539,29 @@ every row but drifted 1-18 % in learned-arm E_FA under delay, the known
 cross-CPU effect. Post-hoc comparisons are therefore made within one post-hoc
 run, against its own re-run of the sealed severity, never against sealed
 numbers from another node.
+
+### Stage 2 design, fixed before any stage-1 result was read
+
+- **E4 checkpoint selection.** The 24 checkpoint scenarios keep their split
+  (12 stationary-nominal, 12 transient-combined); the transient-combined noise
+  step carries sigma* instead of 0.3 mm. No extra noise-only group is added.
+- **E4 training noise.** Every noise severity the disturbed sampler draws,
+  first change and later changes, is log-uniform in `[0.3 mm, sigma*]`
+  (`env.train_noise_log_range_m`). Condition weights, delay draws, timing,
+  and recovery are untouched. With the option unset the RNG stream is the
+  sealed one.
+- **PID-RN is a grid, not differential evolution.** The plan asks for the same
+  DE setup, but the sealed PID-R `(8.0, 0.5, 4.4)` was itself chosen by a Kp
+  sweep on the 28-scenario robust validation subset, not by DE (2026-08-23
+  above). PID-RN repeats that procedure with sigma* in every noise-bearing
+  scenario of the subset, over Kp `{4..40}` x Kd `{0.5..8}` x tau_d
+  `{0.01, 0.02, 0.05, 0.1}` at the sealed Ki `0.5`, selected by the same
+  `select_practical_candidate` rule. The sealed point is always in the grid.
+  A laptop plumbing test at a guessed 10 mm selected Kd at the old grid floor
+  of 2.0, so the Kd floor was lowered to 0.5 and tau_d 0.1 added; that test
+  is not a result and used no held-out scenario.
+- **E5 history** is a train-time option (`--history-length 1`); evaluation reads
+  the history length off each checkpoint's input size.
+- **Same node for both stages.** Stage 1 ran on `cpunode39`; stage 2 is pinned
+  there and re-runs all 22 sealed instances on the 480 held-out scenarios, so
+  E4 and E5 arms are compared with sealed checkpoints evaluated on the same CPU.

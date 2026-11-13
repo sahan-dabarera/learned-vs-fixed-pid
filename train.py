@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import argparse
+from dataclasses import replace
 import hashlib
 import json
 from importlib.metadata import version
 import platform
 from pathlib import Path
+import re
 import time
 
 import numpy as np
@@ -43,7 +45,18 @@ def main() -> None:
     parser.add_argument("--sampler-profile", choices=tuple(config.SAMPLER_PROFILES),
                         default="dynamic", help="Disturbance sampler; single_step ablates the v3 sampler")
     parser.add_argument("--torch-threads", type=int, default=1)
+    # Post-hoc options; every default reproduces the sealed training.
+    parser.add_argument("--arm", help="post-hoc arm name override, e.g. ppo_scheduler_noisetrained")
+    parser.add_argument("--history-length", type=int, help="observation frames (sealed: profile default 10)")
+    parser.add_argument("--train-noise-max-m", type=float,
+                        help="draw training noise log-uniform in [declared noise, this] (post-hoc E4)")
+    parser.add_argument("--checkpoint-noise-m", type=float,
+                        help="noise-step value on the transient-combined checkpoint scenarios (post-hoc E4)")
     args = parser.parse_args()
+    if args.arm is not None and not re.fullmatch(r"ppo_(scheduler|direct)_[a-z0-9_]+", args.arm):
+        parser.error("--arm must look like ppo_scheduler_<name> or ppo_direct_<name>")
+    if args.arm is not None and args.arm.startswith("ppo_scheduler_") != (args.mode == "scheduled"):
+        parser.error("--arm prefix must match --mode")
     profile = profile_for(args.mode)
     args.timesteps = args.timesteps or profile.default_timesteps
     args.eval_freq = profile.default_eval_freq if args.eval_freq is None else args.eval_freq
@@ -73,9 +86,21 @@ def main() -> None:
         )
     )
     validation = validation[: args.validation_limit or None]
+    if args.checkpoint_noise_m is not None:
+        validation = tuple(
+            replace(
+                scenario,
+                events=tuple(
+                    replace(event, value=float(args.checkpoint_noise_m))
+                    if event.kind == "noise_step" else event
+                    for event in scenario.events
+                ),
+            )
+            for scenario in validation
+        )
     if not validation:
         parser.error("checkpoint scenario selection is empty")
-    arm = f"ppo_{'scheduler' if args.mode == 'scheduled' else 'direct'}_{args.regime}"
+    arm = args.arm or f"ppo_{'scheduler' if args.mode == 'scheduled' else 'direct'}_{args.regime}"
     run_dir = Path(args.output).resolve() / arm / f"seed_{args.seed}"
     run_dir.mkdir(parents=True, exist_ok=True)
 
@@ -86,6 +111,11 @@ def main() -> None:
             disturbance_training=args.regime == "disturbed",
             sampler_profile=args.sampler_profile,
             calibration=calibration,
+            history_length=args.history_length,
+            train_noise_log_range_m=(
+                None if args.train_noise_max_m is None
+                else (config.CONFIG.noise_severity_m, args.train_noise_max_m)
+            ),
         )
 
     class ManifestEvalCallback(BaseCallback):
@@ -164,6 +194,11 @@ def main() -> None:
         "validation_manifest": str(manifest_path),
         "validation_manifest_sha256": manifest.digest(),
         "checkpoint_scenarios": [scenario.scenario_id for scenario in validation],
+        "posthoc": {
+            "history_length": args.history_length,
+            "train_noise_max_m": args.train_noise_max_m,
+            "checkpoint_noise_m": args.checkpoint_noise_m,
+        },
         "calibration": str(calibration_path),
         "calibration_sha256": sha256(calibration_path),
         "python": platform.python_version(),
@@ -174,7 +209,7 @@ def main() -> None:
             else None
         ),
         "controller_profile": {
-            "observation_size": profile.observation_size,
+            "observation_size": len(profile.frame_fields) * (args.history_length or profile.history_length),
             "action_size": profile.action_size,
             "tracking_scale_m": profile.tracking_scale_m,
             "tracking_weight": profile.tracking_weight,
