@@ -565,3 +565,27 @@ numbers from another node.
 - **Same node for both stages.** Stage 1 ran on `cpunode39`; stage 2 is pinned
   there and re-runs all 22 sealed instances on the 480 held-out scenarios, so
   E4 and E5 arms are compared with sealed checkpoints evaluated on the same CPU.
+
+## 2026-11-13: Stage 1 done; stage-2 choices made after reading it
+
+Stage 1 ran as SLURM job 3187230 on `cpunode39` (AMD EPYC 9334, the same CPU
+model as the sealed run's `cpunode13`) at commit `479afe5`, clean tree. Parity
+passed. All 7,920 sweep rows identical to a sealed scenario reproduced the
+sealed `episodes.csv` bit for bit.
+
+Two choices were made **after** seeing the coarse noise sweep, and are
+therefore post-hoc in the strict sense:
+
+- **E1 fine pass runs all 12 rule-generated levels**, not the plan's cap of 6.
+  The breaking-point rule brackets four coarse intervals (1-3, 3-10, 10-30,
+  30-100 mm), three levels each. The cap was a budget guard; the cluster was
+  idle. Levels: 1.316, 1.732, 2.28, 4.054, 5.477, 7.401, 13.161, 17.321,
+  22.795, 40.536, 54.772, 74.008 mm.
+- **E4 runs at two sigma\* values.** The literal rule gives sigma\* = 3 mm:
+  GS-D noise-only reaches 99 % completion and 4.2 mm E_FA against a 1.51 mm
+  baseline there. But GS-D and PID-R collapse at 10 mm (15 % and 2 %
+  completion noise-only), inside the plan's 10-30 mm realistic band, and
+  training on 0.3-3 mm cannot test whether training fixes that collapse.
+  E4 therefore runs at 3 mm (rule) and 10 mm (sensitivity), each with its own
+  PID-RN retune. Arms carry the level in their name, e.g.
+  `ppo_direct_noisetrained_10mm`, `pid_global_robust_noise_10mm`.
