@@ -1,15 +1,32 @@
 # Final Thesis Experiment Todo List
 
-This checklist is ordered by dependency. Do not begin the final five-seed run
-until every item in the freeze gate is complete.
+This checklist was reconciled against the repository, final artifacts, SLURM
+log, and test suite on 2026-09-09. The final five-seed experiment is complete
+and its raw results are sealed. **Do not retrain or tune controllers to close a
+documentation checkbox.** The remaining work is analysis, presentation,
+limited verification, and thesis writing unless a documented correctness bug
+invalidates an affected run.
+
+Current verified state:
+
+- final run: 20/20 PPO trainings completed;
+- final evaluation: 22 controller instances x 480 held-out scenarios = 10,560
+  unique controller/seed/scenario rows;
+- model provenance: all 20 evaluated `best_model.zip` hashes match;
+- current local verification: 89 tests pass;
+- official raw results: `artifacts/results/final/`;
+- superseded development checkpoints remain provenance only and must not be
+  mixed with the final comparison.
 
 ## 0. Project Contract
 
 - [x] Create the `Thesis_Experiment` project directory.
 - [x] Write the initial scientific plan.
 - [x] Create a separate execution checklist.
-- [ ] Review `PLAN.md` with the supervisor.
-- [ ] Record supervisor decisions and revise the plan.
+- [ ] **Author/supervisor action:** review `PLAN.md` and the final-result framing
+  with the supervisor.
+- [ ] **Author/supervisor action:** record any supervisor decisions that affect
+  the thesis text. They must not silently reopen controller tuning.
 - [x] Add a short `README.md` with setup, entry points, and artifact layout.
 - [x] Create a decision log for changes made after the initial plan.
 
@@ -50,7 +67,13 @@ and belongs to exactly one split.
 - [x] Define one common episode-summary and physics-trace schema.
 - [x] Add deterministic replay and paired-scenario tests.
 - [x] Add tests that delay/noise traces are identical across controller adapters.
-- [ ] Add tests for corridor exit, completion, timeout, invalid state, and reset.
+- [x] Test timeout/truncation, reset/replay determinism, optional physics traces,
+  and failure-adjusted padding for early failure, late failure, timeout, and
+  completion.
+- [ ] Add direct environment tests for an actual corridor exit, successful path
+  completion, and invalid simulator state. These are coverage improvements, not
+  a reason to reopen the sealed experiment without evidence of a correctness
+  problem.
 
 **Gate:** the same scripted steering sequence produces the same plant trace
 regardless of which controller adapter supplies it.
@@ -159,7 +182,12 @@ loaded by the batch evaluator.
 - [x] Revalidate the fixed robust PID under the new `0.15 s` delay and replace
   the unstable 60 ms calibration with the prior-informed 150 ms baseline.
 - [x] Run the complete batch-evaluator pipeline on validation manifests.
-- [ ] Verify dashboard execution and trace visualizations.
+- [x] Verify dashboard execution and trace generation automatically: the
+  interactive runner reproduces the batch evaluator sample for sample, the app
+  builds, and the current test suite passes.
+- [ ] Perform and record one manual browser check of chart layout and one MuJoCo
+  replay-window check. This is interface verification only; it cannot alter
+  official results.
 
 **Gate:** every controller is technically sound, validation results are stable,
 and no unresolved bug can plausibly determine the final ranking.
@@ -178,10 +206,15 @@ and no unresolved bug can plausibly determine the final ranking.
 - [x] Implement paired episode tables with missing-pair validation.
 - [x] Implement hierarchical bootstrap confidence intervals.
 - [x] Implement paired continuous effect sizes.
-- [ ] Define practical significance thresholds before final evaluation.
-  **Not done.** Effect sizes and intervals are reported without a pre-declared
-  threshold for practical significance. Recorded in `DECISIONS.md`.
-- [ ] Generate all final table and figure templates using validation data.
+- [x] Record that practical-significance thresholds were not declared before
+  final evaluation. Do not invent them retroactively; report effect sizes and
+  confidence intervals without a predeclared practical threshold and disclose
+  this limitation as recorded in `DECISIONS.md`.
+- [x] Generate machine-readable final aggregate tables and hierarchical paired
+  intervals (`summary.csv` and `paired_effects.csv`).
+- [x] Retire the missed pre-final validation-template task. The final data are
+  now sealed; thesis tables and figures must be generated from the official
+  final artifacts without changing the frozen analysis definitions.
 
 **Gate:** synthetic metric tests pass and the full analysis can be generated
 without manual spreadsheet edits.
@@ -195,9 +228,12 @@ without manual spreadsheet edits.
 - [x] Plot path error, speed, commands, saturation, and disturbance timing.
 - [x] Plot PID gains and gain changes for the scheduling controller.
 - [x] Display completion, failure-adjusted error, and all raw metrics.
-- [x] Support loading immutable batch-evaluation artifacts.
-- [x] Clearly label official batch results versus interactive dashboard runs.
-- [x] Store dashboard-generated artifacts outside final-result directories.
+- [x] Deliberately remove the old batch-artifact viewer. Official batch results
+  are read by `analyze.py`; the dashboard has one interactive-only role and
+  must not grow a second analysis path.
+- [x] Clearly label every dashboard result as interactive and unofficial.
+- [x] Ensure the dashboard writes no artifacts and cannot modify final-result
+  directories.
 - [x] Test scenario replay equivalence between dashboard and batch evaluator.
 
 **Gate:** the dashboard reproduces batch traces for the same scenario and cannot
@@ -216,10 +252,10 @@ modify official results.
 - [x] Record dependency lock files and final hardware environment.
 - [x] Run all unit, replay, integration, and smoke tests.
 - [x] Archive the frozen plan and configuration hashes.
-- [ ] Obtain supervisor approval to open the final experiment phase.
-  **Not obtained before the run.** The final phase was opened without it; the
-  thesis describes this as a final controlled evaluation after iterative
-  development rather than a confirmatory experiment.
+- [x] Record that supervisor approval was not obtained before opening the final
+  phase. This cannot be completed retroactively. Describe the work as a final
+  controlled evaluation after iterative development, not a strictly
+  confirmatory experiment.
 
 **Hard gate:** after this point, no outcome-driven code or parameter changes are
 allowed. Crossed on 2026-08-24 at commit `5240d11`; the held-out set is now
@@ -239,28 +275,64 @@ affected final runs, fixing it, and rerunning every affected arm.
 - [x] Regenerate any infrastructure-failed run only under the predeclared rule.
   Not required: 20/20 runs completed successfully.
 - [x] Seal the immutable raw final-result directory.
+- [x] Verify the copied final manifest and current `held_out.json` are
+  semantically identical and that their 480 scenario IDs exactly match the
+  episode table.
+- [ ] Add a provenance note explaining that the raw `manifest_sha256` recorded
+  on the server does not reproduce from the copied/current manifest bytes,
+  although the copied manifests are semantically identical and all scenario ID
+  sets match. Calibration hashes reproduce after LF/CRLF normalisation and all
+  model hashes reproduce exactly.
 
 **Gate:** complete paired data exist for every declared final scenario.
 
 ## 12. Final Analysis and Thesis Story
 
-- [ ] Generate nominal completion, error, effort, and cost tables.
-- [ ] Generate stationary delay/noise attribution tables.
-- [ ] Generate transient event-response and recovery tables.
-- [ ] Generate per-seed plots and hierarchical confidence intervals.
-- [ ] Generate paired effect distributions, not only aggregate bars.
-- [ ] Inspect and explain both best improvements and worst regressions.
-- [ ] Compare nominal-trained and disturbance-trained policies within each
-  architecture.
-- [ ] Compare global PID, robust global PID, and per-path PID benchmarks.
-- [ ] Report training cost, inference latency, and model size.
+- [x] Generate complete episode-level results for nominal, delay, noise, and
+  combined conditions in stationary and transient modes.
+- [x] Generate aggregate completion, failure-adjusted error, raw tracking,
+  effort, progress, and saturation data in `summary.csv`.
+- [x] Generate hierarchical paired confidence intervals in
+  `paired_effects.csv`.
+- [x] Record event-response and recovery fields in `episodes.csv`, including
+  pre-event error, post-event peak, excess IAE/ITAE, and recovery time.
+- [x] Measure training wall time, mean/p99 inference latency, policy decisions,
+  physics steps, and model parameter counts in the saved artifacts.
+- [x] Inspect the sealed scheduler mechanism across all five seeds and document
+  the best case, worst case, seed variance, and post-hoc limitation in
+  `DECISIONS.md` and `gain_mechanism.txt`.
+- [x] Compare both global PID baselines in the primary generated-path result.
+  Per-path PID gains are intentionally absent because they apply only to named
+  fixed paths, not the generated held-out paths; state this explicitly instead
+  of treating it as missing work.
+- [x] Preserve the rejected hypotheses and negative development results in
+  `Path_Following_PPO/FINDINGS.md`, `Blind_PPO/RESULTS.md`,
+  `EndToEnd_RL/RESULTS_STORY.md`, and `DECISIONS.md`.
+
+### Remaining thesis-ready outputs
+
+- [ ] Produce publication-ready nominal completion, error, effort, training
+  cost, inference latency, and model-size tables from the sealed artifacts.
+- [ ] Produce publication-ready stationary delay/noise attribution tables.
+- [ ] Produce publication-ready transient event-response and recovery tables.
+- [ ] Generate per-seed plots and paired effect distributions; do not replace
+  seed-level evidence with aggregate bars.
+- [ ] Inspect and explain the best improvements and worst regressions across all
+  three controller architectures, not only the scheduler mechanism.
+- [ ] Write the explicit within-architecture comparisons of nominal-trained and
+  disturbance-trained scheduler and direct-PPO policies.
 - [ ] Write conclusions by operating regime rather than forcing one winner.
-- [ ] Document rejected hypotheses and negative results.
+- [ ] Turn the documented rejected hypotheses and negative results into the
+  final thesis narrative.
 - [ ] Produce the supervisor presentation in the story order from `PLAN.md`.
 - [ ] Export final dashboard examples from preselected representative scenarios
   only after aggregate analysis is complete.
-- [ ] Archive scripts, manifests, raw data, processed data, figures, and hashes.
+- [ ] Evaluate the already frozen models on `structural_ood.json` and
+  `stress.json` only if these appendix results are still required. Keep them
+  separate from the primary held-out result and do not tune from them.
+- [ ] Assemble a self-contained archive of scripts, manifests, raw data,
+  processed tables, figures, hashes, and the provenance note.
 
-**Done:** the thesis result is reproducible from immutable artifacts, every
-claim maps to a predeclared metric, and the complete seed/scenario evidence is
-available for review.
+**Current status:** the primary experiment and machine-readable statistical
+outputs are complete. The remaining critical path is thesis-ready analysis,
+figures, interpretation, limitations, presentation, and archival packaging.

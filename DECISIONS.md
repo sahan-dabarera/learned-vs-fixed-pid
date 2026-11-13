@@ -463,3 +463,44 @@ learned scheduling wins. It is that learned gain scheduling **can** beat a
 strongly tuned PID on both nominal accuracy and delay robustness, but PPO's
 seed variance makes it do so unreliably. The engineering barrier this
 experiment identifies is training reproducibility, not the control concept.
+
+## 2026-09-08: Provenance of the 200 ms observation window
+
+Recorded while drafting Chapter 4. This is a documentation note, not a change:
+no code, parameter, or result was touched.
+
+`CONFIG.history_length = 10` was inherited unchanged from
+`Path_Following_PPO/config.py` through `Blind_PPO/config.py`. Its only recorded
+justification in any of the three projects is the arithmetic that ten frames at
+the 50 Hz policy rate span 200 ms. There is no literature source for the value
+and no history-length ablation was run, here or in the predecessor projects.
+
+Two points worth keeping separate. `FRAME_SKIP = 10` (physics steps per policy
+decision, fixed by 500/50) and `HISTORY_LENGTH = 10` (frames of memory) are
+independent quantities that happen to share a value; nothing links them.
+
+The one deliberate piece of design around the window is in `EndToEnd_RL`: when
+the direct arm was run at 500 Hz, the window was held fixed **in seconds**
+rather than in frames -- a 100-frame buffer subsampled every tenth frame, still
+200 ms, still 130 dimensions instead of 1300. That establishes memory as a
+physical timescale, not a tensor shape. It does not establish that 200 ms is
+the right timescale.
+
+Post-hoc, the value is defensible but was not verified against the disturbance
+severity it now has to cover:
+
+- A blind policy can only infer hidden actuator lag if a command and its
+  delayed consequence both fall inside the same observation. The declared
+  delay severity is `0.15 s`, so the 200 ms window covers it by 50 ms. That
+  severity was raised from `0.06 s` to `0.15 s` on 2026-08-22, well after the
+  window was fixed, and the window was never re-checked against it.
+- At the `0.3-0.7 m/s` target speeds, 200 ms spans `6-14 cm` of travel: shorter
+  than a path feature, long enough to resolve error rate and yaw response.
+- 170 inputs into a `[64, 64]` policy is already `30471` parameters. Doubling
+  the window doubles the input layer against a `300k`-decision budget.
+
+The thesis states the window as an inherited, untuned design choice held
+constant across both learned architectures, notes that it exceeds the declared
+dead time, and lists the missing ablation as a limitation. A 5/10/20-frame
+ablation on the disturbed scheduler arm, on development seeds and the
+validation manifest only, would close it; it was deliberately not run.
