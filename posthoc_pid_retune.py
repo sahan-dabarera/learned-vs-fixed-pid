@@ -127,8 +127,7 @@ def main() -> None:
         if value in (min(grid), max(grid))
     ]
     result["selected_on_grid_edge"] = edges
-    (output / "pid_rn.json").write_text(json.dumps(result, indent=2) + "
-", encoding="utf-8")
+    (output / "pid_rn.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     if edges:
         print(f"WARNING: selection sits on the grid edge in {edges}; report it")
     print(f"PID-RN at sigma*={args.sigma_m * 1000:g} mm: Kp {s['kp']} Ki {s['ki']} Kd {s['kd']} tau_d {s['tau_d']}")
