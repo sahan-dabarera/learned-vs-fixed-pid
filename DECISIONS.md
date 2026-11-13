@@ -504,3 +504,38 @@ constant across both learned architectures, notes that it exceeds the declared
 dead time, and lists the missing ablation as a limitation. A 5/10/20-frame
 ablation on the disturbed scheduler arm, on development seeds and the
 validation manifest only, would close it; it was deliberately not run.
+
+## 2026-11-13: Post-hoc experiments opened, sealed run untouched
+
+Follow-up experiments from `D:\Msc\Thesis_Final\Experiments\Experiment_Plan.md`
+run on branch `posthoc-experiments`. They read the sealed checkpoints and
+manifests and write only to `artifacts/results/posthoc/` and
+`artifacts/models/posthoc/`; `posthoc_eval.py` refuses any output path inside
+the sealed directories. No default of `evaluate.py`, `train.py`, or `env.py`
+changed.
+
+Deviations from the plan, decided before any post-hoc result was seen:
+
+- **Transient mode included in both sweeps.** The plan swept stationary
+  scenarios only. Each sweep now also runs the 60 transient records, with the
+  swept value as the step size at the sealed 6 s onset, so 120 scenarios per
+  level and condition instead of 60.
+- **Sweeps are built from the sealed disturbed records, not the nominal ones.**
+  Noise levels override the sealed `noise` and `combined` records, delay levels
+  the sealed `delay` records. Noise seeds therefore match the sealed run, and
+  at the sealed severity a swept scenario is identical to its sealed record.
+  Those rows replay the sealed run for every controller (360 scenarios x 22
+  instances), which replaces the plan's 24-scenario replay slice.
+- **0.40 s delay is run for every arm**, not only for arms still completing at
+  0.30 s. It is a superset and costs about 2,600 episodes.
+- **E3 frozen variants keep the scheduler's rate-limited start.** A frozen
+  controller runs in scheduler mode with a constant action, so its gains ramp
+  from the nominal gains to the frozen target exactly as the learned
+  scheduler's do. Frozen gains are time averages over the validation manifest:
+  `clean` = nominal condition, `delay` = delay and combined, both modes.
+
+A laptop smoke test against the sealed (cluster) episodes matched completion on
+every row but drifted 1-18 % in learned-arm E_FA under delay, the known
+cross-CPU effect. Post-hoc comparisons are therefore made within one post-hoc
+run, against its own re-run of the sealed severity, never against sealed
+numbers from another node.
