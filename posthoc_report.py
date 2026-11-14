@@ -243,12 +243,11 @@ def paired(rows_a, rows_b, controller_a, controller_b, mode, condition, match_se
     return ({k: np.asarray(v) for k, v in err.items()}, {k: np.asarray(v) for k, v in comp.items()})
 
 
-RNG = np.random.default_rng(BOOT_SEED)
-
-
 def estimate(values: dict[str, np.ndarray]) -> tuple[float, float, float]:
+    """Seed-mean and 95 % CI. A fresh generator per comparison keeps every
+    interval independent of call order, so figures and tables agree."""
     mean = float(np.mean([np.mean(v) for v in values.values()]))
-    low, high = _bootstrap(values, RNG, DRAWS)
+    low, high = _bootstrap(values, np.random.default_rng(BOOT_SEED), DRAWS)
     return mean, low, high
 
 
@@ -494,7 +493,7 @@ def build() -> str:
     out += ["", "### Paired frozen − dynamic per seed and seed-mean", ""]
     out.append(f"Same checkpoint, same scenario. Per-seed columns are mean differences over the 60 scenarios; the "
                f"CI is the hierarchical bootstrap of `analyze.py` (resample seeds, then scenarios within seed; "
-               f"{DRAWS:,} draws, generator seed {BOOT_SEED}). Positive ΔE_FA = frozen has larger error.\n")
+               f"{DRAWS:,} draws, generator re-seeded with {BOOT_SEED} for every comparison). Positive ΔE_FA = frozen has larger error.\n")
     out.append("**ΔE_FA (mm)**\n\n" + err_t)
     out.append("\n**Δcompletion (percentage points)**\n\n" + comp_t)
     err_r, comp_r = paired_vs_fixed([p[0] for p in pairs], fz_eps, ho_eps, "pid_global_robust")
@@ -583,7 +582,28 @@ def build() -> str:
                "`e4_training_{3mm,10mm}.log`, `e5_training.log`. Manifests: `manifests/posthoc/"
                "{noise_coarse,noise_fine,delay}.json`. Models (on the cluster, `~/thesis-experiment/`): "
                "`artifacts/models/posthoc/{e4_noise_3mm,e4_noise_10mm,e5_history}/`. Code: `posthoc_*.py`, "
-               "`slurm_posthoc*.sh` on branch `posthoc-experiments`. No plots were generated.")
+               "`slurm_posthoc*.sh` on branch `posthoc-experiments`.")
+    out += ["", "**Figures** (`posthoc_figures.py`; PDF + 300 dpi PNG in `artifacts/results/posthoc/figures/`, "
+            "copied to `D:\\Msc\\Thesis_Final\\Experiments\\figures\\`):", ""]
+    figures = [
+        ("e1_noise_sweep_stationary / _transient", "E1: completion and E_FA vs σ, six sealed arms, noise-only "
+         "and combined; 10–30 mm band shaded."),
+        ("e1_mechanism_stationary_noise", "E1: steering TV/T and wheel saturation vs σ, noise-only, stationary."),
+        ("e1f_pid_derivative_filter", "E1-F: PID-R completion vs σ for τd 0.01 / 0.02 / 0.05 s."),
+        ("e2_delay_sweep", "E2: completion and E_FA vs delay, both modes; 0.15 s marked."),
+        ("e3_frozen_gain_completion", "E3: per-seed completion over the delay-bearing held-out cells, dynamic vs "
+         "F-clean vs F-delay."),
+        ("e4_noise_sweep_{noise,combined}_{stationary,transient}", "E4: sealed arm vs σ* = 3 mm and 10 mm "
+         "variants, per family, completion and E_FA vs σ."),
+        ("e4_heldout_completion", "E4: held-out completion per cell, sealed vs variants, per family."),
+        ("e5_history_paired_difference", "E5: paired ΔE_FA (H1 − H10) per cell, seed-mean with 95 % CI and "
+         "per-seed points."),
+    ]
+    out.append(table(["file", "content"], ([f"`{name}`", text] for name, text in figures)))
+    out.append("\nEncoding: each sealed arm keeps one colour, marker and line style in every figure (PID dashed "
+               "square, scheduler solid circle, direct dotted triangle; nominal hollow, disturbed filled). In "
+               "variant figures dark gray is the sealed/reference arm, blue the first variant and orange the "
+               "second. Both palettes passed the colour-vision-deficiency separation check.")
     return "\n".join(out) + "\n"
 
 

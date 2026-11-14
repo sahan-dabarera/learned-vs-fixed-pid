@@ -83,7 +83,7 @@ generated tables and must be updated by hand if the tables change.
 - **GS-D F-delay gains vs F-clean:** Kp is lower under F-delay for 4 of 5 seeds (all except seed 11).
 - **GS-N:** frozen − dynamic completion differences vary in sign across seeds.
   - F-clean: from +93.3 pp (seed 11) to −66.7 pp (seeds 53 and 71). The seed-mean is +2.0 / +1.0 pp stationary and −12.7 / −12.3 pp transient, and the CIs include 0.
-  - F-delay: seed-mean −8.3 to −12.7 pp, with CI upper bounds at 0.0 to +5.0.
+  - F-delay: seed-mean −8.3 to −12.7 pp, with CI upper bounds from 0.0 to +5.3.
 - **Against PID-R** (100 % in every held-out cell), GS-D F-delay is the only frozen variant above 80 % completion in the delay cells. Paired frozen − PID-R differences are in the collapsed table.
 
 ## E4 method

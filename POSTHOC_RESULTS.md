@@ -1435,81 +1435,81 @@ Held-out 480 (60 scenarios per cell; learned rows pool 5 seeds). Dynamic and PID
 
 ### Paired frozen − dynamic per seed and seed-mean
 
-Same checkpoint, same scenario. Per-seed columns are mean differences over the 60 scenarios; the CI is the hierarchical bootstrap of `analyze.py` (resample seeds, then scenarios within seed; 10,000 draws, generator seed 20260819). Positive ΔE_FA = frozen has larger error.
+Same checkpoint, same scenario. Per-seed columns are mean differences over the 60 scenarios; the CI is the hierarchical bootstrap of `analyze.py` (resample seeds, then scenarios within seed; 10,000 draws, generator re-seeded with 20260819 for every comparison). Positive ΔE_FA = frozen has larger error.
 
 **ΔE_FA (mm)**
 
 | pair | mode | condition | s11 | s23 | s37 | s53 | s71 | seed-mean | 95 % CI |
 |---|---|---|---|---|---|---|---|---|---|
 | GS-N F-clean − GS-N | stationary | nominal | -0.03 | -0.03 | +0.00 | +0.02 | +0.00 | **-0.01** | [-0.02, +0.01] |
-| GS-N F-clean − GS-N | stationary | delay | -96.35 | +1.18 | -2.98 | +115.46 | +79.89 | **+19.44** | [-43.43, +82.14] |
+| GS-N F-clean − GS-N | stationary | delay | -96.35 | +1.18 | -2.98 | +115.46 | +79.89 | **+19.44** | [-42.73, +82.46] |
 | GS-N F-clean − GS-N | stationary | noise | -0.02 | -0.03 | +0.00 | +0.02 | +0.00 | **-0.01** | [-0.02, +0.01] |
-| GS-N F-clean − GS-N | stationary | combined | -86.73 | +1.22 | -1.95 | +114.10 | +81.73 | **+21.67** | [-36.55, +83.05] |
+| GS-N F-clean − GS-N | stationary | combined | -86.73 | +1.22 | -1.95 | +114.10 | +81.73 | **+21.67** | [-36.25, +82.63] |
 | GS-N F-clean − GS-N | transient | nominal | -0.03 | -0.03 | +0.00 | +0.02 | +0.00 | **-0.01** | [-0.02, +0.01] |
-| GS-N F-clean − GS-N | transient | delay | -86.74 | +0.94 | -3.70 | +117.64 | +97.57 | **+25.14** | [-36.58, +89.10] |
+| GS-N F-clean − GS-N | transient | delay | -86.74 | +0.94 | -3.70 | +117.64 | +97.57 | **+25.14** | [-36.44, +89.09] |
 | GS-N F-clean − GS-N | transient | noise | -0.03 | -0.03 | +0.00 | +0.02 | +0.00 | **-0.01** | [-0.02, +0.01] |
-| GS-N F-clean − GS-N | transient | combined | -87.12 | +0.91 | -3.44 | +117.83 | +106.51 | **+26.94** | [-37.05, +91.42] |
+| GS-N F-clean − GS-N | transient | combined | -87.12 | +0.91 | -3.44 | +117.83 | +106.51 | **+26.94** | [-36.54, +91.88] |
 | GS-N F-delay − GS-N | stationary | nominal | -0.42 | -0.10 | -0.06 | +0.14 | +0.09 | **-0.07** | [-0.26, +0.08] |
-| GS-N F-delay − GS-N | stationary | delay | +41.10 | +9.96 | -0.59 | +23.60 | +59.43 | **+26.70** | [+8.34, +46.74] |
+| GS-N F-delay − GS-N | stationary | delay | +41.10 | +9.96 | -0.59 | +23.60 | +59.43 | **+26.70** | [+8.49, +47.11] |
 | GS-N F-delay − GS-N | stationary | noise | -0.41 | -0.10 | -0.06 | +0.13 | +0.08 | **-0.07** | [-0.25, +0.08] |
-| GS-N F-delay − GS-N | stationary | combined | +55.51 | +10.01 | +0.00 | +23.33 | +59.52 | **+29.68** | [+8.86, +51.72] |
+| GS-N F-delay − GS-N | stationary | combined | +55.51 | +10.01 | +0.00 | +23.33 | +59.52 | **+29.68** | [+8.97, +51.38] |
 | GS-N F-delay − GS-N | transient | nominal | -0.42 | -0.10 | -0.06 | +0.14 | +0.09 | **-0.07** | [-0.26, +0.08] |
-| GS-N F-delay − GS-N | transient | delay | +42.57 | +6.59 | -1.81 | +21.68 | +60.99 | **+26.00** | [+6.58, +47.27] |
+| GS-N F-delay − GS-N | transient | delay | +42.57 | +6.59 | -1.81 | +21.68 | +60.99 | **+26.00** | [+6.46, +47.74] |
 | GS-N F-delay − GS-N | transient | noise | -0.42 | -0.10 | -0.06 | +0.14 | +0.08 | **-0.07** | [-0.26, +0.08] |
-| GS-N F-delay − GS-N | transient | combined | +56.77 | +6.50 | -1.72 | +21.18 | +56.39 | **+27.82** | [+6.34, +51.29] |
+| GS-N F-delay − GS-N | transient | combined | +56.77 | +6.50 | -1.72 | +21.18 | +56.39 | **+27.82** | [+6.48, +50.20] |
 | GS-D F-clean − GS-D | stationary | nominal | +0.26 | +0.00 | -0.05 | -0.09 | -0.18 | **-0.01** | [-0.13, +0.14] |
-| GS-D F-clean − GS-D | stationary | delay | -7.81 | +174.09 | +103.28 | +53.86 | +59.86 | **+76.66** | [+27.31, +131.24] |
+| GS-D F-clean − GS-D | stationary | delay | -7.81 | +174.09 | +103.28 | +53.86 | +59.86 | **+76.66** | [+26.91, +132.43] |
 | GS-D F-clean − GS-D | stationary | noise | +0.28 | +0.00 | -0.10 | -0.14 | -0.18 | **-0.03** | [-0.15, +0.14] |
-| GS-D F-clean − GS-D | stationary | combined | -8.23 | +181.38 | +112.22 | +54.82 | +60.58 | **+80.15** | [+29.03, +138.08] |
-| GS-D F-clean − GS-D | transient | nominal | +0.26 | +0.00 | -0.05 | -0.09 | -0.18 | **-0.01** | [-0.13, +0.13] |
-| GS-D F-clean − GS-D | transient | delay | -4.08 | +136.68 | +103.53 | +47.77 | +55.47 | **+67.87** | [+27.07, +109.91] |
+| GS-D F-clean − GS-D | stationary | combined | -8.23 | +181.38 | +112.22 | +54.82 | +60.58 | **+80.15** | [+28.26, +138.06] |
+| GS-D F-clean − GS-D | transient | nominal | +0.26 | +0.00 | -0.05 | -0.09 | -0.18 | **-0.01** | [-0.13, +0.14] |
+| GS-D F-clean − GS-D | transient | delay | -4.08 | +136.68 | +103.53 | +47.77 | +55.47 | **+67.87** | [+26.54, +110.80] |
 | GS-D F-clean − GS-D | transient | noise | +0.27 | +0.00 | -0.08 | -0.12 | -0.18 | **-0.02** | [-0.14, +0.14] |
-| GS-D F-clean − GS-D | transient | combined | -3.69 | +132.44 | +98.09 | +47.40 | +54.11 | **+65.67** | [+26.91, +106.13] |
-| GS-D F-delay − GS-D | stationary | nominal | -0.09 | +0.09 | +0.59 | +0.48 | +0.05 | **+0.22** | [+0.00, +0.46] |
-| GS-D F-delay − GS-D | stationary | delay | -3.77 | +114.94 | +3.80 | +2.33 | +6.84 | **+24.83** | [-0.32, +70.86] |
+| GS-D F-clean − GS-D | transient | combined | -3.69 | +132.44 | +98.09 | +47.40 | +54.11 | **+65.67** | [+26.28, +106.58] |
+| GS-D F-delay − GS-D | stationary | nominal | -0.09 | +0.09 | +0.59 | +0.48 | +0.05 | **+0.22** | [-0.00, +0.46] |
+| GS-D F-delay − GS-D | stationary | delay | -3.77 | +114.94 | +3.80 | +2.33 | +6.84 | **+24.83** | [-0.29, +71.76] |
 | GS-D F-delay − GS-D | stationary | noise | -0.07 | +0.09 | +0.54 | +0.42 | +0.05 | **+0.21** | [+0.01, +0.42] |
-| GS-D F-delay − GS-D | stationary | combined | -3.86 | +120.01 | +4.08 | +2.55 | +6.91 | **+25.94** | [-0.23, +75.00] |
-| GS-D F-delay − GS-D | transient | nominal | -0.09 | +0.09 | +0.59 | +0.48 | +0.05 | **+0.22** | [+0.01, +0.46] |
-| GS-D F-delay − GS-D | transient | delay | -0.43 | +106.46 | +2.58 | +1.68 | +4.10 | **+22.88** | [+0.88, +65.78] |
+| GS-D F-delay − GS-D | stationary | combined | -3.86 | +120.01 | +4.08 | +2.55 | +6.91 | **+25.94** | [-0.21, +74.60] |
+| GS-D F-delay − GS-D | transient | nominal | -0.09 | +0.09 | +0.59 | +0.48 | +0.05 | **+0.22** | [-0.00, +0.46] |
+| GS-D F-delay − GS-D | transient | delay | -0.43 | +106.46 | +2.58 | +1.68 | +4.10 | **+22.88** | [+0.88, +65.95] |
 | GS-D F-delay − GS-D | transient | noise | -0.07 | +0.09 | +0.56 | +0.44 | +0.05 | **+0.21** | [+0.01, +0.43] |
-| GS-D F-delay − GS-D | transient | combined | +0.08 | +112.05 | +2.60 | +1.65 | +4.13 | **+24.10** | [+1.15, +69.15] |
+| GS-D F-delay − GS-D | transient | combined | +0.08 | +112.05 | +2.60 | +1.65 | +4.13 | **+24.10** | [+1.16, +69.42] |
 
 **Δcompletion (percentage points)**
 
 | pair | mode | condition | s11 | s23 | s37 | s53 | s71 | seed-mean | 95 % CI |
 |---|---|---|---|---|---|---|---|---|---|
 | GS-N F-clean − GS-N | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-clean − GS-N | stationary | delay | +93.3 | +0.0 | +31.7 | -66.7 | -48.3 | **+2.0** | [-45.3, +54.7] |
+| GS-N F-clean − GS-N | stationary | delay | +93.3 | +0.0 | +31.7 | -66.7 | -48.3 | **+2.0** | [-46.0, +53.3] |
 | GS-N F-clean − GS-N | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-clean − GS-N | stationary | combined | +91.7 | +0.0 | +26.7 | -66.7 | -46.7 | **+1.0** | [-45.7, +52.0] |
+| GS-N F-clean − GS-N | stationary | combined | +91.7 | +0.0 | +26.7 | -66.7 | -46.7 | **+1.0** | [-45.7, +51.0] |
 | GS-N F-clean − GS-N | transient | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-clean − GS-N | transient | delay | +70.0 | +0.0 | +0.0 | -66.7 | -66.7 | **-12.7** | [-54.7, +31.7] |
+| GS-N F-clean − GS-N | transient | delay | +70.0 | +0.0 | +0.0 | -66.7 | -66.7 | **-12.7** | [-54.7, +31.0] |
 | GS-N F-clean − GS-N | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | GS-N F-clean − GS-N | transient | combined | +71.7 | +0.0 | +0.0 | -66.7 | -66.7 | **-12.3** | [-54.7, +32.0] |
 | GS-N F-delay − GS-N | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-delay − GS-N | stationary | delay | -6.7 | +0.0 | +13.3 | -33.3 | -15.0 | **-8.3** | [-22.7, +5.0] |
+| GS-N F-delay − GS-N | stationary | delay | -6.7 | +0.0 | +13.3 | -33.3 | -15.0 | **-8.3** | [-22.7, +5.3] |
 | GS-N F-delay − GS-N | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-delay − GS-N | stationary | combined | -8.3 | +0.0 | +3.3 | -33.3 | -13.3 | **-10.3** | [-23.7, +0.0] |
+| GS-N F-delay − GS-N | stationary | combined | -8.3 | +0.0 | +3.3 | -33.3 | -13.3 | **-10.3** | [-23.0, +0.3] |
 | GS-N F-delay − GS-N | transient | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-N F-delay − GS-N | transient | delay | -30.0 | +0.0 | +0.0 | +0.0 | -33.3 | **-12.7** | [-27.3, +0.0] |
+| GS-N F-delay − GS-N | transient | delay | -30.0 | +0.0 | +0.0 | +0.0 | -33.3 | **-12.7** | [-27.7, +0.0] |
 | GS-N F-delay − GS-N | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | GS-N F-delay − GS-N | transient | combined | -28.3 | +0.0 | +0.0 | +0.0 | -33.3 | **-12.3** | [-27.0, +0.0] |
 | GS-D F-clean − GS-D | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-clean − GS-D | stationary | delay | +0.0 | -100.0 | -66.7 | -33.3 | -53.3 | **-50.7** | [-80.0, -20.3] |
+| GS-D F-clean − GS-D | stationary | delay | +0.0 | -100.0 | -66.7 | -33.3 | -53.3 | **-50.7** | [-80.0, -20.7] |
 | GS-D F-clean − GS-D | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-clean − GS-D | stationary | combined | +0.0 | -100.0 | -66.7 | -38.3 | -63.3 | **-53.7** | [-81.7, -23.0] |
+| GS-D F-clean − GS-D | stationary | combined | +0.0 | -100.0 | -66.7 | -38.3 | -63.3 | **-53.7** | [-82.0, -23.0] |
 | GS-D F-clean − GS-D | transient | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-clean − GS-D | transient | delay | +0.0 | -100.0 | -66.7 | -33.3 | -38.3 | **-47.7** | [-77.7, -19.0] |
+| GS-D F-clean − GS-D | transient | delay | +0.0 | -100.0 | -66.7 | -33.3 | -38.3 | **-47.7** | [-78.3, -19.0] |
 | GS-D F-clean − GS-D | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-clean − GS-D | transient | combined | +0.0 | -100.0 | -66.7 | -31.7 | -36.7 | **-47.0** | [-78.3, -19.0] |
+| GS-D F-clean − GS-D | transient | combined | +0.0 | -100.0 | -66.7 | -31.7 | -36.7 | **-47.0** | [-78.0, -18.3] |
 | GS-D F-delay − GS-D | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-delay − GS-D | stationary | delay | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-40.7, +0.0] |
+| GS-D F-delay − GS-D | stationary | delay | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.3, +0.0] |
 | GS-D F-delay − GS-D | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-delay − GS-D | stationary | combined | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.0, +0.0] |
+| GS-D F-delay − GS-D | stationary | combined | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.3, +0.0] |
 | GS-D F-delay − GS-D | transient | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-delay − GS-D | transient | delay | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.0, +0.0] |
+| GS-D F-delay − GS-D | transient | delay | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.3, +0.0] |
 | GS-D F-delay − GS-D | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-D F-delay − GS-D | transient | combined | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-40.7, +0.0] |
+| GS-D F-delay − GS-D | transient | combined | +0.0 | -66.7 | +0.0 | +0.0 | +0.0 | **-13.3** | [-41.3, +0.0] |
 
 <details><summary>Paired frozen − PID-R (seed-mean and 95 % CI)</summary>
 
@@ -1518,37 +1518,37 @@ Same checkpoint, same scenario. Per-seed columns are mean differences over the 6
 | pair | mode | condition | seed-mean | 95 % CI |
 |---|---|---|---|---|
 | GS-N F-clean − PID-R | stationary | nominal | -0.91 | [-1.06, -0.77] |
-| GS-N F-clean − PID-R | stationary | delay | +66.00 | [+18.65, +114.91] |
+| GS-N F-clean − PID-R | stationary | delay | +66.00 | [+18.53, +115.70] |
 | GS-N F-clean − PID-R | stationary | noise | -0.90 | [-1.06, -0.77] |
-| GS-N F-clean − PID-R | stationary | combined | +66.73 | [+19.26, +116.05] |
+| GS-N F-clean − PID-R | stationary | combined | +66.73 | [+19.24, +116.51] |
 | GS-N F-clean − PID-R | transient | nominal | -0.91 | [-1.06, -0.77] |
-| GS-N F-clean − PID-R | transient | delay | +61.85 | [+11.44, +115.34] |
-| GS-N F-clean − PID-R | transient | noise | -0.90 | [-1.05, -0.77] |
-| GS-N F-clean − PID-R | transient | combined | +63.79 | [+11.48, +121.01] |
+| GS-N F-clean − PID-R | transient | delay | +61.85 | [+11.40, +116.00] |
+| GS-N F-clean − PID-R | transient | noise | -0.90 | [-1.06, -0.77] |
+| GS-N F-clean − PID-R | transient | combined | +63.79 | [+11.39, +120.91] |
 | GS-N F-delay − PID-R | stationary | nominal | -0.97 | [-1.07, -0.88] |
-| GS-N F-delay − PID-R | stationary | delay | +73.26 | [+31.40, +119.83] |
-| GS-N F-delay − PID-R | stationary | noise | -0.97 | [-1.08, -0.88] |
-| GS-N F-delay − PID-R | stationary | combined | +74.73 | [+31.80, +123.79] |
-| GS-N F-delay − PID-R | transient | nominal | -0.97 | [-1.08, -0.88] |
-| GS-N F-delay − PID-R | transient | delay | +62.71 | [+21.26, +109.12] |
-| GS-N F-delay − PID-R | transient | noise | -0.97 | [-1.07, -0.87] |
-| GS-N F-delay − PID-R | transient | combined | +64.67 | [+21.12, +115.40] |
-| GS-D F-clean − PID-R | stationary | nominal | -0.81 | [-1.08, -0.38] |
-| GS-D F-clean − PID-R | stationary | delay | +77.92 | [+28.06, +132.82] |
+| GS-N F-delay − PID-R | stationary | delay | +73.26 | [+31.48, +120.79] |
+| GS-N F-delay − PID-R | stationary | noise | -0.97 | [-1.07, -0.88] |
+| GS-N F-delay − PID-R | stationary | combined | +74.73 | [+32.07, +123.94] |
+| GS-N F-delay − PID-R | transient | nominal | -0.97 | [-1.07, -0.88] |
+| GS-N F-delay − PID-R | transient | delay | +62.71 | [+21.16, +108.74] |
+| GS-N F-delay − PID-R | transient | noise | -0.97 | [-1.07, -0.88] |
+| GS-N F-delay − PID-R | transient | combined | +64.67 | [+20.95, +115.89] |
+| GS-D F-clean − PID-R | stationary | nominal | -0.81 | [-1.09, -0.38] |
+| GS-D F-clean − PID-R | stationary | delay | +77.92 | [+27.80, +135.10] |
 | GS-D F-clean − PID-R | stationary | noise | -0.81 | [-1.08, -0.38] |
-| GS-D F-clean − PID-R | stationary | combined | +81.60 | [+30.35, +140.32] |
-| GS-D F-clean − PID-R | transient | nominal | -0.81 | [-1.08, -0.38] |
-| GS-D F-clean − PID-R | transient | delay | +69.26 | [+26.88, +113.31] |
-| GS-D F-clean − PID-R | transient | noise | -0.81 | [-1.09, -0.38] |
-| GS-D F-clean − PID-R | transient | combined | +66.93 | [+27.21, +110.22] |
+| GS-D F-clean − PID-R | stationary | combined | +81.60 | [+29.56, +140.38] |
+| GS-D F-clean − PID-R | transient | nominal | -0.81 | [-1.09, -0.38] |
+| GS-D F-clean − PID-R | transient | delay | +69.26 | [+26.56, +114.16] |
+| GS-D F-clean − PID-R | transient | noise | -0.81 | [-1.08, -0.38] |
+| GS-D F-clean − PID-R | transient | combined | +66.93 | [+26.00, +110.15] |
 | GS-D F-delay − PID-R | stationary | nominal | -0.57 | [-0.83, -0.36] |
-| GS-D F-delay − PID-R | stationary | delay | +26.09 | [+0.20, +73.77] |
+| GS-D F-delay − PID-R | stationary | delay | +26.09 | [+0.17, +74.81] |
 | GS-D F-delay − PID-R | stationary | noise | -0.57 | [-0.83, -0.36] |
-| GS-D F-delay − PID-R | stationary | combined | +27.38 | [+0.69, +77.38] |
+| GS-D F-delay − PID-R | stationary | combined | +27.38 | [+0.64, +77.57] |
 | GS-D F-delay − PID-R | transient | nominal | -0.57 | [-0.83, -0.36] |
-| GS-D F-delay − PID-R | transient | delay | +24.27 | [+0.59, +69.72] |
-| GS-D F-delay − PID-R | transient | noise | -0.57 | [-0.82, -0.36] |
-| GS-D F-delay − PID-R | transient | combined | +25.36 | [+0.74, +73.02] |
+| GS-D F-delay − PID-R | transient | delay | +24.27 | [+0.62, +70.33] |
+| GS-D F-delay − PID-R | transient | noise | -0.57 | [-0.83, -0.36] |
+| GS-D F-delay − PID-R | transient | combined | +25.36 | [+0.73, +73.61] |
 
 **Δcompletion (pp)**
 
@@ -1557,35 +1557,35 @@ Same checkpoint, same scenario. Per-seed columns are mean differences over the 6
 | GS-N F-clean − PID-R | stationary | nominal | +0.0 | [+0.0, +0.0] |
 | GS-N F-clean − PID-R | stationary | delay | -33.3 | [-73.3, +0.0] |
 | GS-N F-clean − PID-R | stationary | noise | +0.0 | [+0.0, +0.0] |
-| GS-N F-clean − PID-R | stationary | combined | -34.3 | [-73.3, -1.0] |
+| GS-N F-clean − PID-R | stationary | combined | -34.3 | [-73.7, -1.0] |
 | GS-N F-clean − PID-R | transient | nominal | +0.0 | [+0.0, +0.0] |
 | GS-N F-clean − PID-R | transient | delay | -33.3 | [-73.3, +0.0] |
 | GS-N F-clean − PID-R | transient | noise | +0.0 | [+0.0, +0.0] |
-| GS-N F-clean − PID-R | transient | combined | -33.3 | [-73.7, +0.0] |
+| GS-N F-clean − PID-R | transient | combined | -33.3 | [-73.3, +0.0] |
 | GS-N F-delay − PID-R | stationary | nominal | +0.0 | [+0.0, +0.0] |
-| GS-N F-delay − PID-R | stationary | delay | -43.7 | [-76.7, -14.0] |
+| GS-N F-delay − PID-R | stationary | delay | -43.7 | [-76.3, -13.3] |
 | GS-N F-delay − PID-R | stationary | noise | +0.0 | [+0.0, +0.0] |
-| GS-N F-delay − PID-R | stationary | combined | -45.7 | [-76.3, -16.7] |
+| GS-N F-delay − PID-R | stationary | combined | -45.7 | [-77.3, -16.7] |
 | GS-N F-delay − PID-R | transient | nominal | +0.0 | [+0.0, +0.0] |
 | GS-N F-delay − PID-R | transient | delay | -33.3 | [-73.3, +0.0] |
 | GS-N F-delay − PID-R | transient | noise | +0.0 | [+0.0, +0.0] |
 | GS-N F-delay − PID-R | transient | combined | -33.3 | [-73.3, +0.0] |
 | GS-D F-clean − PID-R | stationary | nominal | +0.0 | [+0.0, +0.0] |
-| GS-D F-clean − PID-R | stationary | delay | -50.7 | [-79.0, -21.0] |
+| GS-D F-clean − PID-R | stationary | delay | -50.7 | [-80.0, -20.7] |
 | GS-D F-clean − PID-R | stationary | noise | +0.0 | [+0.0, +0.0] |
-| GS-D F-clean − PID-R | stationary | combined | -53.7 | [-81.3, -24.0] |
+| GS-D F-clean − PID-R | stationary | combined | -53.7 | [-82.0, -23.0] |
 | GS-D F-clean − PID-R | transient | nominal | +0.0 | [+0.0, +0.0] |
-| GS-D F-clean − PID-R | transient | delay | -47.7 | [-78.3, -19.3] |
+| GS-D F-clean − PID-R | transient | delay | -47.7 | [-78.3, -19.0] |
 | GS-D F-clean − PID-R | transient | noise | +0.0 | [+0.0, +0.0] |
-| GS-D F-clean − PID-R | transient | combined | -47.0 | [-76.7, -18.3] |
+| GS-D F-clean − PID-R | transient | combined | -47.0 | [-78.0, -18.3] |
 | GS-D F-delay − PID-R | stationary | nominal | +0.0 | [+0.0, +0.0] |
-| GS-D F-delay − PID-R | stationary | delay | -13.3 | [-40.7, +0.0] |
+| GS-D F-delay − PID-R | stationary | delay | -13.3 | [-41.3, +0.0] |
 | GS-D F-delay − PID-R | stationary | noise | +0.0 | [+0.0, +0.0] |
-| GS-D F-delay − PID-R | stationary | combined | -13.3 | [-41.0, +0.0] |
+| GS-D F-delay − PID-R | stationary | combined | -13.3 | [-41.3, +0.0] |
 | GS-D F-delay − PID-R | transient | nominal | +0.0 | [+0.0, +0.0] |
-| GS-D F-delay − PID-R | transient | delay | -13.3 | [-40.7, +0.0] |
+| GS-D F-delay − PID-R | transient | delay | -13.3 | [-41.3, +0.0] |
 | GS-D F-delay − PID-R | transient | noise | +0.0 | [+0.0, +0.0] |
-| GS-D F-delay − PID-R | transient | combined | -13.3 | [-41.0, +0.0] |
+| GS-D F-delay − PID-R | transient | combined | -13.3 | [-41.3, +0.0] |
 
 </details>
 
@@ -1602,7 +1602,7 @@ Same checkpoint, same scenario. Per-seed columns are mean differences over the 6
 - **GS-D F-delay gains vs F-clean:** Kp is lower under F-delay for 4 of 5 seeds (all except seed 11).
 - **GS-N:** frozen − dynamic completion differences vary in sign across seeds.
   - F-clean: from +93.3 pp (seed 11) to −66.7 pp (seeds 53 and 71). The seed-mean is +2.0 / +1.0 pp stationary and −12.7 / −12.3 pp transient, and the CIs include 0.
-  - F-delay: seed-mean −8.3 to −12.7 pp, with CI upper bounds at 0.0 to +5.0.
+  - F-delay: seed-mean −8.3 to −12.7 pp, with CI upper bounds from 0.0 to +5.3.
 - **Against PID-R** (100 % in every held-out cell), GS-D F-delay is the only frozen variant above 80 % completion in the delay cells. Paired frozen − PID-R differences are in the collapsed table.
 
 ## 4. E4 Noise-trained arms
@@ -2649,37 +2649,37 @@ All from `heldout_rerun` (one node, one run). Noise cells carry the sealed 0.3 m
 | pair | mode | condition | s11 | s23 | s37 | s53 | s71 | seed-mean | 95 % CI |
 |---|---|---|---|---|---|---|---|---|---|
 | GS-DN 3mm − GS-D | stationary | nominal | -0.62 | +2.06 | +0.23 | -0.24 | -0.26 | **+0.23** | [-0.41, +1.19] |
-| GS-DN 3mm − GS-D | stationary | delay | +23.85 | -11.72 | +4.97 | +2.93 | -1.19 | **+3.77** | [-5.54, +15.00] |
-| GS-DN 3mm − GS-D | stationary | noise | -0.61 | +2.06 | +0.34 | -0.29 | -0.25 | **+0.25** | [-0.41, +1.19] |
-| GS-DN 3mm − GS-D | stationary | combined | +23.87 | -11.18 | +5.10 | +2.27 | -1.55 | **+3.70** | [-5.37, +15.03] |
-| GS-DN 3mm − GS-D | transient | nominal | -0.62 | +2.06 | +0.23 | -0.24 | -0.26 | **+0.23** | [-0.42, +1.18] |
-| GS-DN 3mm − GS-D | transient | delay | +15.05 | -11.25 | +3.09 | +5.55 | -1.02 | **+2.28** | [-5.45, +9.77] |
-| GS-DN 3mm − GS-D | transient | noise | -0.61 | +2.06 | +0.25 | -0.27 | -0.26 | **+0.23** | [-0.41, +1.18] |
-| GS-DN 3mm − GS-D | transient | combined | +14.58 | -11.03 | +2.99 | +5.11 | -1.10 | **+2.11** | [-5.28, +9.45] |
-| GS-DN 10mm − GS-D | stationary | nominal | -0.89 | +1.33 | -0.15 | -0.25 | -0.37 | **-0.07** | [-0.61, +0.66] |
-| GS-DN 10mm − GS-D | stationary | delay | +58.22 | +2.95 | +18.77 | +59.78 | +87.27 | **+45.40** | [+18.69, +72.15] |
-| GS-DN 10mm − GS-D | stationary | noise | -0.86 | +1.35 | -0.19 | -0.30 | -0.36 | **-0.08** | [-0.61, +0.66] |
-| GS-DN 10mm − GS-D | stationary | combined | +45.00 | +4.04 | +21.39 | +54.42 | +89.84 | **+42.94** | [+18.21, +69.39] |
-| GS-DN 10mm − GS-D | transient | nominal | -0.89 | +1.33 | -0.15 | -0.25 | -0.37 | **-0.07** | [-0.62, +0.66] |
-| GS-DN 10mm − GS-D | transient | delay | +62.89 | -0.86 | +11.75 | +72.02 | +94.71 | **+48.10** | [+16.13, +80.48] |
-| GS-DN 10mm − GS-D | transient | noise | -0.87 | +1.34 | -0.18 | -0.28 | -0.36 | **-0.07** | [-0.62, +0.66] |
-| GS-DN 10mm − GS-D | transient | combined | +60.63 | -0.58 | +11.88 | +94.78 | +97.93 | **+52.93** | [+17.26, +89.32] |
-| DR-DN 3mm − DR-D | stationary | nominal | +70.69 | +3.44 | +0.62 | +0.56 | -0.32 | **+15.00** | [+0.16, +44.74] |
-| DR-DN 3mm − DR-D | stationary | delay | +308.10 | -12.10 | +0.72 | -3.65 | -4.42 | **+57.73** | [-8.23, +187.35] |
-| DR-DN 3mm − DR-D | stationary | noise | +70.67 | +3.73 | +0.42 | +0.60 | -0.57 | **+14.97** | [-0.01, +43.86] |
-| DR-DN 3mm − DR-D | stationary | combined | +309.02 | -8.75 | +3.03 | -3.21 | -4.20 | **+59.18** | [-6.11, +187.46] |
-| DR-DN 3mm − DR-D | transient | nominal | +70.69 | +3.44 | +0.62 | +0.56 | -0.32 | **+15.00** | [+0.14, +44.49] |
-| DR-DN 3mm − DR-D | transient | delay | +186.23 | +3.42 | +1.88 | +8.19 | -3.30 | **+39.29** | [-0.82, +116.46] |
-| DR-DN 3mm − DR-D | transient | noise | +70.62 | +3.40 | +0.62 | +0.62 | -0.23 | **+15.01** | [+0.15, +44.85] |
-| DR-DN 3mm − DR-D | transient | combined | +178.50 | +3.40 | +1.98 | +8.00 | -2.56 | **+37.86** | [-0.51, +111.52] |
-| DR-DN 10mm − DR-D | stationary | nominal | +3.47 | -8.70 | -5.06 | +1.38 | +1.82 | **-1.42** | [-5.75, +2.41] |
-| DR-DN 10mm − DR-D | stationary | delay | +4.60 | -7.25 | -4.21 | -4.30 | +2.53 | **-1.73** | [-5.96, +2.71] |
-| DR-DN 10mm − DR-D | stationary | noise | +3.04 | -8.41 | -4.51 | +0.87 | +1.51 | **-1.50** | [-5.53, +2.03] |
-| DR-DN 10mm − DR-D | stationary | combined | +3.40 | -3.70 | -1.74 | -3.84 | +3.09 | **-0.56** | [-3.48, +2.60] |
-| DR-DN 10mm − DR-D | transient | nominal | +3.47 | -8.70 | -5.06 | +1.38 | +1.82 | **-1.42** | [-5.81, +2.43] |
-| DR-DN 10mm − DR-D | transient | delay | +3.07 | -3.68 | -6.41 | -1.11 | +0.99 | **-1.43** | [-4.42, +1.56] |
-| DR-DN 10mm − DR-D | transient | noise | +3.60 | -8.73 | -5.06 | +1.15 | +1.88 | **-1.43** | [-5.74, +2.40] |
-| DR-DN 10mm − DR-D | transient | combined | +3.69 | -3.75 | -6.45 | -1.53 | +1.67 | **-1.27** | [-4.49, +2.02] |
+| GS-DN 3mm − GS-D | stationary | delay | +23.85 | -11.72 | +4.97 | +2.93 | -1.19 | **+3.77** | [-5.91, +14.87] |
+| GS-DN 3mm − GS-D | stationary | noise | -0.61 | +2.06 | +0.34 | -0.29 | -0.25 | **+0.25** | [-0.41, +1.20] |
+| GS-DN 3mm − GS-D | stationary | combined | +23.87 | -11.18 | +5.10 | +2.27 | -1.55 | **+3.70** | [-5.81, +14.81] |
+| GS-DN 3mm − GS-D | transient | nominal | -0.62 | +2.06 | +0.23 | -0.24 | -0.26 | **+0.23** | [-0.41, +1.19] |
+| GS-DN 3mm − GS-D | transient | delay | +15.05 | -11.25 | +3.09 | +5.55 | -1.02 | **+2.28** | [-5.64, +9.71] |
+| GS-DN 3mm − GS-D | transient | noise | -0.61 | +2.06 | +0.25 | -0.27 | -0.26 | **+0.23** | [-0.41, +1.19] |
+| GS-DN 3mm − GS-D | transient | combined | +14.58 | -11.03 | +2.99 | +5.11 | -1.10 | **+2.11** | [-5.61, +9.34] |
+| GS-DN 10mm − GS-D | stationary | nominal | -0.89 | +1.33 | -0.15 | -0.25 | -0.37 | **-0.07** | [-0.62, +0.68] |
+| GS-DN 10mm − GS-D | stationary | delay | +58.22 | +2.95 | +18.77 | +59.78 | +87.27 | **+45.40** | [+18.36, +72.36] |
+| GS-DN 10mm − GS-D | stationary | noise | -0.86 | +1.35 | -0.19 | -0.30 | -0.36 | **-0.08** | [-0.62, +0.68] |
+| GS-DN 10mm − GS-D | stationary | combined | +45.00 | +4.04 | +21.39 | +54.42 | +89.84 | **+42.94** | [+18.15, +70.22] |
+| GS-DN 10mm − GS-D | transient | nominal | -0.89 | +1.33 | -0.15 | -0.25 | -0.37 | **-0.07** | [-0.62, +0.68] |
+| GS-DN 10mm − GS-D | transient | delay | +62.89 | -0.86 | +11.75 | +72.02 | +94.71 | **+48.10** | [+15.84, +80.24] |
+| GS-DN 10mm − GS-D | transient | noise | -0.87 | +1.34 | -0.18 | -0.28 | -0.36 | **-0.07** | [-0.62, +0.68] |
+| GS-DN 10mm − GS-D | transient | combined | +60.63 | -0.58 | +11.88 | +94.78 | +97.93 | **+52.93** | [+16.73, +89.54] |
+| DR-DN 3mm − DR-D | stationary | nominal | +70.69 | +3.44 | +0.62 | +0.56 | -0.32 | **+15.00** | [+0.11, +45.43] |
+| DR-DN 3mm − DR-D | stationary | delay | +308.10 | -12.10 | +0.72 | -3.65 | -4.42 | **+57.73** | [-8.23, +189.83] |
+| DR-DN 3mm − DR-D | stationary | noise | +70.67 | +3.73 | +0.42 | +0.60 | -0.57 | **+14.97** | [-0.03, +45.43] |
+| DR-DN 3mm − DR-D | stationary | combined | +309.02 | -8.75 | +3.03 | -3.21 | -4.20 | **+59.18** | [-6.10, +190.91] |
+| DR-DN 3mm − DR-D | transient | nominal | +70.69 | +3.44 | +0.62 | +0.56 | -0.32 | **+15.00** | [+0.11, +45.43] |
+| DR-DN 3mm − DR-D | transient | delay | +186.23 | +3.42 | +1.88 | +8.19 | -3.30 | **+39.29** | [-0.96, +118.16] |
+| DR-DN 3mm − DR-D | transient | noise | +70.62 | +3.40 | +0.62 | +0.62 | -0.23 | **+15.01** | [+0.16, +45.39] |
+| DR-DN 3mm − DR-D | transient | combined | +178.50 | +3.40 | +1.98 | +8.00 | -2.56 | **+37.86** | [-0.60, +112.65] |
+| DR-DN 10mm − DR-D | stationary | nominal | +3.47 | -8.70 | -5.06 | +1.38 | +1.82 | **-1.42** | [-5.73, +2.43] |
+| DR-DN 10mm − DR-D | stationary | delay | +4.60 | -7.25 | -4.21 | -4.30 | +2.53 | **-1.73** | [-5.96, +2.49] |
+| DR-DN 10mm − DR-D | stationary | noise | +3.04 | -8.41 | -4.51 | +0.87 | +1.51 | **-1.50** | [-5.52, +1.99] |
+| DR-DN 10mm − DR-D | stationary | combined | +3.40 | -3.70 | -1.74 | -3.84 | +3.09 | **-0.56** | [-3.48, +2.48] |
+| DR-DN 10mm − DR-D | transient | nominal | +3.47 | -8.70 | -5.06 | +1.38 | +1.82 | **-1.42** | [-5.73, +2.43] |
+| DR-DN 10mm − DR-D | transient | delay | +3.07 | -3.68 | -6.41 | -1.11 | +0.99 | **-1.43** | [-4.43, +1.53] |
+| DR-DN 10mm − DR-D | transient | noise | +3.60 | -8.73 | -5.06 | +1.15 | +1.88 | **-1.43** | [-5.75, +2.44] |
+| DR-DN 10mm − DR-D | transient | combined | +3.69 | -3.75 | -6.45 | -1.53 | +1.67 | **-1.27** | [-4.47, +2.02] |
 
 Δcompletion (pp)
 
@@ -2694,21 +2694,21 @@ All from `heldout_rerun` (one node, one run). Noise cells carry the sealed 0.3 m
 | GS-DN 3mm − GS-D | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | GS-DN 3mm − GS-D | transient | combined | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | GS-DN 10mm − GS-D | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-DN 10mm − GS-D | stationary | delay | -31.7 | +0.0 | +0.0 | -33.3 | -66.7 | **-26.3** | [-48.7, -6.0] |
+| GS-DN 10mm − GS-D | stationary | delay | -31.7 | +0.0 | +0.0 | -33.3 | -66.7 | **-26.3** | [-49.3, -5.7] |
 | GS-DN 10mm − GS-D | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-DN 10mm − GS-D | stationary | combined | -30.0 | +0.0 | +0.0 | -33.3 | -66.7 | **-26.0** | [-48.3, -5.7] |
+| GS-DN 10mm − GS-D | stationary | combined | -30.0 | +0.0 | +0.0 | -33.3 | -66.7 | **-26.0** | [-49.3, -5.7] |
 | GS-DN 10mm − GS-D | transient | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-DN 10mm − GS-D | transient | delay | -31.7 | +0.0 | +0.0 | -31.7 | -66.7 | **-26.0** | [-49.0, -5.7] |
+| GS-DN 10mm − GS-D | transient | delay | -31.7 | +0.0 | +0.0 | -31.7 | -66.7 | **-26.0** | [-49.3, -5.7] |
 | GS-DN 10mm − GS-D | transient | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
-| GS-DN 10mm − GS-D | transient | combined | -33.3 | +0.0 | +0.0 | -31.7 | -66.7 | **-26.3** | [-49.3, -5.7] |
+| GS-DN 10mm − GS-D | transient | combined | -33.3 | +0.0 | +0.0 | -31.7 | -66.7 | **-26.3** | [-49.7, -5.7] |
 | DR-DN 3mm − DR-D | stationary | nominal | -3.3 | +0.0 | +0.0 | +0.0 | +0.0 | **-0.7** | [-2.7, +0.0] |
 | DR-DN 3mm − DR-D | stationary | delay | -36.7 | +0.0 | +0.0 | +0.0 | +0.0 | **-7.3** | [-23.0, +0.0] |
 | DR-DN 3mm − DR-D | stationary | noise | -3.3 | +0.0 | +0.0 | +0.0 | +0.0 | **-0.7** | [-2.7, +0.0] |
 | DR-DN 3mm − DR-D | stationary | combined | -36.7 | +0.0 | +0.0 | +0.0 | +0.0 | **-7.3** | [-23.0, +0.0] |
 | DR-DN 3mm − DR-D | transient | nominal | -3.3 | +0.0 | +0.0 | +0.0 | +0.0 | **-0.7** | [-2.7, +0.0] |
-| DR-DN 3mm − DR-D | transient | delay | -23.3 | +0.0 | +0.0 | -1.7 | +0.0 | **-5.0** | [-14.7, +0.0] |
+| DR-DN 3mm − DR-D | transient | delay | -23.3 | +0.0 | +0.0 | -1.7 | +0.0 | **-5.0** | [-15.0, +0.0] |
 | DR-DN 3mm − DR-D | transient | noise | -3.3 | +0.0 | +0.0 | +0.0 | +0.0 | **-0.7** | [-2.7, +0.0] |
-| DR-DN 3mm − DR-D | transient | combined | -21.7 | +0.0 | +0.0 | -1.7 | +0.0 | **-4.7** | [-13.7, +0.0] |
+| DR-DN 3mm − DR-D | transient | combined | -21.7 | +0.0 | +0.0 | -1.7 | +0.0 | **-4.7** | [-14.0, +0.0] |
 | DR-DN 10mm − DR-D | stationary | nominal | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | DR-DN 10mm − DR-D | stationary | delay | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
 | DR-DN 10mm − DR-D | stationary | noise | +0.0 | +0.0 | +0.0 | +0.0 | +0.0 | **+0.0** | [+0.0, +0.0] |
@@ -2727,19 +2727,19 @@ All from `heldout_rerun` (one node, one run). Noise cells carry the sealed 0.3 m
 | PID-RN 3mm − PID-R | stationary | nominal | +0.59 | [+0.50, +0.69] |
 | PID-RN 3mm − PID-R | stationary | delay | -8.77 | [-9.31, -8.24] |
 | PID-RN 3mm − PID-R | stationary | noise | +0.59 | [+0.50, +0.69] |
-| PID-RN 3mm − PID-R | stationary | combined | -9.00 | [-9.54, -8.47] |
+| PID-RN 3mm − PID-R | stationary | combined | -9.00 | [-9.53, -8.47] |
 | PID-RN 3mm − PID-R | transient | nominal | +0.59 | [+0.50, +0.69] |
-| PID-RN 3mm − PID-R | transient | delay | -4.11 | [-4.53, -3.67] |
+| PID-RN 3mm − PID-R | transient | delay | -4.11 | [-4.54, -3.67] |
 | PID-RN 3mm − PID-R | transient | noise | +0.59 | [+0.50, +0.69] |
-| PID-RN 3mm − PID-R | transient | combined | -4.28 | [-4.69, -3.84] |
+| PID-RN 3mm − PID-R | transient | combined | -4.28 | [-4.70, -3.83] |
 | PID-RN 10mm − PID-R | stationary | nominal | +0.65 | [+0.54, +0.76] |
-| PID-RN 10mm − PID-R | stationary | delay | +18.30 | [+8.53, +28.45] |
-| PID-RN 10mm − PID-R | stationary | noise | +0.65 | [+0.55, +0.76] |
-| PID-RN 10mm − PID-R | stationary | combined | +24.45 | [+12.99, +36.47] |
+| PID-RN 10mm − PID-R | stationary | delay | +18.30 | [+8.41, +28.25] |
+| PID-RN 10mm − PID-R | stationary | noise | +0.65 | [+0.54, +0.76] |
+| PID-RN 10mm − PID-R | stationary | combined | +24.45 | [+12.80, +36.20] |
 | PID-RN 10mm − PID-R | transient | nominal | +0.65 | [+0.54, +0.76] |
-| PID-RN 10mm − PID-R | transient | delay | +21.87 | [+10.97, +33.39] |
+| PID-RN 10mm − PID-R | transient | delay | +21.87 | [+10.87, +33.43] |
 | PID-RN 10mm − PID-R | transient | noise | +0.65 | [+0.54, +0.76] |
-| PID-RN 10mm − PID-R | transient | combined | +20.94 | [+10.24, +32.66] |
+| PID-RN 10mm − PID-R | transient | combined | +20.94 | [+10.17, +32.26] |
 
 Δcompletion (pp)
 
@@ -2851,22 +2851,22 @@ Held-out 480 from `heldout_rerun`. H10 rows are the sealed checkpoints.
 
 | pair | mode | condition | s11 | s23 | s37 | s53 | s71 | seed-mean | 95 % CI |
 |---|---|---|---|---|---|---|---|---|---|
-| GS-D H1 − GS-D | stationary | nominal | +1.30 | +0.37 | +1.67 | +0.51 | -0.26 | **+0.72** | [+0.12, +1.32] |
-| GS-D H1 − GS-D | stationary | delay | -8.93 | -4.42 | -4.34 | -1.73 | -1.60 | **-4.20** | [-6.77, -2.14] |
-| GS-D H1 − GS-D | stationary | noise | +1.32 | +0.37 | +1.62 | +0.54 | -0.23 | **+0.73** | [+0.16, +1.31] |
-| GS-D H1 − GS-D | stationary | combined | -9.67 | -3.74 | -4.51 | -1.10 | -1.87 | **-4.18** | [-7.15, -1.90] |
-| GS-D H1 − GS-D | transient | nominal | +1.30 | +0.37 | +1.67 | +0.51 | -0.26 | **+0.72** | [+0.13, +1.33] |
-| GS-D H1 − GS-D | transient | delay | -4.39 | -7.04 | -1.26 | -0.43 | -1.23 | **-2.87** | [-5.25, -0.90] |
-| GS-D H1 − GS-D | transient | noise | +1.32 | +0.37 | +1.64 | +0.53 | -0.24 | **+0.72** | [+0.15, +1.32] |
-| GS-D H1 − GS-D | transient | combined | -4.25 | -6.78 | -1.18 | -0.69 | -1.27 | **-2.83** | [-5.08, -0.99] |
-| DR-D H1 − DR-D | stationary | nominal | -2.94 | -9.49 | -6.50 | +0.82 | -4.10 | **-4.44** | [-7.51, -1.44] |
-| DR-D H1 − DR-D | stationary | delay | -8.20 | -16.91 | -15.25 | -3.64 | -4.22 | **-9.64** | [-14.89, -4.84] |
-| DR-D H1 − DR-D | stationary | noise | -2.96 | -9.21 | -6.70 | +0.73 | -4.34 | **-4.50** | [-7.43, -1.55] |
-| DR-D H1 − DR-D | stationary | combined | -8.33 | -13.47 | -13.83 | -4.00 | -3.80 | **-8.68** | [-12.61, -4.84] |
-| DR-D H1 − DR-D | transient | nominal | -2.94 | -9.49 | -6.50 | +0.82 | -4.10 | **-4.44** | [-7.57, -1.45] |
-| DR-D H1 − DR-D | transient | delay | -7.39 | -11.50 | -12.03 | +4.71 | -5.41 | **-6.32** | [-10.96, -0.42] |
-| DR-D H1 − DR-D | transient | noise | -3.00 | -9.52 | -6.52 | +0.72 | -4.02 | **-4.47** | [-7.49, -1.47] |
-| DR-D H1 − DR-D | transient | combined | -7.30 | -11.63 | -11.90 | +4.38 | -4.68 | **-6.23** | [-10.88, -0.62] |
+| GS-D H1 − GS-D | stationary | nominal | +1.30 | +0.37 | +1.67 | +0.51 | -0.26 | **+0.72** | [+0.13, +1.32] |
+| GS-D H1 − GS-D | stationary | delay | -8.93 | -4.42 | -4.34 | -1.73 | -1.60 | **-4.20** | [-6.85, -2.14] |
+| GS-D H1 − GS-D | stationary | noise | +1.32 | +0.37 | +1.62 | +0.54 | -0.23 | **+0.73** | [+0.15, +1.30] |
+| GS-D H1 − GS-D | stationary | combined | -9.67 | -3.74 | -4.51 | -1.10 | -1.87 | **-4.18** | [-7.19, -1.89] |
+| GS-D H1 − GS-D | transient | nominal | +1.30 | +0.37 | +1.67 | +0.51 | -0.26 | **+0.72** | [+0.13, +1.32] |
+| GS-D H1 − GS-D | transient | delay | -4.39 | -7.04 | -1.26 | -0.43 | -1.23 | **-2.87** | [-5.27, -0.89] |
+| GS-D H1 − GS-D | transient | noise | +1.32 | +0.37 | +1.64 | +0.53 | -0.24 | **+0.72** | [+0.14, +1.31] |
+| GS-D H1 − GS-D | transient | combined | -4.25 | -6.78 | -1.18 | -0.69 | -1.27 | **-2.83** | [-5.09, -0.98] |
+| DR-D H1 − DR-D | stationary | nominal | -2.94 | -9.49 | -6.50 | +0.82 | -4.10 | **-4.44** | [-7.50, -1.44] |
+| DR-D H1 − DR-D | stationary | delay | -8.20 | -16.91 | -15.25 | -3.64 | -4.22 | **-9.64** | [-14.81, -4.85] |
+| DR-D H1 − DR-D | stationary | noise | -2.96 | -9.21 | -6.70 | +0.73 | -4.34 | **-4.50** | [-7.43, -1.54] |
+| DR-D H1 − DR-D | stationary | combined | -8.33 | -13.47 | -13.83 | -4.00 | -3.80 | **-8.68** | [-12.56, -4.84] |
+| DR-D H1 − DR-D | transient | nominal | -2.94 | -9.49 | -6.50 | +0.82 | -4.10 | **-4.44** | [-7.50, -1.44] |
+| DR-D H1 − DR-D | transient | delay | -7.39 | -11.50 | -12.03 | +4.71 | -5.41 | **-6.32** | [-10.92, -0.54] |
+| DR-D H1 − DR-D | transient | noise | -3.00 | -9.52 | -6.52 | +0.72 | -4.02 | **-4.47** | [-7.51, -1.52] |
+| DR-D H1 − DR-D | transient | combined | -7.30 | -11.63 | -11.90 | +4.38 | -4.68 | **-6.23** | [-10.85, -0.68] |
 
 Δcompletion (pp)
 
@@ -2916,6 +2916,22 @@ Held-out 480 from `heldout_rerun`. H10 rows are the sealed checkpoints.
 | `artifacts/results/posthoc/e4_noise_sweep/` | episodes.csv, metadata.json, summary.csv, summary_by_seed.csv |
 | `artifacts/results/posthoc/e4_pid_retune_10mm/` | candidates.csv, pid_rn.json |
 | `artifacts/results/posthoc/e4_pid_retune_3mm/` | candidates.csv, pid_rn.json |
+| `artifacts/results/posthoc/figures/` | e1_mechanism_stationary_noise.pdf, e1_mechanism_stationary_noise.png, e1_noise_sweep_stationary.pdf, e1_noise_sweep_stationary.png, e1_noise_sweep_transient.pdf, e1_noise_sweep_transient.png, e1f_pid_derivative_filter.pdf, e1f_pid_derivative_filter.png, e2_delay_sweep.pdf, e2_delay_sweep.png, e3_frozen_gain_completion.pdf, e3_frozen_gain_completion.png, e4_heldout_completion.pdf, e4_heldout_completion.png, e4_noise_sweep_combined_stationary.pdf, e4_noise_sweep_combined_stationary.png, e4_noise_sweep_combined_transient.pdf, e4_noise_sweep_combined_transient.png, e4_noise_sweep_noise_stationary.pdf, e4_noise_sweep_noise_stationary.png, e4_noise_sweep_noise_transient.pdf, e4_noise_sweep_noise_transient.png, e5_history_paired_difference.pdf, e5_history_paired_difference.png |
 | `artifacts/results/posthoc/heldout_rerun/` | episodes.csv, metadata.json, sealed_check.json, summary.csv, summary_by_seed.csv |
 
-Logs: `artifacts/results/posthoc/slurm-thesis-posthoc-{s1-3187230,s2-3188678,s2b-3189024}.out`, `e4_training_{3mm,10mm}.log`, `e5_training.log`. Manifests: `manifests/posthoc/{noise_coarse,noise_fine,delay}.json`. Models (on the cluster, `~/thesis-experiment/`): `artifacts/models/posthoc/{e4_noise_3mm,e4_noise_10mm,e5_history}/`. Code: `posthoc_*.py`, `slurm_posthoc*.sh` on branch `posthoc-experiments`. No plots were generated.
+Logs: `artifacts/results/posthoc/slurm-thesis-posthoc-{s1-3187230,s2-3188678,s2b-3189024}.out`, `e4_training_{3mm,10mm}.log`, `e5_training.log`. Manifests: `manifests/posthoc/{noise_coarse,noise_fine,delay}.json`. Models (on the cluster, `~/thesis-experiment/`): `artifacts/models/posthoc/{e4_noise_3mm,e4_noise_10mm,e5_history}/`. Code: `posthoc_*.py`, `slurm_posthoc*.sh` on branch `posthoc-experiments`.
+
+**Figures** (`posthoc_figures.py`; PDF + 300 dpi PNG in `artifacts/results/posthoc/figures/`, copied to `D:\Msc\Thesis_Final\Experiments\figures\`):
+
+| file | content |
+|---|---|
+| `e1_noise_sweep_stationary / _transient` | E1: completion and E_FA vs σ, six sealed arms, noise-only and combined; 10–30 mm band shaded. |
+| `e1_mechanism_stationary_noise` | E1: steering TV/T and wheel saturation vs σ, noise-only, stationary. |
+| `e1f_pid_derivative_filter` | E1-F: PID-R completion vs σ for τd 0.01 / 0.02 / 0.05 s. |
+| `e2_delay_sweep` | E2: completion and E_FA vs delay, both modes; 0.15 s marked. |
+| `e3_frozen_gain_completion` | E3: per-seed completion over the delay-bearing held-out cells, dynamic vs F-clean vs F-delay. |
+| `e4_noise_sweep_{noise,combined}_{stationary,transient}` | E4: sealed arm vs σ* = 3 mm and 10 mm variants, per family, completion and E_FA vs σ. |
+| `e4_heldout_completion` | E4: held-out completion per cell, sealed vs variants, per family. |
+| `e5_history_paired_difference` | E5: paired ΔE_FA (H1 − H10) per cell, seed-mean with 95 % CI and per-seed points. |
+
+Encoding: each sealed arm keeps one colour, marker and line style in every figure (PID dashed square, scheduler solid circle, direct dotted triangle; nominal hollow, disturbed filled). In variant figures dark gray is the sealed/reference arm, blue the first variant and orange the second. Both palettes passed the colour-vision-deficiency separation check.
