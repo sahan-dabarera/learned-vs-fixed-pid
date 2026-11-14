@@ -206,7 +206,7 @@ drift `check_parity.py` measures. So keep one result set to one node:
 - **Training and evaluation belong in the same job.** `slurm_batch.sh` runs
   parity, all twenty runs, and the held-out evaluation in one allocation, so
   they cannot land on different nodes.
-- If you must split them, pin the node with `--nodelist=cpunode13`, or check
+- If you must split them, pin the node with `--nodelist=cpunode13.dyn.scc.plus.ac.at`, or check
   whether the partition is homogeneous first:
   `sinfo -o "%n %c %m %f" | sort -u -k2`.
 - `evaluate.py` records the node, CPU model, and SLURM job id under `machine`

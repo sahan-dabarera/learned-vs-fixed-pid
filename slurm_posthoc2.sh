@@ -2,8 +2,8 @@
 # Post-hoc experiments, stage 2: E1 fine sweep, E4 noise-trained arms at each
 # sigma*, E5 history ablation. Pin it to the stage-1 node:
 #
-#   sbatch --nodelist=cpunode39 slurm_posthoc2.sh
-#   sbatch --nodelist=cpunode39 --export=ALL,SIGMAS="0.003 0.01" slurm_posthoc2.sh
+#   sbatch --nodelist=cpunode39.dyn.scc.plus.ac.at slurm_posthoc2.sh
+#   sbatch --nodelist=cpunode39.dyn.scc.plus.ac.at --export=ALL,SIGMAS="0.003 0.01" slurm_posthoc2.sh
 #
 # SIGMAS lists sigma* values in metres (E4 runs once per value), or "none".
 # Decided from the stage-1 coarse sweep (DECISIONS.md, 2026-11-13): 3 mm by
@@ -87,7 +87,7 @@ python posthoc_eval.py --manifest manifests/posthoc/noise_fine.json \
 
 stage "waiting for training"
 for PID in "${PIDS[@]}"; do wait "${PID}"; done
-tail -3 "${OUT}"/e*_training*.log
+for LOG in "${OUT}"/e*_training*.log; do echo "--- ${LOG}"; tail -n 3 "${LOG}"; done
 
 EXTRA=(--extra-arm "ppo_scheduler_disturbed_h1=${MODELS}/e5_history"
        --extra-arm "ppo_direct_disturbed_h1=${MODELS}/e5_history")

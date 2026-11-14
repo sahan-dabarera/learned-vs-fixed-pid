@@ -2,7 +2,7 @@
 # Post-hoc experiments, stage 1: evaluation only, no training.
 #
 #   sbatch slurm_posthoc.sh
-#   sbatch --nodelist=cpunode13 slurm_posthoc.sh        # same node as the sealed run
+#   sbatch --nodelist=cpunode13.dyn.scc.plus.ac.at slurm_posthoc.sh        # same node as the sealed run
 #   sbatch --export=ALL,VENV=$HOME/venv312 slurm_posthoc.sh
 #
 # Runs, in one allocation so every number comes from one node:
