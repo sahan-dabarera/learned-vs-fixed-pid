@@ -14,6 +14,11 @@ Ki stays at the sealed 0.5, as in the sealed sweep. The sealed PID-R point is
 always in the grid, so the retune can only match or beat it on this subset.
 
     python posthoc_pid_retune.py --sigma-m 0.01 --output artifacts/results/posthoc/e4_pid_retune
+
+Plan 2 runs it without --sigma-m on the ranged validation manifest, so every
+scenario keeps its own drawn delay and noise:
+
+    python posthoc_pid_retune.py --manifest manifests/posthoc/validation_ranged.json --output ...
 """
 
 from __future__ import annotations
@@ -82,7 +87,7 @@ def score(candidate: tuple[float, float, float, float], scenarios: list[dict[str
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--sigma-m", type=float, required=True, help="sigma* in metres")
+    parser.add_argument("--sigma-m", type=float, help="sigma* in metres; omit to keep the manifest's noise")
     parser.add_argument("--output", required=True)
     parser.add_argument("--manifest", default=str(config.ROOT / "manifests" / "validation.json"))
     parser.add_argument("--workers", type=int, default=0)
@@ -92,7 +97,10 @@ def main() -> None:
     if (output / "pid_rn.json").exists():
         parser.error(f"refusing to overwrite {output / 'pid_rn.json'}")
     manifest = ScenarioManifest.load(Path(args.manifest))
-    subset = [with_noise(scenario, args.sigma_m) for scenario in _subset(manifest, robust=True)]
+    subset = [
+        scenario if args.sigma_m is None else with_noise(scenario, args.sigma_m)
+        for scenario in _subset(manifest, robust=True)
+    ]
     payload = [asdict(scenario) for scenario in subset]
     grid = sorted(set(itertools.product(KP_GRID, (KI,), KD_GRID, TAU_GRID)) | {SEALED_ROBUST})
 
@@ -109,6 +117,8 @@ def main() -> None:
     write_csv(output / "candidates.csv", rows)
     result = {
         "sigma_m": args.sigma_m,
+        "manifest": Path(args.manifest).name,
+        "manifest_sha256": manifest.digest(),
         "selected": {key: chosen[key] for key in ("kp", "ki", "kd", "tau_d")},
         "selected_metrics": chosen,
         "sealed_robust_metrics": sealed,
@@ -130,7 +140,8 @@ def main() -> None:
     (output / "pid_rn.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     if edges:
         print(f"WARNING: selection sits on the grid edge in {edges}; report it")
-    print(f"PID-RN at sigma*={args.sigma_m * 1000:g} mm: Kp {s['kp']} Ki {s['ki']} Kd {s['kd']} tau_d {s['tau_d']}")
+    where = "manifest noise" if args.sigma_m is None else f"sigma*={args.sigma_m * 1000:g} mm"
+    print(f"PID-RN at {where}: Kp {s['kp']} Ki {s['ki']} Kd {s['kd']} tau_d {s['tau_d']}")
     print(f"  selected E_FA {chosen['failure_adjusted_error_m'] * 1000:.2f} mm, completion {chosen['completion_rate']:.2f}")
     print(f"  sealed PID-R E_FA {sealed['failure_adjusted_error_m'] * 1000:.2f} mm, completion {sealed['completion_rate']:.2f}")
     print(f"--pid pid_global_robust_noise={s['kp']},{s['ki']},{s['kd']},{s['tau_d']}")

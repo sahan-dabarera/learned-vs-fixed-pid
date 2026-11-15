@@ -52,11 +52,25 @@ def main() -> None:
                         help="draw training noise log-uniform in [declared noise, this] (post-hoc E4)")
     parser.add_argument("--checkpoint-noise-m", type=float,
                         help="noise-step value on the transient-combined checkpoint scenarios (post-hoc E4)")
+    parser.add_argument("--train-noise-min-m", type=float,
+                        help="lower end of the log-uniform noise draw (default: declared noise; plan 2)")
+    parser.add_argument("--train-delay-range-s", metavar="LOW,HIGH",
+                        help="draw training delay uniform in [LOW, HIGH], no declared-severity spike (plan 2)")
     args = parser.parse_args()
     if args.arm is not None and not re.fullmatch(r"ppo_(scheduler|direct)_[a-z0-9_]+", args.arm):
         parser.error("--arm must look like ppo_scheduler_<name> or ppo_direct_<name>")
     if args.arm is not None and args.arm.startswith("ppo_scheduler_") != (args.mode == "scheduled"):
         parser.error("--arm prefix must match --mode")
+    if args.train_noise_min_m is not None and args.train_noise_max_m is None:
+        parser.error("--train-noise-min-m needs --train-noise-max-m")
+    delay_range = None
+    if args.train_delay_range_s is not None:
+        try:
+            delay_range = tuple(float(item) for item in args.train_delay_range_s.split(","))
+        except ValueError:
+            parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
+        if len(delay_range) != 2:
+            parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
     profile = profile_for(args.mode)
     args.timesteps = args.timesteps or profile.default_timesteps
     args.eval_freq = profile.default_eval_freq if args.eval_freq is None else args.eval_freq
@@ -114,8 +128,12 @@ def main() -> None:
             history_length=args.history_length,
             train_noise_log_range_m=(
                 None if args.train_noise_max_m is None
-                else (config.CONFIG.noise_severity_m, args.train_noise_max_m)
+                else (
+                    config.CONFIG.noise_severity_m if args.train_noise_min_m is None else args.train_noise_min_m,
+                    args.train_noise_max_m,
+                )
             ),
+            train_delay_range_s=delay_range,
         )
 
     class ManifestEvalCallback(BaseCallback):
@@ -198,6 +216,8 @@ def main() -> None:
             "history_length": args.history_length,
             "train_noise_max_m": args.train_noise_max_m,
             "checkpoint_noise_m": args.checkpoint_noise_m,
+            "train_noise_min_m": args.train_noise_min_m,
+            "train_delay_range_s": delay_range,
         },
         "calibration": str(calibration_path),
         "calibration_sha256": sha256(calibration_path),

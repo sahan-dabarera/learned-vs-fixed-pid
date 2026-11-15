@@ -59,6 +59,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         physics_trace: bool = False,
         history_length: int | None = None,
         train_noise_log_range_m: tuple[float, float] | None = None,
+        train_delay_range_s: tuple[float, float] | None = None,
     ) -> None:
         super().__init__()
         if mode not in MODES:
@@ -88,8 +89,8 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             False if legacy_derivative_kick is None else bool(legacy_derivative_kick)
         )
         self.physics_trace = bool(physics_trace)
-        # Post-hoc options. Both default to the sealed behaviour: the profile's
-        # history length, and the sealed noise-severity draw.
+        # Post-hoc options. All default to the sealed behaviour: the profile's
+        # history length, and the sealed noise- and delay-severity draws.
         self.history_length = int(history_length or self.profile.history_length)
         if self.history_length < 1:
             raise ValueError("history_length must be at least 1")
@@ -101,6 +102,14 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             0.0 < self.train_noise_log_range_m[0] <= self.train_noise_log_range_m[1]
         ):
             raise ValueError("train_noise_log_range_m must be positive and ordered")
+        self.train_delay_range_s = (
+            None if train_delay_range_s is None
+            else (float(train_delay_range_s[0]), float(train_delay_range_s[1]))
+        )
+        if self.train_delay_range_s is not None and not (
+            0.0 <= self.train_delay_range_s[0] <= self.train_delay_range_s[1]
+        ):
+            raise ValueError("train_delay_range_s must be non-negative and ordered")
         if self.gain_rate_limit.shape != (3,) or np.any(self.gain_rate_limit <= 0):
             raise ValueError("gain_rate_limit must contain three positive values")
         if self.derivative_filter_tau_s < 0:
@@ -159,6 +168,17 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
         low, high = np.log(self.train_noise_log_range_m)
         return float(np.exp(self.np_random.uniform(low, high)))
 
+    def _sample_delay(self) -> float:
+        """Delay severity for one disturbance change.
+
+        Sealed behaviour: the declared severity half the time, otherwise uniform
+        in TRAIN_DELAY_RANGE_S. With train_delay_range_s set (post-hoc plan 2),
+        uniform in that range with no point mass at the declared severity.
+        """
+        if self.train_delay_range_s is None:
+            return self._sample_severity(config.TRAIN_DELAY_RANGE_S, config.CONFIG.delay_severity_s)
+        return float(self.np_random.uniform(*self.train_delay_range_s))
+
     def _sample_disturbance(self, episode: dict[str, Any]) -> None:
         """Mirror the evaluation condition grid with randomized severity and timing.
 
@@ -179,7 +199,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             return
         wants_delay = condition in {"delay", "combined"}
         wants_noise = condition in {"noise", "combined"}
-        delay = self._sample_severity(config.TRAIN_DELAY_RANGE_S, config.CONFIG.delay_severity_s)
+        delay = self._sample_delay()
         noise = self._sample_noise()
         if self.np_random.random() >= config.DISTURBANCE_TRANSIENT_PROB:
             episode["initial_delay_s"] = delay if wants_delay else 0.0
@@ -193,10 +213,7 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
                     "kind": "delay_step",
                     "start_fraction": start_fraction,
                     "value": 0.0 if recovered else (
-                        delay if position == 0 else
-                        self._sample_severity(
-                            config.TRAIN_DELAY_RANGE_S, config.CONFIG.delay_severity_s
-                        )
+                        delay if position == 0 else self._sample_delay()
                     ),
                 })
             if wants_noise:

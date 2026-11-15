@@ -610,3 +610,43 @@ tau_d 0.02). Neither is on a grid edge.
 `posthoc_observations.md`. Paired intervals reuse `analyze._bootstrap`
 (10,000 draws, generator seed 20260819). A copy goes to
 `D:\Msc\Thesis_Final\Experiments\POSTHOC_RESULTS.md`.
+
+## 2026-11-16: Plan 2 — H = 1 and ranged disturbances as the main design
+
+`D:\Msc\Thesis_Final\Experiments\Experiment_Plan_2.md`, revised with the user:
+
+- H = 1 (one frame, which carries the previous action) is the main design
+  for every learned arm, and H = 10 is the history ablation. This is treated
+  as a design fix, not a selection among H values. H = 10 is reported only
+  where it differs meaningfully.
+- The disturbed arms train on ranges instead of a declared point:
+  - delay uniform in [0, 0.3] s, with no p = 0.5 spike at 0.15 s;
+  - noise log-uniform in [0.1, 10] mm;
+  - the condition grid, the change count (1-3) and the recovery probability
+    are unchanged.
+  - New flags: `train.py --train-delay-range-s`, `--train-noise-min-m`.
+    Defaults reproduce the sealed sampler, with the same RNG call order.
+- Checkpoint selection for the ranged arms uses
+  `manifests/posthoc/validation_ranged.json`, `validation.json` with its
+  own draws from the same ranges (seed 20261117).
+- The H = 10 ablation is retrained with the same ranged sampler
+  (`ppo_{kind}_ranged_h10`). Without that, an H1 − H10 difference would mix
+  the history change with the sampler change. The sealed H = 10 and E5 H = 1
+  arms (old sampler) remain as references.
+- PID-RN is re-tuned on the ranged validation subset by the same grid and rule
+  as E4 (`posthoc_pid_retune.py` without `--sigma-m`).
+- Main table: `manifests/posthoc/held_out_ranged.json`, the 480 held-out
+  records with each delay drawn from U[0, 0.3] s and each noise level from
+  logU[0.1, 10] mm (seed 20261116). The fixed-severity held-out set runs
+  alongside it as a comparison and a sealed replay check.
+- F4 dynamic: `manifests/posthoc/dynamic.json`. The 60 stationary delay
+  records are given a delay redrawn uniform in [0, D_max] after holds drawn
+  uniform in [1, 3] s, for D_max = 0.15, 0.3 and 0.45 s, in a delay-only
+  variant and a combined variant. The combined variant adds noise on its own
+  schedule, log-uniform in [0.1, 10] mm, and has the same delay schedule. No
+  environment change was needed: these are ordinary multi-event scenarios.
+- F3 runs every level for every arm (0-0.8 s, `delay_wide.json`) instead of
+  stopping early. The 960 E2 records inside it are byte-identical, so the
+  existing arms double as a replay check.
+- Everything runs as `slurm_plan2.sh`. Results go to `artifacts/results/posthoc2/`
+  and models to `artifacts/models/posthoc/plan2/`.

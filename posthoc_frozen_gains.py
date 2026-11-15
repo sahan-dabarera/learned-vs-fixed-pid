@@ -47,12 +47,17 @@ def _replay(arm: str, seed: int, model_path: str, manifest_path: str, calibratio
     from rollout import run_episode
     from scenarios import ScenarioManifest
 
+    from controller_profiles import profile_for
+
     torch.set_num_threads(1)
     model = PPO.load(model_path, device="cpu")
+    # An H=1 checkpoint has a shorter input; read the history off the network.
+    history_length = int(model.observation_space.shape[0]) // len(profile_for("scheduled").frame_fields)
     env = PathFollowingEnv(
         mode="scheduled",
         training=False,
         calibration=GainCalibration.load(Path(calibration_path)),
+        history_length=history_length,
     )
     manifest = ScenarioManifest.load(Path(manifest_path))
     result: dict[str, Any] = {}
@@ -86,18 +91,20 @@ def main() -> None:
     parser.add_argument("--scheduler-calibration", default=str(config.ROOT / "artifacts" / "calibration" / "blind_ppo.json"))
     parser.add_argument("--models-root", default=str(config.ROOT / "artifacts" / "models" / "final"))
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--arm", action="append", default=[],
+                        help="scheduler arm under --models-root (default: the two sealed scheduler arms)")
     args = parser.parse_args()
 
     manifest = Path(args.manifest).resolve()
-    if manifest.name != "validation.json":
-        parser.error("frozen gains must come from the validation manifest")
+    if not manifest.name.startswith("validation"):
+        parser.error("frozen gains must come from a validation manifest")
     output = Path(args.output).resolve()
     target = output / "frozen_gains.json"
     if target.exists():
         parser.error(f"refusing to overwrite {target}")
 
     jobs = []
-    for arm in SCHEDULER_ARMS:
+    for arm in args.arm or SCHEDULER_ARMS:
         for seed in config.CONFIG.final_training_seeds:
             path = Path(args.models_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
