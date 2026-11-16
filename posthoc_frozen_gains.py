@@ -28,7 +28,7 @@ from typing import Any
 import numpy as np
 
 import config
-from posthoc_eval import git_state, usable_cores
+from posthoc_eval import git_state, model_box, usable_cores
 
 
 SCHEDULER_ARMS = ("ppo_scheduler_nominal", "ppo_scheduler_disturbed")
@@ -38,7 +38,8 @@ VARIANTS = {
 }
 
 
-def _replay(arm: str, seed: int, model_path: str, manifest_path: str, calibration_path: str) -> dict[str, Any]:
+def _replay(arm: str, seed: int, model_path: str, manifest_path: str, calibration_path: str,
+            rate_limit: tuple[float, float, float] | None = None) -> dict[str, Any]:
     import torch
     from stable_baselines3 import PPO
 
@@ -58,6 +59,7 @@ def _replay(arm: str, seed: int, model_path: str, manifest_path: str, calibratio
         training=False,
         calibration=GainCalibration.load(Path(calibration_path)),
         history_length=history_length,
+        **({"gain_rate_limit": rate_limit} if rate_limit is not None else {}),
     )
     manifest = ScenarioManifest.load(Path(manifest_path))
     result: dict[str, Any] = {}
@@ -81,7 +83,8 @@ def _replay(arm: str, seed: int, model_path: str, manifest_path: str, calibratio
             }
     finally:
         env.close()
-    return {"arm": arm, "seed": seed, "gains": result}
+    return {"arm": arm, "seed": seed, "gains": result,
+            "box": {"calibration": calibration_path, "gain_rate_limit_per_s": rate_limit}}
 
 
 def main() -> None:
@@ -109,7 +112,8 @@ def main() -> None:
             path = Path(args.models_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
                 raise FileNotFoundError(path)
-            jobs.append((arm, seed, str(path), str(manifest), str(Path(args.scheduler_calibration).resolve())))
+            box, rate = model_box(path, str(Path(args.scheduler_calibration).resolve()))
+            jobs.append((arm, seed, str(path), str(manifest), box, rate))
 
     started = time.time()
     workers = args.workers or min(usable_cores(), len(jobs))
@@ -117,14 +121,17 @@ def main() -> None:
         results = list(pool.map(_replay, *zip(*jobs)))
 
     gains: dict[str, dict[str, Any]] = {}
+    boxes: dict[str, dict[str, Any]] = {}
     for item in results:
         gains.setdefault(item["arm"], {})[str(item["seed"])] = item["gains"]
+        boxes.setdefault(item["arm"], {})[str(item["seed"])] = item["box"]
     from evaluate import machine_description
 
     payload = {
         "description": "Time-averaged applied scheduler gains on the validation manifest",
         "variants": {name: list(conditions) for name, conditions in VARIANTS.items()},
         "gains": gains,
+        "boxes": boxes,
         "command": [sys.executable, *sys.argv],
         "git": git_state(),
         "machine": machine_description(),

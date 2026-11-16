@@ -663,3 +663,32 @@ tau_d 0.02). Neither is on a grid edge.
   - Final PID-RN: (2.0, 0.5, 0.5, tau_d 0.01). Validation E_FA is 12.04 mm at 100 % completion; the Kp 4.0 pick had 15.16 mm.
   - Its rows come from `artifacts/results/posthoc2/pidrn_*`. Rounds 2 and 3 produced identical rows. The Kp 4.0 rows in the job-3225586 directories are superseded.
 - `ppo_direct_ranged_h10` seed 37 is a poor run: held-out nominal completion 78 %, validation E_FA 205 mm. It was selected by the unchanged checkpoint rule and is reported as is.
+
+## 2026-11-17: Plan 3 — scheduler gain box and training budget
+
+`D:\Msc\Thesis_Final\Experiments\Experiment_Plan_3.md`. Checked against the code before running:
+
+- **Plan-2 box** (`blind_ppo.json`): Kp [5, 300], Ki [0, 1.5], Kd [2.5, 6.0]. The map is piecewise linear
+  around g0 = (26, 0.5, 4.4).
+  - PID-RN (2.0, 0.5, 0.5) lies outside it on Kp and Kd.
+  - The frozen GS-D gains of seeds 53 and 71 sit on the Kd floor (2.56).
+- **Wide box:** `artifacts/calibration/blind_ppo_wide.json`. Only the lower bounds change: Kp 1, Ki 0, Kd 0.
+  Upper bounds and g0 are unchanged, so action 0 still maps to g0, and only the lower segment of the map
+  changes.
+- **Rate limit held at the plan-2 values** (147.5, 0.75, 1.75 per s; 2.95 / 0.015 / 0.035 per decision).
+  This uses the new `train.py --gain-rate-limit`. The plan's "half the range per second" rule would have
+  raised the Kd limit by 71 % (1.75 to 3.0 per s), a second change mixed into the box test. Agreed with the
+  author.
+- **Per-checkpoint box:**
+  - `posthoc_eval.py`, `posthoc_frozen_gains.py` and `posthoc_gain_occupancy.py` read each checkpoint's
+    box and rate limit from its `metadata.json`.
+  - The calibration file is found by name and matched by sha256, with line endings normalised.
+  - Earlier checkpoints resolve to `blind_ppo.json` with the default rate, as before. `slurm_plan3.sh`
+    re-runs the plan-2 schedulers and DR-D on the ranged held-out set and requires bit-identical rows.
+- **Episode trace:** the scheduler trace now also records target gains (`kp_target` etc.). Metrics are
+  unchanged.
+- **G0.2 edge occupancy:** measured in action coordinates (|a| >= 0.98), plus the fraction of steps exactly
+  on a bound. The plan's "2 % of the gain range" puts every Kp below 10.9 at the floor, which covers almost all
+  GS-D gains.
+- **PPO schedule:** constant learning rate (3e-4) and entropy coefficient, so the 2M runs change no
+  schedule. Checkpoint interval stays at 25k (80 checkpoints).

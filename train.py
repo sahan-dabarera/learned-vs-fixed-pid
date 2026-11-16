@@ -54,6 +54,8 @@ def main() -> None:
                         help="noise-step value on the transient-combined checkpoint scenarios (post-hoc E4)")
     parser.add_argument("--train-noise-min-m", type=float,
                         help="lower end of the log-uniform noise draw (default: declared noise; plan 2)")
+    parser.add_argument("--gain-rate-limit", metavar="KP,KI,KD",
+                        help="scheduler gain rate limit per second (default: half the calibration box range; plan 3)")
     parser.add_argument("--train-delay-range-s", metavar="LOW,HIGH",
                         help="draw training delay uniform in [LOW, HIGH], no declared-severity spike (plan 2)")
     args = parser.parse_args()
@@ -71,6 +73,14 @@ def main() -> None:
             parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
         if len(delay_range) != 2:
             parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
+    rate_limit = None
+    if args.gain_rate_limit is not None:
+        try:
+            rate_limit = tuple(float(item) for item in args.gain_rate_limit.split(","))
+        except ValueError:
+            parser.error("--gain-rate-limit must be KP,KI,KD per second")
+        if len(rate_limit) != 3 or args.mode != "scheduled":
+            parser.error("--gain-rate-limit takes three values and applies to --mode scheduled only")
     profile = profile_for(args.mode)
     args.timesteps = args.timesteps or profile.default_timesteps
     args.eval_freq = profile.default_eval_freq if args.eval_freq is None else args.eval_freq
@@ -134,6 +144,7 @@ def main() -> None:
                 )
             ),
             train_delay_range_s=delay_range,
+            gain_rate_limit=rate_limit,
         )
 
     class ManifestEvalCallback(BaseCallback):
@@ -218,13 +229,15 @@ def main() -> None:
             "checkpoint_noise_m": args.checkpoint_noise_m,
             "train_noise_min_m": args.train_noise_min_m,
             "train_delay_range_s": delay_range,
+            "gain_rate_limit_per_s": rate_limit,
         },
         "calibration": str(calibration_path),
         "calibration_sha256": sha256(calibration_path),
         "python": platform.python_version(),
         "config": config.CONFIG.to_dict(),
         "gain_rate_limit_per_s": (
-            (0.5 * (calibration.upper.as_array() - calibration.lower.as_array())).tolist()
+            (list(rate_limit) if rate_limit is not None
+             else (0.5 * (calibration.upper.as_array() - calibration.lower.as_array())).tolist())
             if args.mode == "scheduled"
             else None
         ),

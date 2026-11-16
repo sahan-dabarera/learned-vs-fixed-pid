@@ -690,6 +690,8 @@ class PathFollowingEnv(gym.Env[np.ndarray, np.ndarray]):
             row[key] = float(info[key])
         if self.mode != "direct":
             row.update({"kp": float(self.applied_gains[0]), "ki": float(self.applied_gains[1]), "kd": float(self.applied_gains[2])})
+            row.update({"kp_target": float(self.target_gains[0]), "ki_target": float(self.target_gains[1]),
+                        "kd_target": float(self.target_gains[2])})
         self._trace.append(row)
 
     def _append_physics_trace(

@@ -75,6 +75,46 @@ class ControllerSpec:
     constant_gains: tuple[float, float, float] | None = None
     derivative_filter_tau_s: float | None = None
     history_length: int | None = None
+    gain_rate_limit: tuple[float, float, float] | None = None
+
+
+def model_box(model_path: Path, default_calibration: str) -> tuple[str, tuple[float, float, float] | None]:
+    """Gain box and rate limit a scheduler checkpoint was trained with.
+
+    Read from the run's metadata.json: the calibration file is located by name
+    under artifacts/calibration and checked against the recorded sha256; the
+    rate limit is returned only when training set it explicitly (plan 3), so
+    every earlier checkpoint keeps the default (half the box range per second).
+    Without metadata the default calibration is used, as before.
+    """
+    meta_path = Path(model_path).parent / "metadata.json"
+    if not meta_path.is_file():
+        return default_calibration, None
+    meta = json.loads(meta_path.read_text(encoding="utf-8"))
+    recorded = meta.get("calibration")
+    calibration = default_calibration
+    if recorded:
+        candidate = config.ROOT / "artifacts" / "calibration" / Path(recorded).name
+        if not candidate.is_file():
+            raise FileNotFoundError(f"{meta_path}: calibration {candidate.name} is not in artifacts/calibration")
+        # Compare with line endings normalised: a Windows checkout stores the
+        # same JSON with CRLF, which changes the raw-byte digest only.
+        import hashlib
+
+        normalised = hashlib.sha256(candidate.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+        if meta.get("calibration_sha256") and meta["calibration_sha256"] not in (sha256(candidate), normalised):
+            raise ValueError(f"{meta_path}: {candidate.name} does not match the recorded sha256")
+        calibration = str(candidate)
+    rate = (meta.get("posthoc") or {}).get("gain_rate_limit_per_s")
+    return calibration, (tuple(float(v) for v in rate) if rate else None)
+
+
+def _scheduler_spec(arm: str, seed: int, path: Path, calibration: str, scheduler_calibration: str):
+    mode = "scheduled" if arm.startswith("ppo_scheduler_") else "direct"
+    if mode == "direct":
+        return ControllerSpec(arm, seed, mode, calibration, model_path=str(path))
+    box, rate = model_box(path, scheduler_calibration)
+    return ControllerSpec(arm, seed, mode, box, model_path=str(path), gain_rate_limit=rate)
 
 
 def _label(value: float) -> str:
@@ -123,12 +163,7 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
                 path = models_root / arm / f"seed_{seed}" / "best_model.zip"
                 if not path.is_file():
                     raise FileNotFoundError(path)
-                mode = "scheduled" if arm.startswith("ppo_scheduler_") else "direct"
-                specs.append(ControllerSpec(
-                    arm, seed, mode,
-                    scheduler_calibration if mode == "scheduled" else calibration,
-                    model_path=str(path),
-                ))
+                specs.append(_scheduler_spec(arm, seed, path, calibration, scheduler_calibration))
     for tau in args.robust_tau_d:
         specs.append(ControllerSpec(
             f"pid_global_robust_taud{_label(tau)}", None, "fixed", calibration,
@@ -139,11 +174,15 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
         statistic = args.frozen_statistic
         for arm, seeds in sorted(payload["gains"].items()):
             for seed, variants in sorted(seeds.items(), key=lambda item: int(item[0])):
+                box = payload.get("boxes", {}).get(arm, {}).get(seed, {})
+                rate = box.get("gain_rate_limit_per_s")
                 for variant in args.frozen_variants:
                     gains = variants[variant][statistic]
                     specs.append(ControllerSpec(
-                        f"{arm}_frozen_{variant}", int(seed), "scheduled", scheduler_calibration,
+                        f"{arm}_frozen_{variant}", int(seed), "scheduled",
+                        box.get("calibration", scheduler_calibration),
                         constant_gains=(gains["kp"], gains["ki"], gains["kd"]),
+                        gain_rate_limit=tuple(rate) if rate else None,
                     ))
     for entry in args.extra_arm:
         arm, raw_root = entry.split("=", 1)
@@ -152,11 +191,7 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
             path = Path(raw_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
                 raise FileNotFoundError(path)
-            specs.append(ControllerSpec(
-                arm, seed, mode,
-                scheduler_calibration if mode == "scheduled" else calibration,
-                model_path=str(path),
-            ))
+            specs.append(_scheduler_spec(arm, seed, path, calibration, scheduler_calibration))
     for entry in args.pid:
         name, raw_values = entry.split("=", 1)
         values = [float(item) for item in raw_values.split(",")]
@@ -172,12 +207,7 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
         path = Path(raw_path).resolve()
         if not path.is_file():
             raise FileNotFoundError(path)
-        mode = "scheduled" if arm.startswith("ppo_scheduler_") else "direct"
-        specs.append(ControllerSpec(
-            arm, int(raw_seed), mode,
-            scheduler_calibration if mode == "scheduled" else calibration,
-            model_path=str(path),
-        ))
+        specs.append(_scheduler_spec(arm, int(raw_seed), path, calibration, scheduler_calibration))
     names = [(spec.name, spec.seed) for spec in specs]
     if len(set(names)) != len(names):
         raise ValueError("duplicate controller/seed in the requested set")
@@ -221,6 +251,8 @@ def _controller(spec: ControllerSpec) -> tuple[Any, Any]:
     kwargs: dict[str, Any] = {}
     if history_length is not None:
         kwargs["history_length"] = history_length
+    if spec.gain_rate_limit is not None:
+        kwargs["gain_rate_limit"] = spec.gain_rate_limit
     env = PathFollowingEnv(
         mode=spec.mode,
         training=False,
