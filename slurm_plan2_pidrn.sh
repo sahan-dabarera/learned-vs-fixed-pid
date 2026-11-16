@@ -8,6 +8,12 @@
 #
 #   sbatch --nodelist=cpunode13.dyn.scc.plus.ac.at slurm_plan2_pidrn.sh
 #
+# Round 2 (round 1 picked Kp 2.0 with Kd and tau_d at their lower edges)
+# refines around that choice; TAG=fine selects its grid and keeps its outputs
+# apart (suffix _fine):
+#
+#   sbatch --nodelist=cpunode13.dyn.scc.plus.ac.at --export=ALL,TAG=fine slurm_plan2_pidrn.sh
+#
 # Roughly 30-45 minutes on 64 cores.
 
 #SBATCH --job-name=thesis-plan2-pidrn
@@ -26,7 +32,18 @@ set -euo pipefail
 VENV="${VENV:-.venv}"
 OUT="${OUT:-artifacts/results/posthoc2}"
 MAN=manifests/posthoc
-KP_GRID="1,1.5,2,2.5,3,4,5,6,8,10,13,18,26,40"
+TAG="${TAG:-}"
+if [ "${TAG}" = "fine" ]; then
+  KP_GRID="1.5,2,2.5,3"
+  KD_GRID="0,0.25,0.5,1"
+  TAU_GRID="0.005,0.01,0.02"
+else
+  KP_GRID="1,1.5,2,2.5,3,4,5,6,8,10,13,18,26,40"
+  KD_GRID="0.5,1,2,3,4.4,6,8"
+  TAU_GRID="0.01,0.02,0.05,0.1"
+fi
+SUF="${TAG:+_${TAG}}"
+RETUNE="${OUT}/pid_retune_wide${SUF}"
 
 cd "${SLURM_SUBMIT_DIR:-$(dirname "$0")}"
 # shellcheck disable=SC1091
@@ -43,19 +60,19 @@ done_in() { test -f "$1/$2"; }
 stage "parity gate"
 python check_parity.py
 
-stage "PID-RN retune, Kp grid ${KP_GRID}"
-done_in "${OUT}/pid_retune_wide" pid_rn.json || \
+stage "PID-RN retune, Kp ${KP_GRID} / Kd ${KD_GRID} / tau_d ${TAU_GRID}"
+done_in "${RETUNE}" pid_rn.json || \
   python posthoc_pid_retune.py --manifest "${MAN}/validation_ranged.json" --kp-grid "${KP_GRID}" \
-    --output "${OUT}/pid_retune_wide"
-PIDRN=$(python -c "import json;s=json.load(open('${OUT}/pid_retune_wide/pid_rn.json'))['selected'];print(f\"pid_global_robust_noise={s['kp']},{s['ki']},{s['kd']},{s['tau_d']}\")")
+    --kd-grid "${KD_GRID}" --tau-grid "${TAU_GRID}" --output "${RETUNE}"
+PIDRN=$(python -c "import json;s=json.load(open('${RETUNE}/pid_rn.json'))['selected'];print(f\"pid_global_robust_noise={s['kp']},{s['ki']},{s['kd']},{s['tau_d']}\")")
 echo "  ${PIDRN}"
 
 run() {  # output dir, manifests...
   local dir=$1; shift
   local args=()
   for M in "$@"; do args+=(--manifest "${M}"); done
-  done_in "${OUT}/${dir}" episodes.csv || \
-    python posthoc_eval.py --no-default "${args[@]}" --pid "${PIDRN}" --output "${OUT}/${dir}"
+  done_in "${OUT}/${dir}${SUF}" episodes.csv || \
+    python posthoc_eval.py --no-default "${args[@]}" --pid "${PIDRN}" --output "${OUT}/${dir}${SUF}"
 }
 
 stage "selected PID-RN on every plan-2 manifest"
@@ -66,4 +83,4 @@ run pidrn_f4_dynamic        "${MAN}/dynamic.json"
 run pidrn_f5_noise_sweep    "${MAN}/noise_coarse.json" "${MAN}/noise_fine.json"
 
 stage "done"
-echo "pack: tar czf plan2_pidrn.tgz ${OUT}/pid_retune_wide ${OUT}/pidrn_* slurm-thesis-plan2-pidrn-*.out"
+echo "pack: tar czf plan2_pidrn${SUF}.tgz ${RETUNE} ${OUT}/pidrn_*${SUF} slurm-thesis-plan2-pidrn-${SLURM_JOB_ID:-x}.out"

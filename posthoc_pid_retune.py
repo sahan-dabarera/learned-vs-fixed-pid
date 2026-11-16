@@ -92,8 +92,16 @@ def main() -> None:
     parser.add_argument("--manifest", default=str(config.ROOT / "manifests" / "validation.json"))
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--kp-grid", help="comma-separated Kp values replacing the default grid")
+    parser.add_argument("--kd-grid", help="comma-separated Kd values replacing the default grid")
+    parser.add_argument("--tau-grid", help="comma-separated tau_d values replacing the default grid")
     args = parser.parse_args()
-    kp_grid = KP_GRID if args.kp_grid is None else tuple(float(v) for v in args.kp_grid.split(","))
+
+    def grid_of(text, default):
+        return default if text is None else tuple(float(v) for v in text.split(","))
+
+    kp_grid = grid_of(args.kp_grid, KP_GRID)
+    kd_grid = grid_of(args.kd_grid, KD_GRID)
+    tau_grid = grid_of(args.tau_grid, TAU_GRID)
 
     output = Path(args.output).resolve()
     if (output / "pid_rn.json").exists():
@@ -104,7 +112,7 @@ def main() -> None:
         for scenario in _subset(manifest, robust=True)
     ]
     payload = [asdict(scenario) for scenario in subset]
-    grid = sorted(set(itertools.product(kp_grid, (KI,), KD_GRID, TAU_GRID)) | {SEALED_ROBUST})
+    grid = sorted(set(itertools.product(kp_grid, (KI,), kd_grid, tau_grid)) | {SEALED_ROBUST})
 
     started = time.time()
     workers = args.workers or usable_cores()
@@ -126,7 +134,7 @@ def main() -> None:
         "sealed_robust_metrics": sealed,
         "selection_rule": "calibrate_pid.select_practical_candidate (completion band, 0.5% error band, smoothest)",
         "scenarios": [scenario.scenario_id for scenario in subset],
-        "grid": {"kp": kp_grid, "ki": KI, "kd": KD_GRID, "tau_d": TAU_GRID},
+        "grid": {"kp": kp_grid, "ki": KI, "kd": kd_grid, "tau_d": tau_grid},
         "command": [sys.executable, *sys.argv],
         "git": git_state(),
         "machine": machine_description(),
@@ -135,7 +143,7 @@ def main() -> None:
     (output / "pid_rn.json").write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     s = result["selected"]
     edges = [
-        name for name, value, grid in (("kp", s["kp"], kp_grid), ("kd", s["kd"], KD_GRID), ("tau_d", s["tau_d"], TAU_GRID))
+        name for name, value, grid in (("kp", s["kp"], kp_grid), ("kd", s["kd"], kd_grid), ("tau_d", s["tau_d"], tau_grid))
         if value in (min(grid), max(grid))
     ]
     result["selected_on_grid_edge"] = edges
