@@ -650,3 +650,16 @@ tau_d 0.02). Neither is on a grid edge.
   existing arms double as a replay check.
 - Everything runs as `slurm_plan2.sh`. Results go to `artifacts/results/posthoc2/`
   and models to `artifacts/models/posthoc/plan2/`.
+
+## 2026-11-16: Plan 2 run finished; PID-RN settled after two grid extensions
+
+- Job 3225586 ran on cpunode13, commit `578dda6`.
+  - All 30 training runs finished.
+  - Sealed replay matched bit for bit: 10,560 held-out rows and 2,640 delay-sweep rows.
+- Its PID-RN retune picked Kp 4.0, the bottom of the Kp grid.
+  - Round 2 (wide Kp grid, 1-40) picked (2.0, 0.5, 0.5, tau_d 0.01). Kd and tau_d were then at their lower edges.
+  - Round 3 (fine grid, Kd down to 0, tau_d down to 0.005) picked the same point.
+  - The selection rule applied to all 424 candidates of the three rounds also picks it.
+  - Final PID-RN: (2.0, 0.5, 0.5, tau_d 0.01). Validation E_FA is 12.04 mm at 100 % completion; the Kp 4.0 pick had 15.16 mm.
+  - Its rows come from `artifacts/results/posthoc2/pidrn_*`. Rounds 2 and 3 produced identical rows. The Kp 4.0 rows in the job-3225586 directories are superseded.
+- `ppo_direct_ranged_h10` seed 37 is a poor run: held-out nominal completion 78 %, validation E_FA 205 mm. It was selected by the unchanged checkpoint rule and is reported as is.
