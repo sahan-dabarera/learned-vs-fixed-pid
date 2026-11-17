@@ -127,3 +127,22 @@
   - The median applied Kp is 3.75–8.67 in the disturbed conditions and 12.07 in nominal; the median Kd is
     2.17–3.24.
   - The applied Kp is on the floor (Kp = 1) in 15.1–27.6 % of steps in the disturbed conditions.
+
+## G5
+
+- **Transient event metrics (ranged held-out):** PID-RN has the lowest post-event peak path distance in transient
+  delay (40.2 mm) and combined (44.4 mm) among the main arms.
+- **DR-D − PID-RN:**
+  - post-event peak +14.1 mm (delay) and +20.7 mm (combined);
+  - excess IAE +11.1 / +16.0 mm·s;
+  - all four CIs exclude 0. The noise-cell CIs include 0.
+- **GS-D-W 2M − PID-RN:**
+  - post-event peak −15.2 mm in transient noise, CI [−21.6, −9.3];
+  - excess IAE +8.8 mm·s (delay) and +12.9 mm·s (combined), CIs exclude 0;
+  - the peak CIs for delay and combined include 0.
+- **Onset and severity:** every transient record steps at 6 s from a clean start. The transient draws have a
+  median delay of 0.143 s and a median noise of 1.07 mm.
+- **Run time per decision (EPYC 9334, one thread):**
+  - fixed PIDs 0.6–1.0 µs (constant action only);
+  - learned policies 278–343 µs mean, with per-episode 99th percentiles of about 310 µs (GS-N-W: 392 µs);
+  - the decision period is 20 ms.

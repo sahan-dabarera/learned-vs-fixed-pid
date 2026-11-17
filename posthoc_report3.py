@@ -422,6 +422,172 @@ def frozen_section() -> str:
     ])
 
 
+# ---------------------------------------------------------------- G5 (addendum: lookups, no training)
+
+EVENT_METRICS = (("post_event_peak_distance_m", "post-event peak path distance", 1000, "mm"),
+                 ("post_event_excess_iae_m_s", "post-event excess IAE", 1000, "mm·s"))
+EVENT_CELLS = [("transient", c) for c in ("delay", "noise", "combined")]
+
+
+def paired_metric(rows, a, b, mode, condition, match_seed, key):
+    """Seed -> arrays of (a - b) for one metric, scenarios where both rows define it."""
+    ref = {}
+    for row in rows:
+        if row["controller"] == b and row["evaluation_mode"] == mode and row["condition"] == condition:
+            ref[(row["training_seed"] if match_seed else "", row["scenario_id"])] = row
+    out = defaultdict(list)
+    for row in rows:
+        if row["controller"] != a or row["evaluation_mode"] != mode or row["condition"] != condition:
+            continue
+        base = ref[(row["training_seed"] if match_seed else "", row["scenario_id"])]
+        if row[key] in ("", None) or base[key] in ("", None):
+            continue
+        out[row["training_seed"] or "fixed"].append(float(row[key]) - float(base[key]))
+    return {k: np.asarray(v) for k, v in out.items()}
+
+
+def g5_section() -> str:
+    ep = load("heldout_ranged", "episodes.csv")
+    rows = [r for r in ep if r["controller"] in MAIN and r["evaluation_mode"] == "transient"]
+    # 1. event metrics, seed-pooled means over every episode that defines them (as the sealed summary)
+    table_rows = []
+    for arm in MAIN:
+        line = [SHORT[arm]]
+        for key, _, scale, _unit in EVENT_METRICS:
+            for _, condition in EVENT_CELLS:
+                vals = [float(r[key]) for r in rows if r["controller"] == arm and r["condition"] == condition
+                        and r[key] not in ("", None)]
+                line.append(f"{np.mean(vals) * scale:.1f}" if vals else "–")
+        table_rows.append(line)
+    header = ["arm"] + [f"{label.split(' ')[1]} {c} ({unit})" for _, label, _, unit in EVENT_METRICS
+                        for _, c in EVENT_CELLS]
+    pair_rows = []
+    for a, b, match in ((DRD, PIDRN, False), (CHOSEN_D, PIDRN, False)):
+        for key, label, scale, unit in EVENT_METRICS:
+            for mode, condition in EVENT_CELLS:
+                values = paired_metric(ep, a, b, mode, condition, match, key)
+                mean, low, high = r1.estimate(values)
+                pair_rows.append([f"{SHORT[a]} − {SHORT[b]}", label, condition]
+                                 + [f"{np.mean(values[s]) * scale:+.2f}" if s in values else "–" for s in SEEDS]
+                                 + [f"**{mean * scale:+.2f}** {unit}", f"[{low * scale:+.2f}, {high * scale:+.2f}]"])
+    # 2. onset and severity
+    book = r2.bookkeeping("held_out_ranged")
+    manifest = json.loads((r2.MAN / "held_out_ranged.json").read_text(encoding="utf-8"))["scenarios"]
+    trans = [s for s in manifest if s["evaluation_mode"] == "transient"]
+    starts = sorted({e["start_s"] for s in trans for e in s["events"]})
+    clean = all(s["initial_delay_s"] == 0 and s["initial_noise_std_m"] == 0 for s in trans)
+    d = np.array([book[s["scenario_id"]]["delay_s"] for s in trans if s["condition"] in ("delay", "combined")])
+    n = np.array([book[s["scenario_id"]]["noise_m"] for s in trans if s["condition"] in ("noise", "combined")]) * 1000
+    # 3. inference time per control decision (cluster, one torch thread per worker process)
+    inf_rows = []
+    for arm in MAIN:
+        r = [x for x in ep if x["controller"] == arm]
+        means = np.asarray([float(x["mean_inference_ms"]) for x in r])
+        p99 = np.asarray([float(x["p99_inference_ms"]) for x in r])
+        decisions = np.asarray([float(x["policy_decisions"]) for x in r])
+        inf_rows.append([SHORT[arm], len(r), f"{np.sum(means * decisions) / np.sum(decisions) * 1000:.1f}",
+                         f"{np.median(p99) * 1000:.1f}", f"{np.percentile(p99, 95) * 1000:.1f}"])
+    meta_g4 = meta(P3 / "g4_heldout_ranged_g2" / "metadata.json")
+    from core.dynamics import DT
+
+    obs = observation_table()
+    return "\n\n".join([
+        "### 9.1 Transient event metrics, ranged held-out (transient cells)",
+        "Definitions (`env.py::_recovery_metrics`, unchanged since the sealed run):\n"
+        "- **Event onset:** the earliest event start in the scenario.\n"
+        "- **Baseline:** the mean path distance over the 1 s before onset.\n"
+        "- **Post-event peak path distance:** the maximum path distance in [onset, onset + 2 s].\n"
+        "- **Post-event excess IAE:** the integral of max(distance − baseline, 0) over the same 2 s window.\n"
+        "- **Aggregation:** seed-pooled means over every episode that defines them, as in the summary tables. "
+        "Failed episodes are included if they reach the onset.",
+        table(header, table_rows),
+        "**Paired differences** (hierarchical bootstrap, 10,000 replicates, seed-mean; learned seeds against the "
+        "single PID instance)",
+        table(["pair", "metric", "transient cell"] + [f"s{s}" for s in SEEDS] + ["seed-mean", "95 % CI"], pair_rows),
+        "### 9.2 Transient onset and severity in the ranged held-out set",
+        f"- **Onset:** every transient record has its events at {', '.join(f'{s:g} s' for s in starts)} "
+        f"(`config.transient_start_s`). Before onset the scenario is clean: "
+        f"{'yes, no initial delay or noise in any transient record' if clean else 'NO'}.\n"
+        "- **Event structure:** transient delay and noise records carry one step event. Combined records carry "
+        "two, a delay step and a noise step, both at the onset.\n"
+        f"- **Severity:** drawn once per record with the generator keyed on (seed 20261116, record index). "
+        f"Delay is uniform in [0, 0.3] s (transient draws: min {d.min():.3f}, median {np.median(d):.3f}, "
+        f"max {d.max():.3f} s). Noise is log-uniform in [0.1, 10] mm (transient draws: min {n.min():.2f}, median "
+        f"{np.median(n):.2f}, max {n.max():.2f} mm). The step value is the drawn severity, and it holds to the "
+        "end of the episode.",
+        "### 9.3 Run-time cost per control decision",
+        table(["arm", "episodes", "mean (µs)", "median of per-episode p99 (µs)",
+               "95th pct of per-episode p99 (µs)"], inf_rows),
+        f"- **What is measured:** wall time of one `predictor(observation)` call, i.e. the policy forward pass, "
+        f"or for the fixed PIDs the constant action. It was measured in `rollout.run_episode` with "
+        f"`time.perf_counter_ns` during the ranged held-out run on {meta_g4['machine']['processor']}. Each of the "
+        f"{meta_g4['workers']} worker processes ran with one torch thread, so each measurement is on one core.\n"
+        "- **Not included:** the PID law itself and the gain-scheduler map run inside the environment step "
+        f"(physics at {1 / DT:g} Hz, {config.CONFIG.frame_skip} substeps per decision).\n"
+        "- **Statistics recorded:** per episode, the mean and the 99th percentile. The plan's 95th percentile per "
+        "decision was not recorded. The table reports the decision-weighted mean and the spread of the "
+        "per-episode 99th percentiles.\n"
+        "- **Training wall time:** plan-2 runs in `POSTHOC_RESULTS_2.md` §2; plan-3 runs in §2–3 of this document.",
+        "### 9.4 Observation contents (one frame, H = 1)",
+        obs,
+    ])
+
+
+def observation_table() -> str:
+    from controller_profiles import DIRECT_FRAME_FIELDS, SCHEDULER_FRAME_FIELDS
+
+    c = config
+    vmax = max(c.CONFIG.target_speeds)
+    common = {
+        "e_ct_rate": ("rate of the measured cross-track error over the last decision (m/s)",
+                      f"÷ {c.E_CT_RATE_SCALE_MPS:g} m/s"),
+        "e_theta": ("heading error to the path tangent (rad)", "÷ π"),
+        "speed": ("forward speed of the chassis (m/s)", f"÷ {c.SPEED_SCALE_MPS:g} m/s"),
+        "yaw_rate": ("yaw rate (rad/s)", f"÷ {c.YAW_RATE_SCALE_RADPS:g} rad/s"),
+        "omega_applied": ("steering command after wheel allocation (normalised wheel units)", "already in [−1, 1]"),
+        "v_applied": ("speed command after wheel allocation (normalised wheel units)", "already in [−1, 1]"),
+        "v_target": ("target speed of the episode (m/s)", f"÷ {vmax:g} m/s"),
+        "wheel_utilization": ("larger absolute value of the two allocated wheel commands", "already in [0, 1]"),
+        "allocation_limited": ("1 if allocation had to change the requested (v, ω), else 0", "flag"),
+    }
+    gs = dict(common)
+    gs.update({
+        "e_ct": ("measured (noisy) cross-track error (m)", f"÷ {c.E_CT_SCALE_M:g} m"),
+        "e_ct_integral": ("integral state of the steering PID (m·s)", f"÷ {c.INTEGRAL_SCALE_MS:g} m·s"),
+        "omega_requested": ("steering PID output before allocation (normalised)", "PID output limits [−1, 1]"),
+        "previous_action_kp": ("previous scheduler action for Kp (action coordinates)", "already in [−1, 1]"),
+        "previous_action_ki": ("previous scheduler action for Ki", "already in [−1, 1]"),
+        "previous_action_kd": ("previous scheduler action for Kd", "already in [−1, 1]"),
+        "pid_saturated": ("1 if the unclamped PID output exceeds 1, else 0", "flag"),
+        "steer_integrator_hold": ("1 if the PID integrator was held (anti-windup) at the last substep, else 0",
+                                  "flag"),
+    })
+    dr = dict(common)
+    dr.update({
+        "e_ct": ("measured (noisy) cross-track error (m)", "÷ 0.2 m"),
+        "e_ct_integral": ("environment-side error integral, itself clipped to ±1 m·s (m·s)",
+                          f"÷ {c.INTEGRAL_SCALE_MS:g} m·s"),
+        "previous_steer": ("previous policy action (steering command)", "already in [−1, 1]"),
+        "steer_saturated": ("1 if the absolute steering action reaches 1, else 0", "flag"),
+    })
+    parts = []
+    for title, fields, meaning in (("Gain scheduler (GS), 17 fields", SCHEDULER_FRAME_FIELDS, gs),
+                                   ("Direct policy (DR), 13 fields", DIRECT_FRAME_FIELDS, dr)):
+        rows = [[i + 1, f"`{f}`", *meaning[f]] for i, f in enumerate(fields)]
+        parts.append(f"**{title}** (order as in the observation vector)\n\n"
+                     + table(["#", "field", "content (unit)", "scaling"], rows))
+    return "\n\n".join(parts) + (
+        "\n\n- **Clipping:** every field is clipped to [−1, 1] after scaling (`env.py::_frame`).\n"
+        "- **Timing:** fields are taken at the last physics substep of a decision. The frame is built every 20 ms "
+        "(50 Hz).\n"
+        "- **History:** with H = 1 the observation is this single frame. The previous action (GS: three gain "
+        "actions; DR: previous steer) is the only memory. With H = 10, the last ten frames are concatenated, "
+        "oldest first.\n"
+        "- **Differences between the two policies:** the GS and DR frames use different e_ct scales (1 m vs 0.2 m) "
+        "and different integral sources (the PID's internal integral vs an environment-side integral). These "
+        "come from their separate controller profiles.")
+
+
 def observations() -> dict[str, str]:
     path = ROOT / "posthoc_observations3.md"
     if not path.exists():
@@ -497,8 +663,9 @@ def build() -> str:
         "## 6. G4 Delay sweep and dynamic delay", sweeps_section(), o("G4 delay"),
         "## 7. G4 Noise sweep and mechanism", noise_section(), o("G4 noise"),
         "## 8. G4 Frozen gains and gain occupancy of the new arms", frozen_section(), o("G4 frozen"),
-        "## 9. Observations", "Facts per section are written under each section above. No interpretation.",
-        "## 10. Files",
+        "## 9. G5 Gaps for the thesis (addendum, lookups only)", g5_section(), o("G5"),
+        "## 10. Observations", "Facts per section are written under each section above. No interpretation.",
+        "## 11. Files",
         "- **Results:** `artifacts/results/posthoc3/<step>/`.\n- **Models:** `artifacts/models/posthoc/plan3/`.\n"
         "- **Calibration:** `artifacts/calibration/blind_ppo_wide.json`.\n- **Code:** `posthoc_gain_occupancy.py`, "
         "`posthoc_replay_check.py`, `posthoc_report3.py`, `posthoc_figures3.py`, plus the per-checkpoint box in "

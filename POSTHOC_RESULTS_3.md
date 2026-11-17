@@ -2685,11 +2685,136 @@ Figure: `figures/g4_gain_occupancy_wide.{pdf,png}`.
     2.17–3.24.
   - The applied Kp is on the floor (Kp = 1) in 15.1–27.6 % of steps in the disturbed conditions.
 
-## 9. Observations
+## 9. G5 Gaps for the thesis (addendum, lookups only)
+
+### 9.1 Transient event metrics, ranged held-out (transient cells)
+
+Definitions (`env.py::_recovery_metrics`, unchanged since the sealed run):
+- **Event onset:** the earliest event start in the scenario.
+- **Baseline:** the mean path distance over the 1 s before onset.
+- **Post-event peak path distance:** the maximum path distance in [onset, onset + 2 s].
+- **Post-event excess IAE:** the integral of max(distance − baseline, 0) over the same 2 s window.
+- **Aggregation:** seed-pooled means over every episode that defines them, as in the summary tables. Failed episodes are included if they reach the onset.
+
+| arm | peak delay (mm) | peak noise (mm) | peak combined (mm) | excess delay (mm·s) | excess noise (mm·s) | excess combined (mm·s) |
+|---|---|---|---|---|---|---|
+| PID-N | 167.9 | 6.3 | 190.9 | 110.7 | 2.0 | 132.1 |
+| PID-R | 43.3 | 19.7 | 49.7 | 17.9 | 11.8 | 23.0 |
+| PID-RN | 40.2 | 31.7 | 44.4 | 14.8 | 10.6 | 17.2 |
+| GS-N-W | 83.8 | 15.4 | 93.1 | 44.4 | 7.4 | 47.9 |
+| GS-D-W 2M | 49.6 | 16.5 | 59.7 | 23.6 | 8.4 | 30.1 |
+| DR-N | 45.7 | 26.5 | 54.1 | 21.0 | 8.5 | 26.4 |
+| DR-D | 54.3 | 31.5 | 65.1 | 25.9 | 10.4 | 33.2 |
+
+**Paired differences** (hierarchical bootstrap, 10,000 replicates, seed-mean; learned seeds against the single PID instance)
+
+| pair | metric | transient cell | s11 | s23 | s37 | s53 | s71 | seed-mean | 95 % CI |
+|---|---|---|---|---|---|---|---|---|---|
+| DR-D − PID-RN | post-event peak path distance | delay | +7.75 | +41.28 | +3.69 | -1.72 | +19.63 | **+14.12** mm | [+1.83, +29.20] |
+| DR-D − PID-RN | post-event peak path distance | noise | -12.37 | +33.29 | -6.08 | -7.43 | -8.37 | **-0.19** mm | [-10.45, +17.40] |
+| DR-D − PID-RN | post-event peak path distance | combined | +18.39 | +45.49 | +5.68 | +4.90 | +28.76 | **+20.65** mm | [+7.68, +35.50] |
+| DR-D − PID-RN | post-event excess IAE | delay | +6.37 | +20.49 | +4.80 | +1.26 | +22.61 | **+11.11** mm·s | [+3.17, +19.89] |
+| DR-D − PID-RN | post-event excess IAE | noise | -6.14 | +12.79 | -2.35 | -3.53 | -2.04 | **-0.25** mm·s | [-4.98, +7.06] |
+| DR-D − PID-RN | post-event excess IAE | combined | +12.63 | +25.50 | +4.60 | +6.12 | +31.07 | **+15.99** mm·s | [+6.66, +26.58] |
+| GS-D-W 2M − PID-RN | post-event peak path distance | delay | +1.89 | -3.75 | +37.87 | +1.87 | +8.99 | **+9.38** mm | [-1.68, +24.37] |
+| GS-D-W 2M − PID-RN | post-event peak path distance | noise | -12.53 | -9.36 | -26.08 | -8.70 | -19.23 | **-15.18** mm | [-21.59, -9.31] |
+| GS-D-W 2M − PID-RN | post-event peak path distance | combined | -4.84 | -4.88 | +61.58 | +15.55 | +9.17 | **+15.32** mm | [-2.79, +39.77] |
+| GS-D-W 2M − PID-RN | post-event excess IAE | delay | +4.84 | +1.66 | +24.52 | +5.73 | +7.24 | **+8.80** mm·s | [+2.50, +17.10] |
+| GS-D-W 2M − PID-RN | post-event excess IAE | noise | -2.34 | -1.48 | -9.39 | +6.48 | -4.26 | **-2.20** mm·s | [-6.80, +3.19] |
+| GS-D-W 2M − PID-RN | post-event excess IAE | combined | +0.94 | +1.07 | +36.14 | +17.26 | +9.00 | **+12.88** mm·s | [+2.25, +25.71] |
+
+### 9.2 Transient onset and severity in the ranged held-out set
+
+- **Onset:** every transient record has its events at 6 s (`config.transient_start_s`). Before onset the scenario is clean: yes, no initial delay or noise in any transient record.
+- **Event structure:** transient delay and noise records carry one step event. Combined records carry two, a delay step and a noise step, both at the onset.
+- **Severity:** drawn once per record with the generator keyed on (seed 20261116, record index). Delay is uniform in [0, 0.3] s (transient draws: min 0.000, median 0.143, max 0.299 s). Noise is log-uniform in [0.1, 10] mm (transient draws: min 0.11, median 1.07, max 8.39 mm). The step value is the drawn severity, and it holds to the end of the episode.
+
+### 9.3 Run-time cost per control decision
+
+| arm | episodes | mean (µs) | median of per-episode p99 (µs) | 95th pct of per-episode p99 (µs) |
+|---|---|---|---|---|
+| PID-N | 480 | 1.0 | 1.3 | 1.4 |
+| PID-R | 480 | 1.0 | 1.3 | 1.4 |
+| PID-RN | 480 | 0.6 | 0.8 | 1.4 |
+| GS-N-W | 2400 | 342.7 | 392.1 | 535.8 |
+| GS-D-W 2M | 2400 | 277.6 | 310.5 | 317.3 |
+| DR-N | 2400 | 289.8 | 309.6 | 314.8 |
+| DR-D | 2400 | 289.7 | 309.4 | 314.9 |
+
+- **What is measured:** wall time of one `predictor(observation)` call, i.e. the policy forward pass, or for the fixed PIDs the constant action. It was measured in `rollout.run_episode` with `time.perf_counter_ns` during the ranged held-out run on AMD EPYC 9334 32-Core Processor. Each of the 64 worker processes ran with one torch thread, so each measurement is on one core.
+- **Not included:** the PID law itself and the gain-scheduler map run inside the environment step (physics at 500 Hz, 10 substeps per decision).
+- **Statistics recorded:** per episode, the mean and the 99th percentile. The plan's 95th percentile per decision was not recorded. The table reports the decision-weighted mean and the spread of the per-episode 99th percentiles.
+- **Training wall time:** plan-2 runs in `POSTHOC_RESULTS_2.md` §2; plan-3 runs in §2–3 of this document.
+
+### 9.4 Observation contents (one frame, H = 1)
+
+**Gain scheduler (GS), 17 fields** (order as in the observation vector)
+
+| # | field | content (unit) | scaling |
+|---|---|---|---|
+| 1 | `e_ct` | measured (noisy) cross-track error (m) | ÷ 1 m |
+| 2 | `e_ct_rate` | rate of the measured cross-track error over the last decision (m/s) | ÷ 2 m/s |
+| 3 | `e_ct_integral` | integral state of the steering PID (m·s) | ÷ 1 m·s |
+| 4 | `e_theta` | heading error to the path tangent (rad) | ÷ π |
+| 5 | `speed` | forward speed of the chassis (m/s) | ÷ 1.5 m/s |
+| 6 | `yaw_rate` | yaw rate (rad/s) | ÷ 10 rad/s |
+| 7 | `omega_requested` | steering PID output before allocation (normalised) | PID output limits [−1, 1] |
+| 8 | `omega_applied` | steering command after wheel allocation (normalised wheel units) | already in [−1, 1] |
+| 9 | `v_applied` | speed command after wheel allocation (normalised wheel units) | already in [−1, 1] |
+| 10 | `previous_action_kp` | previous scheduler action for Kp (action coordinates) | already in [−1, 1] |
+| 11 | `previous_action_ki` | previous scheduler action for Ki | already in [−1, 1] |
+| 12 | `previous_action_kd` | previous scheduler action for Kd | already in [−1, 1] |
+| 13 | `v_target` | target speed of the episode (m/s) | ÷ 0.7 m/s |
+| 14 | `wheel_utilization` | larger absolute value of the two allocated wheel commands | already in [0, 1] |
+| 15 | `pid_saturated` | 1 if the unclamped PID output exceeds 1, else 0 | flag |
+| 16 | `allocation_limited` | 1 if allocation had to change the requested (v, ω), else 0 | flag |
+| 17 | `steer_integrator_hold` | 1 if the PID integrator was held (anti-windup) at the last substep, else 0 | flag |
+
+**Direct policy (DR), 13 fields** (order as in the observation vector)
+
+| # | field | content (unit) | scaling |
+|---|---|---|---|
+| 1 | `e_ct` | measured (noisy) cross-track error (m) | ÷ 0.2 m |
+| 2 | `e_ct_rate` | rate of the measured cross-track error over the last decision (m/s) | ÷ 2 m/s |
+| 3 | `e_ct_integral` | environment-side error integral, itself clipped to ±1 m·s (m·s) | ÷ 1 m·s |
+| 4 | `e_theta` | heading error to the path tangent (rad) | ÷ π |
+| 5 | `speed` | forward speed of the chassis (m/s) | ÷ 1.5 m/s |
+| 6 | `yaw_rate` | yaw rate (rad/s) | ÷ 10 rad/s |
+| 7 | `previous_steer` | previous policy action (steering command) | already in [−1, 1] |
+| 8 | `omega_applied` | steering command after wheel allocation (normalised wheel units) | already in [−1, 1] |
+| 9 | `v_applied` | speed command after wheel allocation (normalised wheel units) | already in [−1, 1] |
+| 10 | `v_target` | target speed of the episode (m/s) | ÷ 0.7 m/s |
+| 11 | `wheel_utilization` | larger absolute value of the two allocated wheel commands | already in [0, 1] |
+| 12 | `steer_saturated` | 1 if the absolute steering action reaches 1, else 0 | flag |
+| 13 | `allocation_limited` | 1 if allocation had to change the requested (v, ω), else 0 | flag |
+
+- **Clipping:** every field is clipped to [−1, 1] after scaling (`env.py::_frame`).
+- **Timing:** fields are taken at the last physics substep of a decision. The frame is built every 20 ms (50 Hz).
+- **History:** with H = 1 the observation is this single frame. The previous action (GS: three gain actions; DR: previous steer) is the only memory. With H = 10, the last ten frames are concatenated, oldest first.
+- **Differences between the two policies:** the GS and DR frames use different e_ct scales (1 m vs 0.2 m) and different integral sources (the PID's internal integral vs an environment-side integral). These come from their separate controller profiles.
+
+- **Transient event metrics (ranged held-out):** PID-RN has the lowest post-event peak path distance in transient
+  delay (40.2 mm) and combined (44.4 mm) among the main arms.
+- **DR-D − PID-RN:**
+  - post-event peak +14.1 mm (delay) and +20.7 mm (combined);
+  - excess IAE +11.1 / +16.0 mm·s;
+  - all four CIs exclude 0. The noise-cell CIs include 0.
+- **GS-D-W 2M − PID-RN:**
+  - post-event peak −15.2 mm in transient noise, CI [−21.6, −9.3];
+  - excess IAE +8.8 mm·s (delay) and +12.9 mm·s (combined), CIs exclude 0;
+  - the peak CIs for delay and combined include 0.
+- **Onset and severity:** every transient record steps at 6 s from a clean start. The transient draws have a
+  median delay of 0.143 s and a median noise of 1.07 mm.
+- **Run time per decision (EPYC 9334, one thread):**
+  - fixed PIDs 0.6–1.0 µs (constant action only);
+  - learned policies 278–343 µs mean, with per-episode 99th percentiles of about 310 µs (GS-N-W: 392 µs);
+  - the decision period is 20 ms.
+
+## 10. Observations
 
 Facts per section are written under each section above. No interpretation.
 
-## 10. Files
+## 11. Files
 
 - **Results:** `artifacts/results/posthoc3/<step>/`.
 - **Models:** `artifacts/models/posthoc/plan3/`.
