@@ -38,12 +38,15 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--arm", action="append", required=True, metavar="ARM=MODELS_ROOT")
     parser.add_argument("--output", required=True)
+    parser.add_argument("--seeds", help="comma-separated seeds (default: the five final seeds)")
     args = parser.parse_args()
+    seeds = (tuple(int(value) for value in args.seeds.split(",")) if args.seeds
+             else config.CONFIG.final_training_seeds)
 
     rows = []
     for entry in args.arm:
         arm, root = entry.split("=", 1)
-        for seed in config.CONFIG.final_training_seeds:
+        for seed in seeds:
             run_dir = Path(root).resolve() / arm / f"seed_{seed}"
             record = selected_checkpoint(run_dir / "validation_history.jsonl")
             metadata = json.loads((run_dir / "metadata.json").read_text(encoding="utf-8"))

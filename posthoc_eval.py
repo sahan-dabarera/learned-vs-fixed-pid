@@ -147,6 +147,13 @@ def usable_cores() -> int:
         return os.cpu_count() or 1
 
 
+def extra_seeds(args: argparse.Namespace) -> tuple[int, ...]:
+    """Seeds for --extra-arm: --seeds when given, else the five final seeds."""
+    if getattr(args, "seeds", None):
+        return tuple(int(value) for value in args.seeds.split(","))
+    return config.CONFIG.final_training_seeds
+
+
 def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
     calibration = str(Path(args.calibration).resolve())
     scheduler_calibration = str(Path(args.scheduler_calibration).resolve())
@@ -187,7 +194,7 @@ def build_controllers(args: argparse.Namespace) -> list[ControllerSpec]:
     for entry in args.extra_arm:
         arm, raw_root = entry.split("=", 1)
         mode = "scheduled" if arm.startswith("ppo_scheduler_") else "direct"
-        for seed in config.CONFIG.final_training_seeds:
+        for seed in extra_seeds(args):
             path = Path(raw_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
                 raise FileNotFoundError(path)
@@ -343,6 +350,7 @@ def main() -> None:
     parser.add_argument("--model", action="append", default=[], metavar="ARM:SEED=PATH")
     parser.add_argument("--extra-arm", action="append", default=[], metavar="ARM=MODELS_ROOT",
                         help="a post-hoc arm with all five seeds under MODELS_ROOT/ARM/seed_N")
+    parser.add_argument("--seeds", help="comma-separated seeds for --extra-arm (default: the five final seeds)")
     parser.add_argument("--pid", action="append", default=[], metavar="pid_NAME=KP,KI,KD[,TAU_D]")
     parser.add_argument("--robust-tau-d", type=float, action="append", default=[])
     parser.add_argument("--frozen-gains")
