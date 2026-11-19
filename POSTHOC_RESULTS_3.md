@@ -2836,3 +2836,160 @@ Facts per section are written under each section above. No interpretation.
 | `g4_noise_sweep_transient` | G4: noise sweep, transient, main arms; plan-2 GS-D in grey. |
 | `g4_mechanism_stationary_noise` | G4: steering TV/T and wheel saturation vs noise, main arms; plan-2 GS-D in grey. |
 | `g4_gain_occupancy_wide` | G4: applied Kp of GS-D-W vs plan-2 GS-D on the ranged held-out set (log x), both boxes marked. |
+
+## 12. GS-D (2M) gain occupancy and frozen gains (follow-up)
+
+Follow-up job `slurm_plan3b.sh`: replays the five GS-D-W 2M checkpoints (the main scheduler, thesis name "GS-D") with the same tools and settings as §1.2 and §8. No training.
+
+| output | SLURM job | node | commit | episodes / jobs | wall min |
+|---|---|---|---|---|---|
+| `g5_occupancy_2m` | 3347265 | cpunode04 | `0272ef0` | 10 | 11.6 |
+| `g5_frozen_gains_2m` | 3347265 | cpunode04 | `0272ef0` | – | 1.7 |
+| `g5_frozen_eval_2m` | 3347265 | cpunode04 | `0272ef0` | 7200 | 16.3 |
+
+- **Machine:** AMD EPYC 9334, 16 cores. `check_parity.py` printed `PARITY OK`.
+- **Replay check:** the dynamic GS-D-W 2M rows of this job reproduce 2400 of 2400 rows of `g4_heldout_ranged_g2` bit for bit.
+
+### 12.1 Gain occupancy, GS-D-W 2M (same definitions as §1.2: edges in action coordinates, the Kp lower edge is Kp ≤ 1.5 on the wide range; percentages step-weighted over seeds; medians = median of per-seed medians)
+
+| arm | manifest | condition | Kp target at lower edge % | Kp applied on lower bound % | Kd target at lower edge % | Kd applied on lower bound % | Ki target at lower edge % | Kp target at upper edge % | median Kp (seed median) | median Kd (seed median) |
+|---|---|---|---|---|---|---|---|---|---|---|
+| GS-D-W 2M | held_out_ranged | stationary/combined | 44.6 | 38.0 | 8.4 | 1.7 | 22.1 | 0 | 3.95 | 3.18 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 38.1 | 30.5 | 10.3 | 1.7 | 21.7 | 0.0 | 6.44 | 3.16 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 36.5 | 32.2 | 13.1 | 10.3 | 26.5 | 0 | 3.75 | 2.63 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 7.7 | 6.0 | 19.9 | 17.3 | 28.1 | 0 | 8.64 | 2.77 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 37.0 | 32.1 | 11.1 | 4.3 | 23.9 | 0.0 | 4.03 | 2.65 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 26.8 | 21.8 | 12.8 | 5.2 | 24.6 | 0.0 | 6.74 | 2.67 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 23.7 | 20.8 | 18.7 | 15.3 | 26.8 | 0 | 5.17 | 2.64 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 7.7 | 6.0 | 19.9 | 17.3 | 28.1 | 0 | 8.64 | 2.77 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 44.8 | 37.8 | 8.2 | 1.4 | 24.5 | 0 | 2.18 | 2.97 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 35.5 | 27.3 | 11.2 | 1.6 | 21.4 | 0 | 5.41 | 2.75 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 52.1 | 47.8 | 8.2 | 5.5 | 24.8 | 0 | 1.00 | 2.79 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 8.3 | 6.0 | 19.9 | 17.4 | 28.2 | 0 | 8.79 | 2.68 |
+| GS-D-W 2M | validation_ranged | transient/combined | 48.0 | 43.7 | 8.7 | 2.9 | 24.5 | 0 | 1.40 | 3.28 |
+| GS-D-W 2M | validation_ranged | transient/delay | 31.4 | 27.1 | 12.2 | 5.0 | 24.7 | 0 | 6.00 | 2.62 |
+| GS-D-W 2M | validation_ranged | transient/noise | 30.2 | 27.3 | 17.8 | 13.8 | 26.6 | 0 | 3.70 | 2.60 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 8.3 | 6.0 | 19.9 | 17.4 | 28.2 | 0 | 8.79 | 2.68 |
+
+<details><summary>Per seed (incl. mean / median / p5 / p95 of every gain)</summary>
+
+| arm | manifest | condition | seed | Kp target at lower edge % | Kp applied on lower bound % | Kd target at lower edge % | Kd applied on lower bound % | Ki target at lower edge % | Kp target at upper edge % | Kp mean | Kp median | Kp p5 | Kp p95 | Ki mean | Ki median | Ki p5 | Ki p95 | Kd mean | Kd median | Kd p5 | Kd p95 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| GS-D-W 2M | held_out_ranged | stationary/combined | 11 | 46.0 | 37.2 | 0 | 0 | 29.0 | 0 | 5.64 | 3.95 | 1.00 | 16.38 | 0.08 | 0.06 | 0.00 | 0.20 | 2.66 | 2.61 | 2.15 | 3.23 |
+| GS-D-W 2M | held_out_ranged | stationary/combined | 23 | 41.5 | 36.3 | 6.5 | 0.6 | 0 | 0 | 3.14 | 2.64 | 1.00 | 7.09 | 1.09 | 1.12 | 0.82 | 1.25 | 1.99 | 1.83 | 0.94 | 3.24 |
+| GS-D-W 2M | held_out_ranged | stationary/combined | 37 | 56.2 | 42.3 | 27.3 | 7.4 | 69.7 | 0 | 12.89 | 3.95 | 1.00 | 46.91 | 0.03 | 0.00 | 0.00 | 0.11 | 3.41 | 4.48 | 0.00 | 5.39 |
+| GS-D-W 2M | held_out_ranged | stationary/combined | 53 | 81.0 | 76.1 | 0.4 | 0 | 3.8 | 0 | 2.12 | 1.00 | 1.00 | 8.30 | 0.46 | 0.31 | 0.10 | 1.14 | 4.57 | 4.48 | 3.62 | 5.65 |
+| GS-D-W 2M | held_out_ranged | stationary/combined | 71 | 0.6 | 0.1 | 6.5 | 0 | 5.4 | 0 | 12.02 | 11.14 | 4.59 | 20.01 | 1.06 | 1.06 | 0.58 | 1.50 | 3.00 | 3.18 | 0.86 | 4.74 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 11 | 40.6 | 30.9 | 0 | 0 | 27.2 | 0.0 | 7.37 | 6.44 | 1.00 | 20.10 | 0.09 | 0.07 | 0.00 | 0.23 | 2.74 | 2.67 | 2.19 | 3.51 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 23 | 37.8 | 33.7 | 5.5 | 1.4 | 0 | 0 | 3.55 | 3.45 | 1.00 | 7.96 | 1.12 | 1.13 | 0.91 | 1.27 | 1.95 | 1.81 | 0.86 | 3.24 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 37 | 45.7 | 27.2 | 35.9 | 7.0 | 69.0 | 0 | 15.76 | 12.80 | 1.00 | 43.26 | 0.03 | 0.00 | 0.00 | 0.13 | 2.87 | 3.16 | 0.00 | 5.14 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 53 | 69.4 | 63.9 | 0.4 | 0 | 3.7 | 0 | 3.52 | 1.00 | 1.00 | 18.21 | 0.54 | 0.38 | 0.14 | 1.20 | 4.62 | 4.59 | 3.44 | 6.00 |
+| GS-D-W 2M | held_out_ranged | stationary/delay | 71 | 0.4 | 0.0 | 8.2 | 0.0 | 7.6 | 0 | 12.22 | 11.86 | 3.75 | 20.33 | 1.02 | 1.08 | 0.12 | 1.50 | 3.19 | 3.53 | 0.83 | 4.97 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 11 | 35.3 | 29.5 | 0 | 0 | 42.0 | 0 | 4.67 | 3.75 | 1.00 | 10.55 | 0.05 | 0.04 | 0.00 | 0.15 | 2.67 | 2.63 | 2.13 | 3.07 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 23 | 25.4 | 20.3 | 3.4 | 0 | 0 | 0 | 3.41 | 3.67 | 1.00 | 5.57 | 1.05 | 1.12 | 0.77 | 1.16 | 2.37 | 2.27 | 1.28 | 3.55 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 37 | 37.5 | 33.8 | 56.5 | 48.2 | 82.5 | 0 | 28.21 | 34.45 | 1.00 | 67.67 | 0.01 | 0.00 | 0.00 | 0.04 | 2.40 | 0.97 | 0.00 | 5.44 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 53 | 79.6 | 72.7 | 0.2 | 0 | 3.8 | 0 | 2.87 | 1.00 | 1.00 | 16.57 | 0.63 | 0.60 | 0.07 | 1.19 | 4.85 | 5.13 | 3.15 | 6.00 |
+| GS-D-W 2M | held_out_ranged | stationary/noise | 71 | 0.1 | 0 | 2.0 | 0 | 0.1 | 0 | 13.87 | 13.60 | 6.66 | 19.99 | 1.23 | 1.37 | 0.55 | 1.50 | 2.78 | 2.67 | 0.73 | 4.57 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 11 | 1.6 | 0.5 | 0 | 0 | 41.6 | 0 | 7.83 | 8.64 | 2.45 | 11.39 | 0.04 | 0.05 | 0.00 | 0.09 | 2.73 | 2.65 | 2.50 | 3.02 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 23 | 0.3 | 0 | 0 | 0 | 0 | 0 | 4.75 | 4.85 | 3.24 | 5.87 | 1.12 | 1.13 | 1.09 | 1.16 | 2.56 | 2.77 | 1.40 | 3.26 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 37 | 0.0 | 0 | 99.6 | 86.7 | 99.0 | 0 | 48.94 | 46.44 | 31.90 | 74.31 | 0.01 | 0.00 | 0.00 | 0.00 | 0.30 | 0.00 | 0.00 | 2.79 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 53 | 36.6 | 29.6 | 0 | 0 | 0 | 0 | 10.10 | 7.55 | 1.00 | 22.75 | 1.17 | 1.18 | 1.10 | 1.24 | 5.59 | 5.48 | 4.96 | 6.00 |
+| GS-D-W 2M | held_out_ranged | stationary/nominal | 71 | 0 | 0 | 0 | 0 | 0 | 0 | 16.81 | 17.00 | 10.83 | 20.41 | 1.37 | 1.40 | 1.14 | 1.50 | 3.25 | 3.41 | 1.92 | 4.58 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 11 | 40.1 | 33.7 | 0 | 0 | 34.2 | 0.1 | 5.68 | 4.03 | 1.00 | 14.91 | 0.07 | 0.05 | 0.00 | 0.20 | 2.73 | 2.65 | 2.26 | 3.59 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 23 | 35.2 | 30.8 | 4.1 | 0 | 0 | 0 | 3.42 | 3.51 | 1.00 | 6.65 | 1.09 | 1.13 | 0.86 | 1.23 | 2.04 | 1.92 | 1.03 | 3.26 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 37 | 40.0 | 29.4 | 45.1 | 21.1 | 74.5 | 0.0 | 21.52 | 15.54 | 1.00 | 57.88 | 0.02 | 0.00 | 0.00 | 0.11 | 2.35 | 1.92 | 0.00 | 5.30 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 53 | 71.8 | 68.9 | 0.3 | 0 | 4.6 | 0 | 4.65 | 1.00 | 1.00 | 22.39 | 0.56 | 0.34 | 0.08 | 1.23 | 4.68 | 4.65 | 3.22 | 6.00 |
+| GS-D-W 2M | held_out_ranged | transient/combined | 71 | 0.4 | 0.0 | 4.7 | 0 | 5.6 | 0 | 12.30 | 11.80 | 4.39 | 20.45 | 1.06 | 1.17 | 0.32 | 1.50 | 3.16 | 3.36 | 0.74 | 4.82 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 11 | 26.5 | 21.0 | 0 | 0 | 34.9 | 0.0 | 7.11 | 6.74 | 1.00 | 16.91 | 0.07 | 0.06 | 0.00 | 0.21 | 2.73 | 2.67 | 2.25 | 3.30 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 23 | 24.8 | 22.1 | 2.5 | 0.0 | 0 | 0 | 3.88 | 4.07 | 1.00 | 6.94 | 1.12 | 1.14 | 0.95 | 1.25 | 2.10 | 1.97 | 1.01 | 3.26 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 37 | 29.4 | 16.9 | 54.9 | 25.2 | 75.6 | 0 | 25.74 | 23.15 | 1.00 | 60.69 | 0.03 | 0.00 | 0.00 | 0.12 | 1.67 | 0.90 | 0.00 | 4.93 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 53 | 56.5 | 52.1 | 0.3 | 0 | 3.3 | 0 | 6.28 | 1.00 | 1.00 | 22.70 | 0.76 | 0.89 | 0.17 | 1.23 | 5.03 | 5.11 | 3.62 | 6.00 |
+| GS-D-W 2M | held_out_ranged | transient/delay | 71 | 0.4 | 0.1 | 4.6 | 0.0 | 7.7 | 0 | 13.04 | 12.75 | 3.82 | 20.60 | 1.09 | 1.23 | 0.09 | 1.50 | 3.35 | 3.63 | 1.10 | 5.03 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 11 | 25.1 | 20.1 | 0 | 0 | 42.0 | 0 | 5.52 | 5.17 | 1.00 | 11.34 | 0.04 | 0.03 | 0.00 | 0.11 | 2.69 | 2.64 | 2.38 | 3.02 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 23 | 16.7 | 12.8 | 2.2 | 0 | 0 | 0 | 3.81 | 4.01 | 1.00 | 5.89 | 1.09 | 1.13 | 0.88 | 1.17 | 2.34 | 2.35 | 1.19 | 3.26 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 37 | 2.7 | 2.2 | 94.8 | 80.8 | 94.5 | 0 | 47.54 | 46.10 | 28.25 | 75.19 | 0.01 | 0.00 | 0.00 | 0.03 | 0.43 | 0.00 | 0.00 | 3.56 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 53 | 68.2 | 63.4 | 0.1 | 0 | 2.4 | 0 | 5.35 | 1.00 | 1.00 | 22.45 | 0.75 | 1.00 | 0.09 | 1.23 | 5.14 | 5.25 | 3.66 | 6.00 |
+| GS-D-W 2M | held_out_ranged | transient/noise | 71 | 0.0 | 0 | 1.5 | 0 | 0.0 | 0 | 14.90 | 15.58 | 7.63 | 20.39 | 1.33 | 1.40 | 0.74 | 1.50 | 2.81 | 2.94 | 0.73 | 4.57 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 11 | 1.6 | 0.5 | 0 | 0 | 41.6 | 0 | 7.83 | 8.64 | 2.45 | 11.39 | 0.04 | 0.05 | 0.00 | 0.09 | 2.73 | 2.65 | 2.50 | 3.02 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 23 | 0.3 | 0 | 0 | 0 | 0 | 0 | 4.75 | 4.85 | 3.24 | 5.87 | 1.12 | 1.13 | 1.09 | 1.16 | 2.56 | 2.77 | 1.40 | 3.26 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 37 | 0.0 | 0 | 99.6 | 86.7 | 99.0 | 0 | 48.94 | 46.44 | 31.90 | 74.31 | 0.01 | 0.00 | 0.00 | 0.00 | 0.30 | 0.00 | 0.00 | 2.79 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 53 | 36.6 | 29.6 | 0 | 0 | 0 | 0 | 10.10 | 7.55 | 1.00 | 22.75 | 1.17 | 1.18 | 1.10 | 1.24 | 5.59 | 5.48 | 4.96 | 6.00 |
+| GS-D-W 2M | held_out_ranged | transient/nominal | 71 | 0 | 0 | 0 | 0 | 0 | 0 | 16.81 | 17.00 | 10.83 | 20.41 | 1.37 | 1.40 | 1.14 | 1.50 | 3.25 | 3.41 | 1.92 | 4.58 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 11 | 51.4 | 41.5 | 0 | 0 | 36.7 | 0 | 4.43 | 2.18 | 1.00 | 15.75 | 0.07 | 0.06 | 0.00 | 0.19 | 2.62 | 2.58 | 2.12 | 3.08 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 23 | 46.6 | 40.1 | 5.3 | 0 | 0 | 0 | 2.76 | 2.10 | 1.00 | 6.65 | 1.09 | 1.12 | 0.85 | 1.26 | 1.83 | 1.71 | 1.05 | 2.96 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 37 | 54.1 | 39.8 | 27.8 | 6.8 | 69.7 | 0 | 12.28 | 3.95 | 1.00 | 41.82 | 0.03 | 0.00 | 0.00 | 0.11 | 3.49 | 4.17 | 0.00 | 5.47 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 53 | 74.6 | 71.0 | 0.2 | 0 | 6.0 | 0 | 2.96 | 1.00 | 1.00 | 14.07 | 0.38 | 0.28 | 0.09 | 1.13 | 4.50 | 4.37 | 3.43 | 6.00 |
+| GS-D-W 2M | validation_ranged | stationary/combined | 71 | 0.5 | 0.1 | 6.0 | 0 | 7.5 | 0 | 11.01 | 10.52 | 4.19 | 18.78 | 0.97 | 0.95 | 0.46 | 1.49 | 3.13 | 2.97 | 1.05 | 4.87 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 11 | 42.5 | 31.6 | 0 | 0 | 30.7 | 0 | 6.88 | 5.41 | 1.00 | 18.85 | 0.08 | 0.07 | 0.00 | 0.19 | 2.69 | 2.65 | 2.21 | 3.21 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 23 | 35.1 | 30.3 | 2.9 | 0 | 0 | 0 | 3.60 | 3.25 | 1.00 | 8.45 | 1.10 | 1.13 | 0.76 | 1.26 | 2.01 | 1.72 | 1.01 | 3.73 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 37 | 40.4 | 19.5 | 38.5 | 7.7 | 64.5 | 0 | 19.59 | 15.75 | 1.00 | 57.30 | 0.04 | 0.01 | 0.00 | 0.15 | 2.75 | 2.75 | 0.00 | 5.21 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 53 | 64.7 | 59.9 | 0.1 | 0 | 5.8 | 0 | 4.04 | 1.00 | 1.00 | 18.64 | 0.55 | 0.37 | 0.17 | 1.21 | 4.71 | 4.58 | 3.88 | 6.00 |
+| GS-D-W 2M | validation_ranged | stationary/delay | 71 | 0.1 | 0 | 12.3 | 0 | 5.5 | 0 | 12.47 | 11.54 | 5.05 | 20.58 | 1.11 | 1.17 | 0.61 | 1.50 | 2.86 | 3.18 | 0.62 | 4.70 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 11 | 58.8 | 53.1 | 0 | 0 | 36.6 | 0 | 2.91 | 1.00 | 1.00 | 8.78 | 0.07 | 0.05 | 0.00 | 0.17 | 2.47 | 2.50 | 1.71 | 3.02 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 23 | 41.3 | 33.9 | 6.0 | 0 | 0 | 0 | 2.68 | 2.43 | 1.00 | 5.20 | 0.96 | 1.01 | 0.67 | 1.16 | 2.28 | 2.24 | 1.13 | 3.65 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 37 | 59.9 | 54.4 | 29.3 | 24.6 | 74.5 | 0 | 16.70 | 1.00 | 1.00 | 67.33 | 0.01 | 0.00 | 0.00 | 0.04 | 3.76 | 5.02 | 0.00 | 5.76 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 53 | 91.9 | 88.4 | 0.5 | 0 | 7.0 | 0 | 1.24 | 1.00 | 1.00 | 2.49 | 0.37 | 0.19 | 0.04 | 1.10 | 4.37 | 4.39 | 2.54 | 5.85 |
+| GS-D-W 2M | validation_ranged | stationary/noise | 71 | 0.1 | 0 | 2.3 | 0 | 0.5 | 0 | 11.59 | 10.86 | 6.03 | 19.09 | 1.08 | 1.21 | 0.42 | 1.50 | 2.78 | 2.79 | 1.28 | 4.47 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 11 | 2.7 | 1.2 | 0 | 0 | 44.3 | 0 | 7.46 | 8.20 | 2.20 | 11.22 | 0.04 | 0.04 | 0.00 | 0.09 | 2.71 | 2.63 | 2.46 | 3.02 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 23 | 0.3 | 0 | 0 | 0 | 0 | 0 | 4.67 | 4.74 | 3.18 | 5.79 | 1.11 | 1.12 | 1.08 | 1.16 | 2.52 | 2.68 | 1.32 | 3.24 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 37 | 0.0 | 0 | 99.6 | 87.1 | 97.0 | 0 | 53.54 | 49.90 | 35.11 | 84.96 | 0.01 | 0.00 | 0.00 | 0.02 | 0.29 | 0.00 | 0.00 | 2.72 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 53 | 38.3 | 28.5 | 0 | 0 | 0 | 0 | 10.57 | 8.79 | 1.00 | 22.86 | 1.17 | 1.19 | 1.09 | 1.24 | 5.57 | 5.51 | 4.91 | 6.00 |
+| GS-D-W 2M | validation_ranged | stationary/nominal | 71 | 0 | 0 | 0 | 0 | 0 | 0 | 16.91 | 16.96 | 10.93 | 20.42 | 1.37 | 1.40 | 1.16 | 1.50 | 3.27 | 3.49 | 2.16 | 4.56 |
+| GS-D-W 2M | validation_ranged | transient/combined | 11 | 55.9 | 50.8 | 0 | 0 | 35.3 | 0 | 3.72 | 1.00 | 1.00 | 11.79 | 0.08 | 0.06 | 0.00 | 0.20 | 2.53 | 2.54 | 1.89 | 3.05 |
+| GS-D-W 2M | validation_ranged | transient/combined | 23 | 47.8 | 42.0 | 6.8 | 0 | 0 | 0 | 2.73 | 1.91 | 1.00 | 6.00 | 1.01 | 1.01 | 0.75 | 1.21 | 1.97 | 1.91 | 0.98 | 3.20 |
+| GS-D-W 2M | validation_ranged | transient/combined | 37 | 56.6 | 47.8 | 29.9 | 13.5 | 72.0 | 0 | 16.89 | 1.40 | 1.00 | 63.70 | 0.02 | 0.00 | 0.00 | 0.09 | 3.33 | 4.66 | 0.00 | 5.69 |
+| GS-D-W 2M | validation_ranged | transient/combined | 53 | 79.0 | 76.9 | 1.1 | 0 | 7.2 | 0 | 3.94 | 1.00 | 1.00 | 22.45 | 0.39 | 0.19 | 0.05 | 1.23 | 4.14 | 3.97 | 2.65 | 6.00 |
+| GS-D-W 2M | validation_ranged | transient/combined | 71 | 0.4 | 0.1 | 4.2 | 0 | 4.3 | 0 | 11.23 | 10.37 | 5.08 | 20.40 | 0.96 | 0.88 | 0.51 | 1.50 | 3.20 | 3.28 | 1.14 | 4.59 |
+| GS-D-W 2M | validation_ranged | transient/delay | 11 | 33.0 | 28.4 | 0 | 0 | 33.6 | 0 | 6.42 | 6.00 | 1.00 | 16.24 | 0.08 | 0.07 | 0.00 | 0.21 | 2.65 | 2.62 | 2.16 | 3.14 |
+| GS-D-W 2M | validation_ranged | transient/delay | 23 | 33.4 | 30.9 | 3.7 | 0 | 0 | 0 | 3.52 | 3.81 | 1.00 | 6.53 | 1.12 | 1.13 | 0.96 | 1.27 | 1.93 | 1.75 | 0.95 | 3.22 |
+| GS-D-W 2M | validation_ranged | transient/delay | 37 | 38.5 | 28.6 | 47.6 | 24.1 | 76.2 | 0 | 26.24 | 17.59 | 1.00 | 70.39 | 0.03 | 0.00 | 0.00 | 0.12 | 2.31 | 2.29 | 0.00 | 5.07 |
+| GS-D-W 2M | validation_ranged | transient/delay | 53 | 57.2 | 53.0 | 0.6 | 0 | 4.1 | 0 | 6.76 | 1.00 | 1.00 | 22.86 | 0.72 | 0.62 | 0.17 | 1.24 | 4.95 | 4.91 | 3.66 | 6.00 |
+| GS-D-W 2M | validation_ranged | transient/delay | 71 | 0.4 | 0.0 | 7.2 | 0.2 | 8.5 | 0 | 12.85 | 12.59 | 3.96 | 20.60 | 1.02 | 1.10 | 0.15 | 1.50 | 3.36 | 3.65 | 1.18 | 4.86 |
+| GS-D-W 2M | validation_ranged | transient/noise | 11 | 36.4 | 31.9 | 0 | 0 | 43.0 | 0 | 4.55 | 3.59 | 1.00 | 11.10 | 0.05 | 0.04 | 0.00 | 0.13 | 2.62 | 2.60 | 2.13 | 3.01 |
+| GS-D-W 2M | validation_ranged | transient/noise | 23 | 23.6 | 19.5 | 3.5 | 0 | 0 | 0 | 3.44 | 3.70 | 1.00 | 5.78 | 1.05 | 1.11 | 0.76 | 1.16 | 2.23 | 2.20 | 1.17 | 3.24 |
+| GS-D-W 2M | validation_ranged | transient/noise | 37 | 9.5 | 8.1 | 86.0 | 72.2 | 88.7 | 0 | 48.24 | 48.07 | 1.00 | 84.63 | 0.01 | 0.00 | 0.00 | 0.05 | 0.78 | 0.00 | 0.00 | 5.22 |
+| GS-D-W 2M | validation_ranged | transient/noise | 53 | 74.0 | 69.9 | 0.2 | 0 | 5.3 | 0 | 4.67 | 1.00 | 1.00 | 22.69 | 0.64 | 0.68 | 0.06 | 1.24 | 4.82 | 4.95 | 2.96 | 6.00 |
+| GS-D-W 2M | validation_ranged | transient/noise | 71 | 0.0 | 0 | 3.4 | 0 | 0.0 | 0 | 14.31 | 14.39 | 7.31 | 20.39 | 1.30 | 1.38 | 0.79 | 1.50 | 2.70 | 2.66 | 0.61 | 4.55 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 11 | 2.7 | 1.2 | 0 | 0 | 44.3 | 0 | 7.46 | 8.20 | 2.20 | 11.22 | 0.04 | 0.04 | 0.00 | 0.09 | 2.71 | 2.63 | 2.46 | 3.02 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 23 | 0.3 | 0 | 0 | 0 | 0 | 0 | 4.67 | 4.74 | 3.18 | 5.79 | 1.11 | 1.12 | 1.08 | 1.16 | 2.52 | 2.68 | 1.32 | 3.24 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 37 | 0.0 | 0 | 99.6 | 87.1 | 97.0 | 0 | 53.54 | 49.90 | 35.11 | 84.96 | 0.01 | 0.00 | 0.00 | 0.02 | 0.29 | 0.00 | 0.00 | 2.72 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 53 | 38.3 | 28.5 | 0 | 0 | 0 | 0 | 10.57 | 8.79 | 1.00 | 22.86 | 1.17 | 1.19 | 1.09 | 1.24 | 5.57 | 5.51 | 4.91 | 6.00 |
+| GS-D-W 2M | validation_ranged | transient/nominal | 71 | 0 | 0 | 0 | 0 | 0 | 0 | 16.91 | 16.96 | 10.93 | 20.42 | 1.37 | 1.40 | 1.16 | 1.50 | 3.27 | 3.49 | 2.16 | 4.56 |
+
+</details>
+
+### 12.2 Frozen gains, GS-D-W 2M (same construction as §8.1: mean applied gains on `validation.json`, F-clean from nominal scenarios, F-delay from delay and combined scenarios, evaluated as constant gains on the ranged held-out set with the checkpoint's own gain range and rate limit)
+
+| arm | seed | F-clean Kp / Ki / Kd | F-delay Kp / Ki / Kd |
+|---|---|---|---|
+| GS-D-W 2M | 11 | 7.46 / 0.043 / 2.71 | 7.33 / 0.078 / 2.72 |
+| GS-D-W 2M | 23 | 4.67 / 1.113 / 2.52 | 3.39 / 1.146 / 1.77 |
+| GS-D-W 2M | 37 | 53.54 / 0.009 / 0.29 | 19.50 / 0.034 / 2.13 |
+| GS-D-W 2M | 53 | 10.57 / 1.174 / 5.57 | 4.01 / 0.496 / 4.65 |
+| GS-D-W 2M | 71 | 16.91 / 1.373 / 3.27 | 12.63 / 1.206 / 2.37 |
+
+**Completion in the four delay-bearing cells (%)**
+
+| arm | seed | dynamic | F-clean | F-delay | dynamic − best frozen (pp) | flag (> 5 pp) |
+|---|---|---|---|---|---|---|
+| GS-D-W 2M | 11 | 100 | 90.8 | 92.1 | +7.9 | **yes** |
+| GS-D-W 2M | 23 | 97.9 | 97.9 | 98.8 | -0.8 |  |
+| GS-D-W 2M | 37 | 94.6 | 15.4 | 47.5 | +47.1 | **yes** |
+| GS-D-W 2M | 53 | 96.7 | 90.4 | 95.8 | +0.8 |  |
+| GS-D-W 2M | 71 | 89.6 | 67.9 | 65.8 | +21.7 | **yes** |
+| GS-D-W 2M | mean | 95.7 | 72.5 | 80.0 | +15.7 |  |
+
+- **Gain occupancy, GS-D-W 2M, ranged held-out:**
+  - The Kp target is at the lower edge of the wide range (Kp ≤ 1.5) in 23.7–44.6 % of steps in the disturbed
+    conditions, and 7.7 % in nominal.
+  - The applied Kp is on the floor (Kp = 1) in 20.8–38.0 % of disturbed-condition steps, and 6.0 % in nominal.
+  - At 300k (GS-D-W, §8.2) the floor shares were 15.1–27.6 % and 0.1 %.
+- **Medians (ranged held-out):** applied Kp 3.75–6.74 in the disturbed conditions and 8.64 in nominal; applied
+  Kd 2.63–3.18 (2.77 in nominal). The Kp target never reaches the upper edge (≤ 0.05 % of steps).
+- **Frozen gains, GS-D-W 2M, delay-bearing cells:** mean completion is 95.7 % with dynamic gains, 72.5 % with
+  F-clean and 80.0 % with F-delay.
+  - Flagged seeds: 11 (+7.9 pp), 37 (+47.1 pp) and 71 (+21.7 pp).
+  - Seeds 11 and 23 kept the same checkpoint as their 300k runs, so their frozen gains and completions equal
+    §8.1.
+- **Machine:** all §12 numbers come from job 3347265 on cpunode04 (AMD EPYC 9334). The replayed dynamic rows match
+  the G4 rows bit for bit.

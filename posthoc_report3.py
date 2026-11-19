@@ -588,6 +588,59 @@ def observation_table() -> str:
         "come from their separate controller profiles.")
 
 
+def frozen_tables(gains_dir: str, eval_dir: str, arms: list[str]) -> tuple[str, str]:
+    gains = meta(P3 / gains_dir / "frozen_gains.json")["gains"]
+    g_rows = []
+    for arm in arms:
+        for s in SEEDS:
+            v = gains[arm][s]
+            g_rows.append([SHORT[arm], s] + [
+                f"{v[k]['mean']['kp']:.2f} / {v[k]['mean']['ki']:.3f} / {v[k]['mean']['kd']:.2f}" for k in ("clean", "delay")])
+    ep = read_csv(P3 / eval_dir / "episodes.csv")
+    c_rows = []
+    for arm in arms:
+        per = {v: r2.seed_completion(ep, name, r2.DELAY_CELLS) for v, name in
+               (("dyn", arm), ("clean", f"{arm}_frozen_clean"), ("delay", f"{arm}_frozen_delay"))}
+        for s in SEEDS + ("mean",):
+            vals = {v: (np.mean(list(p.values())) if s == "mean" else p[s]) for v, p in per.items()}
+            gap = vals["dyn"] - max(vals["clean"], vals["delay"])
+            c_rows.append([SHORT[arm], s, pct(vals["dyn"]), pct(vals["clean"]), pct(vals["delay"]),
+                           f"{gap * 100:+.1f}", "**yes**" if s != "mean" and gap > 0.05 else ""])
+    return (table(["arm", "seed", "F-clean Kp / Ki / Kd", "F-delay Kp / Ki / Kd"], g_rows),
+            table(["arm", "seed", "dynamic", "F-clean", "F-delay", "dynamic − best frozen (pp)", "flag (> 5 pp)"],
+                  c_rows))
+
+
+def g12_section() -> str:
+    rows = []
+    for name, file in (("g5_occupancy_2m", "metadata.json"), ("g5_frozen_gains_2m", "frozen_gains.json"),
+                       ("g5_frozen_eval_2m", "metadata.json")):
+        m = meta(P3 / name / file)
+        rows.append([f"`{name}`", m["machine"].get("slurm_job_id", "?"), m["machine"]["node"].split(".")[0],
+                     f"`{m['git']['commit'][:7]}`" + (" dirty" if m["git"].get("dirty") else ""),
+                     m.get("episodes", m.get("jobs", "–")), f"{m['wall_time_s'] / 60:.1f}"])
+    rc = meta(P3 / "g5_frozen_eval_2m" / "replay_check.json")
+    occ, occ_seed = occupancy_tables("g5_occupancy_2m", [GSDW2M])
+    gains, completion = frozen_tables("g5_frozen_gains_2m", "g5_frozen_eval_2m", [GSDW2M])
+    return "\n\n".join([
+        "Follow-up job `slurm_plan3b.sh`: replays the five GS-D-W 2M checkpoints (the main scheduler, thesis name "
+        "\"GS-D\") with the same tools and settings as §1.2 and §8. No training.",
+        table(["output", "SLURM job", "node", "commit", "episodes / jobs", "wall min"], rows),
+        f"- **Machine:** AMD EPYC 9334, 16 cores. `check_parity.py` printed `PARITY OK`.\n"
+        f"- **Replay check:** the dynamic GS-D-W 2M rows of this job reproduce {rc['bit_identical_rows']} of "
+        f"{rc['rows_checked']} rows of `g4_heldout_ranged_g2` bit for bit.",
+        "### 12.1 Gain occupancy, GS-D-W 2M (same definitions as §1.2: edges in action coordinates, the Kp lower edge "
+        "is Kp ≤ 1.5 on the wide range; percentages step-weighted over seeds; medians = median of per-seed medians)",
+        occ, details("Per seed (incl. mean / median / p5 / p95 of every gain)", occ_seed),
+        "### 12.2 Frozen gains, GS-D-W 2M (same construction as §8.1: mean applied gains on `validation.json`, "
+        "F-clean from nominal scenarios, F-delay from delay and combined scenarios, evaluated as constant gains on the "
+        "ranged held-out set with the checkpoint's own gain range and rate limit)",
+        gains,
+        "**Completion in the four delay-bearing cells (%)**",
+        completion,
+    ])
+
+
 def observations() -> dict[str, str]:
     path = ROOT / "posthoc_observations3.md"
     if not path.exists():
@@ -673,6 +726,7 @@ def build() -> str:
         "**Figures** (`artifacts/results/posthoc3/figures/`, PDF + 300 dpi PNG; same colour/marker scheme as plan 2; "
         "the chosen scheduler versions take the GS-D / GS-N colours, the plan-2 GS-D is a thin grey line).",
         table(["file", "content"], ([f"`{n}`", c] for n, c in FIGURES)),
+        "## 12. GS-D (2M) gain occupancy and frozen gains (follow-up)", g12_section(), o("G12"),
     ]
     return "\n\n".join(part for part in out if part) + "\n"
 

@@ -146,3 +146,20 @@
   - fixed PIDs 0.6–1.0 µs (constant action only);
   - learned policies 278–343 µs mean, with per-episode 99th percentiles of about 310 µs (GS-N-W: 392 µs);
   - the decision period is 20 ms.
+
+## G12
+
+- **Gain occupancy, GS-D-W 2M, ranged held-out:**
+  - The Kp target is at the lower edge of the wide range (Kp ≤ 1.5) in 23.7–44.6 % of steps in the disturbed
+    conditions, and 7.7 % in nominal.
+  - The applied Kp is on the floor (Kp = 1) in 20.8–38.0 % of disturbed-condition steps, and 6.0 % in nominal.
+  - At 300k (GS-D-W, §8.2) the floor shares were 15.1–27.6 % and 0.1 %.
+- **Medians (ranged held-out):** applied Kp 3.75–6.74 in the disturbed conditions and 8.64 in nominal; applied
+  Kd 2.63–3.18 (2.77 in nominal). The Kp target never reaches the upper edge (≤ 0.05 % of steps).
+- **Frozen gains, GS-D-W 2M, delay-bearing cells:** mean completion is 95.7 % with dynamic gains, 72.5 % with
+  F-clean and 80.0 % with F-delay.
+  - Flagged seeds: 11 (+7.9 pp), 37 (+47.1 pp) and 71 (+21.7 pp).
+  - Seeds 11 and 23 kept the same checkpoint as their 300k runs, so their frozen gains and completions equal
+    §8.1.
+- **Machine:** all §12 numbers come from job 3347265 on cpunode04 (AMD EPYC 9334). The replayed dynamic rows match
+  the G4 rows bit for bit.
