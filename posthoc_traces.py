@@ -137,6 +137,8 @@ def main() -> None:
     parser.add_argument("--calibration", default=str(config.ROOT / "artifacts" / "calibration" / "calibration.json"))
     parser.add_argument("--scheduler-calibration",
                         default=str(config.ROOT / "artifacts" / "calibration" / "blind_ppo.json"))
+    parser.add_argument("--warn-only", action="store_true",
+                        help="report but do not fail on replay-check differences (provisional runs off the cluster)")
     parser.add_argument("--workers", type=int, default=0)
     parser.add_argument("--chunk", type=int, default=12)
     args = parser.parse_args()
@@ -182,7 +184,11 @@ def main() -> None:
     for check in checks:
         print(f"replay check: {check['rows_checked']} rows checked ({check['unmatched_rows']} without a reference), "
               f"{check['identical_rows']} identical")
-        if check["rows_checked"] == 0 or check["identical_rows"] != check["rows_checked"] or check["unmatched_rows"]:
+        failed = check["rows_checked"] == 0 or check["identical_rows"] != check["rows_checked"] or check["unmatched_rows"]
+        if failed and args.warn_only:
+            print("replay check: rows differ from the reference (allowed with --warn-only: provisional run on "
+                  "another machine)")
+        elif failed:
             raise SystemExit("replay check FAILED")
 
 

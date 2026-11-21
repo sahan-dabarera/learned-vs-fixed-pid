@@ -30,7 +30,13 @@
 set -euo pipefail
 
 VENV="${VENV:-.venv}"
-OUT="${OUT:-artifacts/results/posthoc5}"
+# LOCAL=1 runs it off the cluster as a provisional run (e.g. VENV=../venv LOCAL=1 bash slurm_t02.sh):
+# results go to posthoc5_local and replay-check differences are reported, not fatal.
+if [ -n "${LOCAL:-}" ]; then
+  OUT="${OUT:-artifacts/results/posthoc5_local}"; WARN=(--warn-only)
+else
+  OUT="${OUT:-artifacts/results/posthoc5}"; WARN=()
+fi
 P2=artifacts/models/posthoc/plan2
 P3=artifacts/models/posthoc/plan3
 P4=artifacts/models/posthoc/plan4
@@ -49,11 +55,11 @@ PATHS=(10019 10001 10014)
 
 cd "${SLURM_SUBMIT_DIR:-$(dirname "$0")}"
 # shellcheck disable=SC1091
-source "${VENV}/bin/activate"
+if [ -f "${VENV}/bin/activate" ]; then source "${VENV}/bin/activate"; else source "${VENV}/Scripts/activate"; fi
 export OMP_NUM_THREADS=1 MKL_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1
 
 echo "host      : $(hostname)"
-echo "cpu       : $(lscpu | grep 'Model name' | sed 's/.*: *//')"
+echo "cpu       : $( (lscpu 2>/dev/null || true) | grep 'Model name' | sed 's/.*: *//')"
 echo "job       : ${SLURM_JOB_ID:-none}, ${SLURM_CPUS_PER_TASK:-?} cores"
 echo "commit    : $(git rev-parse HEAD) ($(git rev-parse --abbrev-ref HEAD))"
 stage() { echo; echo "=== $1 ($(date -u +%H:%M:%S) UTC) ==="; }
@@ -92,7 +98,7 @@ if ! done_in "${OUT}/frozen_eval_new" episodes.csv; then
     --frozen-gains "${OUT}/frozen_gains_new/frozen_gains.json" \
     --extra-arm "${GSD}=${P4}" --extra-arm "${GSN}=${P4}" --output "${OUT}/frozen_eval_new"
   python posthoc_replay_check.py "${OUT}/frozen_eval_new/episodes.csv" "${R4}/heldout_ranged/episodes.csv" \
-    --output "${OUT}/frozen_eval_new/replay_check.json"
+    --output "${OUT}/frozen_eval_new/replay_check.json" || [ -n "${LOCAL:-}" ]
 fi
 
 ARMS=(--arm "${GSD}=${P3}:${OLD}" --arm "${GSD}=${P4}:${NEW}"
@@ -112,7 +118,7 @@ done_in "${OUT}/traces_heldout" episodes.csv || \
     --reference "${R2}/f2_heldout_ranged/episodes.csv" \
     --reference "${R3}/g4_heldout_ranged_g1/episodes.csv" --reference "${R3}/g4_heldout_ranged_g2/episodes.csv" \
     --reference "${R4}/heldout_ranged/episodes.csv" --reference "${R2}/pidrn_f2_heldout_ranged/episodes.csv" \
-    --output "${OUT}/traces_heldout"
+    "${WARN[@]+"${WARN[@]}"}" --output "${OUT}/traces_heldout"
 
 stage "W17 c: dynamic delay on the three paths, all traced"
 ONLY=()
@@ -122,7 +128,7 @@ done_in "${OUT}/traces_dynamic" episodes.csv || \
     --reference "${R2}/f4_dynamic_existing/episodes.csv" --reference "${R2}/f4_dynamic_new/episodes.csv" \
     --reference "${R3}/g4_dynamic_g1/episodes.csv" --reference "${R3}/g4_dynamic_g2/episodes.csv" \
     --reference "${R4}/dynamic/episodes.csv" --reference "${R2}/pidrn_f4_dynamic/episodes.csv" \
-    --output "${OUT}/traces_dynamic"
+    "${WARN[@]+"${WARN[@]}"}" --output "${OUT}/traces_dynamic"
 
 stage "done"
 echo "pack: tar czf t02_results.tgz ${OUT} slurm-thesis-t02-${SLURM_JOB_ID:-x}.out"
