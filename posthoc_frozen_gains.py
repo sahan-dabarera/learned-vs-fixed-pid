@@ -94,6 +94,7 @@ def main() -> None:
     parser.add_argument("--scheduler-calibration", default=str(config.ROOT / "artifacts" / "calibration" / "blind_ppo.json"))
     parser.add_argument("--models-root", default=str(config.ROOT / "artifacts" / "models" / "final"))
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--seeds", help="comma-separated seeds (default: the five final seeds)")
     parser.add_argument("--arm", action="append", default=[],
                         help="scheduler arm under --models-root (default: the two sealed scheduler arms)")
     args = parser.parse_args()
@@ -108,7 +109,8 @@ def main() -> None:
 
     jobs = []
     for arm in args.arm or SCHEDULER_ARMS:
-        for seed in config.CONFIG.final_training_seeds:
+        for seed in (tuple(int(v) for v in args.seeds.split(",")) if args.seeds
+                     else config.CONFIG.final_training_seeds):
             path = Path(args.models_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
                 raise FileNotFoundError(path)

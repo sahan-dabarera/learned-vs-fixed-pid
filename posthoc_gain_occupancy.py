@@ -94,6 +94,7 @@ def main() -> None:
     parser.add_argument("--scheduler-calibration", default=str(config.ROOT / "artifacts" / "calibration" / "blind_ppo.json"))
     parser.add_argument("--output", required=True)
     parser.add_argument("--workers", type=int, default=0)
+    parser.add_argument("--seeds", help="comma-separated seeds (default: the five final seeds)")
     args = parser.parse_args()
 
     output = Path(args.output).resolve()
@@ -102,7 +103,8 @@ def main() -> None:
     jobs = []
     for entry in args.arm:
         arm, manifest = entry.split("=", 1)
-        for seed in config.CONFIG.final_training_seeds:
+        for seed in (tuple(int(v) for v in args.seeds.split(",")) if args.seeds
+                     else config.CONFIG.final_training_seeds):
             path = Path(args.models_root).resolve() / arm / f"seed_{seed}" / "best_model.zip"
             if not path.is_file():
                 raise FileNotFoundError(path)
