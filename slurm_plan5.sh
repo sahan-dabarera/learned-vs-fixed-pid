@@ -8,15 +8,18 @@
 #           checkpoint), held-out ranged + fixed, gain occupancy, frozen gains.
 #           Effort, event metrics and decision time of the main arms need no run:
 #           they are columns of the plan-4 evaluation rows (posthoc4).
-#   Tier 2  schedulers, 300k: narrow-range GS-D (plan-2 ranged_h1), GS-D-W H10
+#   Tier 2  schedulers, 300k: narrow-range GS-D (plan-2 ranged_h1), narrow-range GS-N
+#           (plan-2 nominal_h1, the one-frame twin of the clean H10 scheduler), GS-D-W H10
 #           (plan-3 ranged_h10_wide), narrow H10 clean / range / point (sealed nominal,
 #           plan-2 ranged_h10, sealed disturbed), point-trained one frame (posthoc2 E5
 #           disturbed_h1). Held-out ranged + fixed; occupancy and frozen gains where the
-#           seed 11-71 runs have them (ranged_h1: G0 occupancy + F6 frozen; sealed
-#           nominal/disturbed: E3 frozen on the fixed held-out set).
+#           seed 11-71 runs have them (ranged_h1, nominal_h1: G0 occupancy + F6 frozen;
+#           sealed nominal/disturbed: E3 frozen on the fixed held-out set); delay sweep and
+#           dynamic delay (F3/F4) for the training-range pair ranged_h1 / disturbed_h1.
 #   Tier 3  direct PPO, 2M: DR-N H10 (sealed nominal), DR-D H10 (plan-2 ranged_h10),
 #           DR-D H10 point (sealed disturbed), point-trained one frame (E5 disturbed_h1).
-#           Held-out ranged + fixed.
+#           Held-out ranged + fixed; delay sweep and dynamic delay for disturbed_h1
+#           (point-trained DR-D; its range-trained twin DR-D has them in posthoc4).
 #
 # Laptop (default here):  VENV=../venv TIERS="1 2 3" bash slurm_plan5.sh > artifacts/results/plan5.log 2>&1
 # Cluster:                sbatch --nodelist=cpunode13.dyn.scc.plus.ac.at slurm_plan5.sh
@@ -98,6 +101,15 @@ evaluate() {  # tag, arms...: ranged and fixed held-out sets + validation scores
   done_in "${OUT}/${tag}_heldout_fixed" episodes.csv || \
     python posthoc_eval.py "${args[@]}" --manifest manifests/held_out.json --output "${OUT}/${tag}_heldout_fixed"
 }
+stress() {  # tag, arms...: constant-delay sweep and dynamic delay (F3 / F4 manifests)
+  local tag=$1; shift
+  local args=(--no-default --seeds "${SEEDS}")
+  for A in "$@"; do args+=(--extra-arm "${A}=${NEW}"); done
+  done_in "${OUT}/${tag}_delay" episodes.csv || \
+    python posthoc_eval.py "${args[@]}" --manifest "${MAN}/delay_wide.json" --output "${OUT}/${tag}_delay"
+  done_in "${OUT}/${tag}_dynamic" episodes.csv || \
+    python posthoc_eval.py "${args[@]}" --manifest "${MAN}/dynamic.json" --output "${OUT}/${tag}_dynamic"
+}
 
 stage "parity gate"
 python check_parity.py || echo "parity gate: differences (expected off the EPYC nodes; recorded, not fatal)"
@@ -124,10 +136,11 @@ case "${TIER}" in
       --extra-arm "ppo_scheduler_ranged_h1_wide=${NEW}" --output "${OUT}/t1_frozen_eval"
   ;;
 2)
-  T2=(ppo_scheduler_ranged_h1 ppo_scheduler_ranged_h10_wide ppo_scheduler_nominal ppo_scheduler_ranged_h10
+  T2=(ppo_scheduler_ranged_h1 ppo_scheduler_nominal_h1 ppo_scheduler_ranged_h10_wide ppo_scheduler_nominal ppo_scheduler_ranged_h10
       ppo_scheduler_disturbed ppo_scheduler_disturbed_h1)
   stage "Tier 2: scheduler training (300k)"
   train ppo_scheduler_ranged_h1        scheduled --only-regime disturbed "${SAMPLER[@]}" "${H1[@]}"   # plan 2
+  train ppo_scheduler_nominal_h1       scheduled --only-regime nominal "${H1[@]}"   # plan 2
   train ppo_scheduler_ranged_h10_wide  scheduled --only-regime disturbed "${SAMPLER[@]}" "${WIDEBOX[@]}"  # plan 3
   train ppo_scheduler_nominal          scheduled --only-regime nominal     # sealed defaults
   train ppo_scheduler_ranged_h10       scheduled --only-regime disturbed "${SAMPLER[@]}"   # plan 2
@@ -136,19 +149,24 @@ case "${TIER}" in
   wait_training "${T2[@]}"
   stage "Tier 2: evaluation"
   evaluate t2 "${T2[@]}"
-  stage "Tier 2: narrow GS-D occupancy (G0 construction) and frozen gains (F6, E3 constructions)"
+  stage "Tier 2: delay sweep and dynamic delay, narrow GS-D range / point"
+  stress t2 ppo_scheduler_ranged_h1 ppo_scheduler_disturbed_h1
+  stage "Tier 2: narrow GS-D / GS-N occupancy (G0 construction) and frozen gains (F6, E3 constructions)"
   done_in "${OUT}/t2_occupancy" occupancy.csv || \
     python posthoc_gain_occupancy.py --models-root "${NEW}" --seeds "${SEEDS}" \
       --arm "ppo_scheduler_ranged_h1=${MAN}/validation_ranged.json" \
-      --arm "ppo_scheduler_ranged_h1=${MAN}/held_out_ranged.json" --output "${OUT}/t2_occupancy"
+      --arm "ppo_scheduler_ranged_h1=${MAN}/held_out_ranged.json" \
+      --arm "ppo_scheduler_nominal_h1=manifests/validation.json" \
+      --arm "ppo_scheduler_nominal_h1=${MAN}/held_out_ranged.json" --output "${OUT}/t2_occupancy"
   done_in "${OUT}/t2_frozen_gains" frozen_gains.json || \
     python posthoc_frozen_gains.py --models-root "${NEW}" --seeds "${SEEDS}" \
-      --arm ppo_scheduler_ranged_h1 --arm ppo_scheduler_nominal --arm ppo_scheduler_disturbed \
-      --output "${OUT}/t2_frozen_gains"
+      --arm ppo_scheduler_ranged_h1 --arm ppo_scheduler_nominal_h1 \
+      --arm ppo_scheduler_nominal --arm ppo_scheduler_disturbed --output "${OUT}/t2_frozen_gains"
   done_in "${OUT}/t2_frozen_eval_ranged" episodes.csv || \
     python posthoc_eval.py --no-default --seeds "${SEEDS}" --manifest "${MAN}/held_out_ranged.json" \
       --frozen-gains "${OUT}/t2_frozen_gains/frozen_gains.json" \
-      --extra-arm "ppo_scheduler_ranged_h1=${NEW}" --output "${OUT}/t2_frozen_eval_ranged"
+      --extra-arm "ppo_scheduler_ranged_h1=${NEW}" --extra-arm "ppo_scheduler_nominal_h1=${NEW}" \
+      --output "${OUT}/t2_frozen_eval_ranged"
   done_in "${OUT}/t2_frozen_eval_fixed" episodes.csv || \
     python posthoc_eval.py --no-default --seeds "${SEEDS}" --manifest manifests/held_out.json \
       --frozen-gains "${OUT}/t2_frozen_gains/frozen_gains.json" \
@@ -165,6 +183,8 @@ case "${TIER}" in
   wait_training "${T3[@]}"
   stage "Tier 3: evaluation"
   evaluate t3 "${T3[@]}"
+  stage "Tier 3: delay sweep and dynamic delay, point-trained DR-D (one frame)"
+  stress t3 ppo_direct_disturbed_h1
   ;;
 *) echo "unknown tier ${TIER}"; exit 1 ;;
 esac
