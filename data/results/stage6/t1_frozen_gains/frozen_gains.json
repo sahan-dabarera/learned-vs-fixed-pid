@@ -1,0 +1,321 @@
+{
+  "description": "Time-averaged applied scheduler gains on the validation manifest",
+  "variants": {
+    "clean": [
+      "nominal"
+    ],
+    "delay": [
+      "delay",
+      "combined"
+    ]
+  },
+  "gains": {
+    "ppo_scheduler_ranged_h1_wide": {
+      "83": {
+        "clean": {
+          "mean": {
+            "kp": 21.704925420769193,
+            "ki": 1.4665716467294465,
+            "kd": 5.014321076318819
+          },
+          "median": {
+            "kp": 21.43551839888096,
+            "ki": 1.5,
+            "kd": 5.051086378097534
+          },
+          "std": {
+            "kp": 2.606047177842424,
+            "ki": 0.14491325819425546,
+            "kd": 0.11890929141258272
+          },
+          "policy_steps": 23574,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 9.784850248269455,
+            "ki": 0.77077779538956,
+            "kd": 4.588437290392987
+          },
+          "median": {
+            "kp": 8.345608258247376,
+            "ki": 0.6255436220765116,
+            "kd": 4.722792453765869
+          },
+          "std": {
+            "kp": 7.697195552266063,
+            "ki": 0.33548156918598127,
+            "kd": 0.4742600561085964
+          },
+          "policy_steps": 54474,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "97": {
+        "clean": {
+          "mean": {
+            "kp": 1.09357386316402,
+            "ki": 0.19699236607209222,
+            "kd": 0.5771042917390938
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.2419547736644745,
+            "kd": 0.3641454696655275
+          },
+          "std": {
+            "kp": 1.2054133330456949,
+            "ki": 0.1945231228232216,
+            "kd": 0.8645419377732412
+          },
+          "policy_steps": 24058,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 2.246528760116974,
+            "ki": 0.15531478445862754,
+            "kd": 1.0956003430553496
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.06,
+            "kd": 0.8998897075653082
+          },
+          "std": {
+            "kp": 3.228806213302626,
+            "ki": 0.17318646148065697,
+            "kd": 0.8631049159806098
+          },
+          "policy_steps": 56491,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "109": {
+        "clean": {
+          "mean": {
+            "kp": 1.0951479289940822,
+            "ki": 0.20448991711187037,
+            "kd": 4.954466765608912
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.2011285275220871,
+            "kd": 4.9733463525772095
+          },
+          "std": {
+            "kp": 1.2154479567278929,
+            "ki": 0.03319360345150315,
+            "kd": 0.12737584150322623
+          },
+          "policy_steps": 23660,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 1.5157874521540566,
+            "ki": 0.05506689518111686,
+            "kd": 4.708038246619812
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.020890622735023498,
+            "kd": 4.741264910697938
+          },
+          "std": {
+            "kp": 1.7941558377508975,
+            "ki": 0.08040465015070711,
+            "kd": 0.24846926592980226
+          },
+          "policy_steps": 52736,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "127": {
+        "clean": {
+          "mean": {
+            "kp": 1.0948672566371676,
+            "ki": 1.4081867019642864,
+            "kd": 4.231709531401494
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 1.434470772743225,
+            "kd": 4.365
+          },
+          "std": {
+            "kp": 1.2136649061839442,
+            "ki": 0.1314317740774446,
+            "kd": 0.3594168173087502
+          },
+          "policy_steps": 23730,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 1.080551872098142,
+            "ki": 1.2045842602487982,
+            "kd": 2.929267807614443
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 1.219534800052643,
+            "kd": 2.733865678310396
+          },
+          "std": {
+            "kp": 1.1043192515104274,
+            "ki": 0.1507441888137444,
+            "kd": 0.6498847423404357
+          },
+          "policy_steps": 57533,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "149": {
+        "clean": {
+          "mean": {
+            "kp": 17.410515350227456,
+            "ki": 0.8727110496548663,
+            "kd": 1.4007169254533263
+          },
+          "median": {
+            "kp": 17.38900451362133,
+            "ki": 0.8600000000000003,
+            "kd": 1.4652703046798707
+          },
+          "std": {
+            "kp": 1.00968921625193,
+            "ki": 0.05397370205396015,
+            "kd": 0.6136004314166245
+          },
+          "policy_steps": 23576,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 22.269779609448612,
+            "ki": 0.692026335401489,
+            "kd": 2.565748139458488
+          },
+          "median": {
+            "kp": 21.365952886641026,
+            "ki": 0.7164794963598249,
+            "kd": 2.5258686733245863
+          },
+          "std": {
+            "kp": 4.56037268701745,
+            "ki": 0.17985254973083245,
+            "kd": 0.8187053238167068
+          },
+          "policy_steps": 82598,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      }
+    }
+  },
+  "boxes": {
+    "ppo_scheduler_ranged_h1_wide": {
+      "83": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "97": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "109": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "127": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "149": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      }
+    }
+  },
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_frozen_gains.py",
+    "--models-root",
+    "artifacts/models/posthoc/plan5",
+    "--seeds",
+    "83,97,109,127,149",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide",
+    "--output",
+    "artifacts/results/posthoc6/t1_frozen_gains"
+  ],
+  "git": {
+    "commit": "6fcd779f4eda518ceaf744c2973baa527f6327c5",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "gpunode09.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-741.22.1.el9_9.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3374181",
+    "slurm_nodelist": "gpunode09.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 128.3275294303894
+}

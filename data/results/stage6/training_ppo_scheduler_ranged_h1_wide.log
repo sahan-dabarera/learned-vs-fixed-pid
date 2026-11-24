@@ -1,0 +1,21 @@
+host          : gpunode09.dyn.scc.plus.ac.at
+slurm job     : 3374181
+granted cores : 64
+runs          : 5 x 1 thread(s) = 5 threads
+concurrency   : 5 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan5
+sampler       : dynamic
+seeds         : 83,97,109,127,149
+
+  start ppo_scheduler_ranged_h1_wide seed 83 (pid 739027)
+  start ppo_scheduler_ranged_h1_wide seed 97 (pid 739028)
+  start ppo_scheduler_ranged_h1_wide seed 109 (pid 739029)
+  start ppo_scheduler_ranged_h1_wide seed 127 (pid 739030)
+  start ppo_scheduler_ranged_h1_wide seed 149 (pid 739031)
+  done  ppo_scheduler_ranged_h1_wide seed 127 in 15.3 min: ok
+  done  ppo_scheduler_ranged_h1_wide seed 83 in 15.9 min: ok
+  done  ppo_scheduler_ranged_h1_wide seed 109 in 16.0 min: ok
+  done  ppo_scheduler_ranged_h1_wide seed 97 in 16.0 min: ok
+  done  ppo_scheduler_ranged_h1_wide seed 149 in 19.7 min: ok
+
+5/5 runs completed in 19.7 min

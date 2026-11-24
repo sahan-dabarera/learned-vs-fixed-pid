@@ -1,0 +1,119 @@
+{
+  "sigma_m": 0.003,
+  "selected": {
+    "kp": 6.0,
+    "ki": 0.5,
+    "kd": 2.0,
+    "tau_d": 0.02
+  },
+  "selected_metrics": {
+    "kp": 6.0,
+    "ki": 0.5,
+    "kd": 2.0,
+    "tau_d": 0.02,
+    "completion_rate": 1.0,
+    "failure_adjusted_error_m": 0.003157908839235903,
+    "mean_distance_m": 0.006292859700698571,
+    "steer_total_variation_per_s": 65.85136159869118,
+    "wheel_saturation_fraction": 0.14856625671850668,
+    "gain_l1": 8.5,
+    "is_sealed_robust": false
+  },
+  "sealed_robust_metrics": {
+    "kp": 8.0,
+    "ki": 0.5,
+    "kd": 4.4,
+    "tau_d": 0.01,
+    "completion_rate": 1.0,
+    "failure_adjusted_error_m": 0.005961586991700192,
+    "mean_distance_m": 0.01031272803667182,
+    "steer_total_variation_per_s": 171.98216234658713,
+    "wheel_saturation_fraction": 0.45198048616272535,
+    "gain_l1": 12.9,
+    "is_sealed_robust": true
+  },
+  "selection_rule": "calibrate_pid.select_practical_candidate (completion band, 0.5% error band, smoothest)",
+  "scenarios": [
+    "validation-sinusoid-v0.3-stationary-nominal",
+    "validation-sinusoid-v0.5-stationary-nominal",
+    "validation-sinusoid-v0.5-stationary-delay",
+    "validation-sinusoid-v0.5-stationary-noise",
+    "validation-sinusoid-v0.5-stationary-combined",
+    "validation-sinusoid-v0.5-transient-combined",
+    "validation-sinusoid-v0.7-stationary-nominal",
+    "validation-lane_change-v0.3-stationary-nominal",
+    "validation-lane_change-v0.5-stationary-nominal",
+    "validation-lane_change-v0.5-stationary-delay",
+    "validation-lane_change-v0.5-stationary-noise",
+    "validation-lane_change-v0.5-stationary-combined",
+    "validation-lane_change-v0.5-transient-combined",
+    "validation-lane_change-v0.7-stationary-nominal",
+    "validation-random_curvature_5000-v0.3-stationary-nominal",
+    "validation-random_curvature_5000-v0.5-stationary-nominal",
+    "validation-random_curvature_5000-v0.5-stationary-delay",
+    "validation-random_curvature_5000-v0.5-stationary-noise",
+    "validation-random_curvature_5000-v0.5-stationary-combined",
+    "validation-random_curvature_5000-v0.5-transient-combined",
+    "validation-random_curvature_5000-v0.7-stationary-nominal",
+    "validation-random_curvature_5001-v0.3-stationary-nominal",
+    "validation-random_curvature_5001-v0.5-stationary-nominal",
+    "validation-random_curvature_5001-v0.5-stationary-delay",
+    "validation-random_curvature_5001-v0.5-stationary-noise",
+    "validation-random_curvature_5001-v0.5-stationary-combined",
+    "validation-random_curvature_5001-v0.5-transient-combined",
+    "validation-random_curvature_5001-v0.7-stationary-nominal"
+  ],
+  "grid": {
+    "kp": [
+      4.0,
+      6.0,
+      8.0,
+      10.0,
+      13.0,
+      18.0,
+      26.0,
+      40.0
+    ],
+    "ki": 0.5,
+    "kd": [
+      0.5,
+      1.0,
+      2.0,
+      3.0,
+      4.4,
+      6.0,
+      8.0
+    ],
+    "tau_d": [
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_pid_retune.py",
+    "--sigma-m",
+    "0.003",
+    "--workers",
+    "32",
+    "--output",
+    "artifacts/results/posthoc/e4_pid_retune_3mm"
+  ],
+  "git": {
+    "commit": "9b72c947d0a9d085b767e46d1c57f10f6a8671ec",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode39.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3188678",
+    "slurm_nodelist": "cpunode39.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 489.8869242668152,
+  "selected_on_grid_edge": []
+}

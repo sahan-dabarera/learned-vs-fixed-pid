@@ -1,0 +1,130 @@
+{
+  "sigma_m": null,
+  "manifest": "validation_ranged.json",
+  "manifest_sha256": "a49ce939c0a2029d05947012ab6492eb5f781b94eab18b31b7921cb35f247668",
+  "selected": {
+    "kp": 2.0,
+    "ki": 0.5,
+    "kd": 0.5,
+    "tau_d": 0.01
+  },
+  "selected_metrics": {
+    "kp": 2.0,
+    "ki": 0.5,
+    "kd": 0.5,
+    "tau_d": 0.01,
+    "completion_rate": 1.0,
+    "failure_adjusted_error_m": 0.0120371015380308,
+    "mean_distance_m": 0.020441797675417598,
+    "steer_total_variation_per_s": 32.34679922181392,
+    "wheel_saturation_fraction": 0.16822462872684968,
+    "gain_l1": 3.0,
+    "is_sealed_robust": false
+  },
+  "sealed_robust_metrics": {
+    "kp": 8.0,
+    "ki": 0.5,
+    "kd": 4.4,
+    "tau_d": 0.01,
+    "completion_rate": 0.8214285714285714,
+    "failure_adjusted_error_m": 0.023182668819174034,
+    "mean_distance_m": 0.026880324981820965,
+    "steer_total_variation_per_s": 121.0794999371897,
+    "wheel_saturation_fraction": 0.4311991458905185,
+    "gain_l1": 12.9,
+    "is_sealed_robust": true
+  },
+  "selection_rule": "calibrate_pid.select_practical_candidate (completion band, 0.5% error band, smoothest)",
+  "scenarios": [
+    "validation-sinusoid-v0.3-stationary-nominal-ranged",
+    "validation-sinusoid-v0.5-stationary-nominal-ranged",
+    "validation-sinusoid-v0.5-stationary-delay-ranged",
+    "validation-sinusoid-v0.5-stationary-noise-ranged",
+    "validation-sinusoid-v0.5-stationary-combined-ranged",
+    "validation-sinusoid-v0.5-transient-combined-ranged",
+    "validation-sinusoid-v0.7-stationary-nominal-ranged",
+    "validation-lane_change-v0.3-stationary-nominal-ranged",
+    "validation-lane_change-v0.5-stationary-nominal-ranged",
+    "validation-lane_change-v0.5-stationary-delay-ranged",
+    "validation-lane_change-v0.5-stationary-noise-ranged",
+    "validation-lane_change-v0.5-stationary-combined-ranged",
+    "validation-lane_change-v0.5-transient-combined-ranged",
+    "validation-lane_change-v0.7-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.3-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.5-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.5-stationary-delay-ranged",
+    "validation-random_curvature_5000-v0.5-stationary-noise-ranged",
+    "validation-random_curvature_5000-v0.5-stationary-combined-ranged",
+    "validation-random_curvature_5000-v0.5-transient-combined-ranged",
+    "validation-random_curvature_5000-v0.7-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.3-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.5-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.5-stationary-delay-ranged",
+    "validation-random_curvature_5001-v0.5-stationary-noise-ranged",
+    "validation-random_curvature_5001-v0.5-stationary-combined-ranged",
+    "validation-random_curvature_5001-v0.5-transient-combined-ranged",
+    "validation-random_curvature_5001-v0.7-stationary-nominal-ranged"
+  ],
+  "grid": {
+    "kp": [
+      1.0,
+      1.5,
+      2.0,
+      2.5,
+      3.0,
+      4.0,
+      5.0,
+      6.0,
+      8.0,
+      10.0,
+      13.0,
+      18.0,
+      26.0,
+      40.0
+    ],
+    "ki": 0.5,
+    "kd": [
+      0.5,
+      1.0,
+      2.0,
+      3.0,
+      4.4,
+      6.0,
+      8.0
+    ],
+    "tau_d": [
+      0.01,
+      0.02,
+      0.05,
+      0.1
+    ]
+  },
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_pid_retune.py",
+    "--manifest",
+    "manifests/posthoc/validation_ranged.json",
+    "--kp-grid",
+    "1,1.5,2,2.5,3,4,5,6,8,10,13,18,26,40",
+    "--output",
+    "artifacts/results/posthoc2/pid_retune_wide"
+  ],
+  "git": {
+    "commit": "2b085dc0f5c4f8a529954deafc0a89adfdfdae3e",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode13.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3281365",
+    "slurm_nodelist": "cpunode13.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 445.64732027053833,
+  "selected_on_grid_edge": [
+    "kd",
+    "tau_d"
+  ]
+}

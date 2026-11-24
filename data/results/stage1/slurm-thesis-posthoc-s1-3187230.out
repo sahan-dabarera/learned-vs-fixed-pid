@@ -1,0 +1,146 @@
+host      : cpunode39.dyn.scc.plus.ac.at
+job       : 3187230 on base
+cores     : 64 allocated
+commit    : 479afe53d692845e2c2c17711c5aabd89381bdce (posthoc-experiments)
+python    : Python 3.12.13
+output    : artifacts/results/posthoc
+
+
+=== parity gate (17:57:35 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode39.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== E3a frozen gains (validation manifest) (17:58:35 UTC) ===
+ppo_scheduler_nominal seed 11  clean: Kp 17.6 Ki 0.85 Kd 3.98  delay: Kp 101.0 Ki 0.45 Kd 3.95
+ppo_scheduler_nominal seed 23  clean: Kp 22.5 Ki 0.21 Kd 5.04  delay: Kp 27.0 Ki 0.19 Kd 5.29
+ppo_scheduler_nominal seed 37  clean: Kp 21.8 Ki 0.57 Kd 4.06  delay: Kp 25.6 Ki 0.45 Kd 4.71
+ppo_scheduler_nominal seed 53  clean: Kp 51.1 Ki 1.23 Kd 4.36  delay: Kp 29.2 Ki 0.74 Kd 4.69
+ppo_scheduler_nominal seed 71  clean: Kp 111.0 Ki 0.57 Kd 5.09  delay: Kp 45.5 Ki 0.65 Kd 4.63
+ppo_scheduler_disturbed seed 11  clean: Kp 7.8 Ki 1.47 Kd 2.58  delay: Kp 10.5 Ki 1.44 Kd 2.61
+ppo_scheduler_disturbed seed 23  clean: Kp 227.4 Ki 0.02 Kd 4.14  delay: Kp 47.3 Ki 0.56 Kd 4.26
+ppo_scheduler_disturbed seed 37  clean: Kp 41.1 Ki 0.81 Kd 4.61  delay: Kp 11.1 Ki 0.86 Kd 3.83
+ppo_scheduler_disturbed seed 53  clean: Kp 33.4 Ki 0.70 Kd 4.65  delay: Kp 11.4 Ki 1.04 Kd 3.82
+ppo_scheduler_disturbed seed 71  clean: Kp 30.6 Ki 0.66 Kd 4.06  delay: Kp 17.5 Ki 0.80 Kd 4.87
+saved /home/user/thesis-experiment/artifacts/results/posthoc/e3_frozen_gains/frozen_gains.json
+
+=== E1 noise sweep, coarse (18:01:21 UTC) ===
+controllers: 22  scenarios: 1440  episodes: 31680  workers: 64
+  1584/31680 episodes, 1.8 min
+  3168/31680 episodes, 3.4 min
+  4752/31680 episodes, 4.9 min
+  6336/31680 episodes, 6.6 min
+  7920/31680 episodes, 8.1 min
+  9504/31680 episodes, 10.3 min
+  11088/31680 episodes, 11.7 min
+  12672/31680 episodes, 13.2 min
+  14256/31680 episodes, 14.7 min
+  15840/31680 episodes, 16.1 min
+  17424/31680 episodes, 17.5 min
+  19008/31680 episodes, 18.5 min
+  20592/31680 episodes, 19.6 min
+  22176/31680 episodes, 20.6 min
+  23760/31680 episodes, 21.7 min
+  25344/31680 episodes, 22.8 min
+  26928/31680 episodes, 23.9 min
+  28512/31680 episodes, 25.0 min
+  30096/31680 episodes, 26.1 min
+  31680/31680 episodes, 26.9 min
+31680 episodes in 26.9 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e1_noise_coarse
+
+=== E2 delay sweep (18:28:15 UTC) ===
+controllers: 22  scenarios: 960  episodes: 21120  workers: 64
+  1056/21120 episodes, 1.8 min
+  2112/21120 episodes, 2.3 min
+  3168/21120 episodes, 3.4 min
+  4224/21120 episodes, 4.3 min
+  5280/21120 episodes, 5.2 min
+  6336/21120 episodes, 6.3 min
+  7392/21120 episodes, 7.4 min
+  8448/21120 episodes, 8.3 min
+  9504/21120 episodes, 9.1 min
+  10560/21120 episodes, 10.0 min
+  11616/21120 episodes, 10.7 min
+  12672/21120 episodes, 11.6 min
+  13728/21120 episodes, 12.0 min
+  14784/21120 episodes, 12.9 min
+  15840/21120 episodes, 13.5 min
+  16896/21120 episodes, 14.3 min
+  17952/21120 episodes, 15.2 min
+  19008/21120 episodes, 16.1 min
+  20064/21120 episodes, 16.9 min
+  21120/21120 episodes, 17.3 min
+21120 episodes in 17.3 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e2_delay
+
+=== E3b frozen-gain schedulers on held-out (18:45:36 UTC) ===
+controllers: 20  scenarios: 480  episodes: 9600  workers: 64
+  480/9600 episodes, 0.9 min
+  960/9600 episodes, 1.2 min
+  1440/9600 episodes, 1.5 min
+  1920/9600 episodes, 1.9 min
+  2400/9600 episodes, 2.1 min
+  2880/9600 episodes, 2.3 min
+  3360/9600 episodes, 2.7 min
+  3840/9600 episodes, 2.9 min
+  4320/9600 episodes, 3.3 min
+  4800/9600 episodes, 3.5 min
+  5280/9600 episodes, 3.7 min
+  5760/9600 episodes, 4.2 min
+  6240/9600 episodes, 4.3 min
+  6720/9600 episodes, 4.5 min
+  7200/9600 episodes, 5.0 min
+  7680/9600 episodes, 5.1 min
+  8160/9600 episodes, 5.6 min
+  8640/9600 episodes, 5.8 min
+  9120/9600 episodes, 6.1 min
+  9600/9600 episodes, 6.2 min
+9600 episodes in 6.2 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e3_frozen_eval
+
+=== E1-F PID-R derivative filter check (18:51:51 UTC) ===
+controllers: 2  scenarios: 720  episodes: 1440  workers: 64
+  72/1440 episodes, 0.7 min
+  144/1440 episodes, 0.7 min
+  216/1440 episodes, 0.7 min
+  288/1440 episodes, 0.7 min
+  360/1440 episodes, 0.7 min
+  432/1440 episodes, 1.0 min
+  504/1440 episodes, 1.0 min
+  576/1440 episodes, 1.1 min
+  648/1440 episodes, 1.1 min
+  720/1440 episodes, 1.1 min
+  792/1440 episodes, 1.1 min
+  864/1440 episodes, 1.1 min
+  936/1440 episodes, 1.1 min
+  1008/1440 episodes, 1.1 min
+  1080/1440 episodes, 1.1 min
+  1152/1440 episodes, 1.1 min
+  1224/1440 episodes, 1.3 min
+  1296/1440 episodes, 1.4 min
+  1368/1440 episodes, 1.4 min
+  1440/1440 episodes, 1.4 min
+1440 episodes in 1.4 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e1f_taud
+
+=== replay check against the sealed episodes (18:53:16 UTC) ===
+e1_noise_coarse: 5280 rows checked, 5280 bit-identical, 0 completion mismatches, max |dE_FA| on finished rows 0.0000 mm (0.00 %)
+e2_delay: 2640 rows checked, 2640 bit-identical, 0 completion mismatches, max |dE_FA| on finished rows 0.0000 mm (0.00 %)
+
+=== done (18:53:16 UTC) ===
+Copy artifacts/results/posthoc back to the laptop:
+  rsync -av SERVER:thesis-experiment/artifacts/results/posthoc ./artifacts/results/

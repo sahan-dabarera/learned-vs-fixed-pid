@@ -1,0 +1,21 @@
+host          : gpunode09.dyn.scc.plus.ac.at
+slurm job     : 3371665
+granted cores : 32
+runs          : 5 x 1 thread(s) = 5 threads
+concurrency   : 5 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan5
+sampler       : dynamic
+seeds         : 83,97,109,127,149
+
+  start ppo_direct_nominal seed 83 (pid 422625)
+  start ppo_direct_nominal seed 97 (pid 422628)
+  start ppo_direct_nominal seed 109 (pid 422631)
+  start ppo_direct_nominal seed 127 (pid 422634)
+  start ppo_direct_nominal seed 149 (pid 422637)
+  done  ppo_direct_nominal seed 109 in 70.0 min: ok
+  done  ppo_direct_nominal seed 97 in 72.0 min: ok
+  done  ppo_direct_nominal seed 83 in 72.9 min: ok
+  done  ppo_direct_nominal seed 127 in 73.0 min: ok
+  done  ppo_direct_nominal seed 149 in 74.2 min: ok
+
+5/5 runs completed in 74.2 min

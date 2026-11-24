@@ -1,0 +1,280 @@
+"""Train one PPO arm with deterministic manifest-based checkpoint selection."""
+
+from __future__ import annotations
+
+import argparse
+from dataclasses import replace
+import hashlib
+import json
+from importlib.metadata import version
+import platform
+from pathlib import Path
+import re
+import time
+
+import numpy as np
+import torch
+
+from pathfollow import config
+from pathfollow.calibration import GainCalibration
+from pathfollow.controller_profiles import profile_for
+from pathfollow.env import PathFollowingEnv
+from pathfollow.rollout import run_episode
+from pathfollow.scenarios import ScenarioManifest
+
+
+def sha256(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def main() -> None:
+    from stable_baselines3 import PPO
+    from stable_baselines3.common.callbacks import BaseCallback
+    from stable_baselines3.common.monitor import Monitor
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--mode", choices=("scheduled", "direct"), required=True)
+    parser.add_argument("--regime", choices=("nominal", "disturbed"), required=True)
+    parser.add_argument("--seed", type=int, default=config.CONFIG.development_seed)
+    parser.add_argument("--timesteps", type=int)
+    parser.add_argument("--calibration")
+    parser.add_argument("--validation-manifest", default=str(config.SCENARIOS / "validation.json"))
+    parser.add_argument("--eval-freq", type=int)
+    parser.add_argument("--validation-limit", type=int, default=0, help="Development-only cap; 0 uses the full manifest")
+    parser.add_argument("--output", default=str(config.RUNS / "checkpoints"))
+    parser.add_argument("--sampler-profile", choices=tuple(config.SAMPLER_PROFILES),
+                        default="dynamic", help="Disturbance sampler; single_step ablates the v3 sampler")
+    parser.add_argument("--torch-threads", type=int, default=1)
+    # Later-stage options; every default reproduces the sealed training.
+    parser.add_argument("--arm", help="arm name override, e.g. ppo_scheduler_ranged_h1")
+    parser.add_argument("--history-length", type=int, help="observation frames (sealed: profile default 10)")
+    parser.add_argument("--train-noise-max-m", type=float,
+                        help="draw training noise log-uniform in [declared noise, this] (stage 1)")
+    parser.add_argument("--checkpoint-noise-m", type=float,
+                        help="noise-step value on the transient-combined checkpoint scenarios (stage 1)")
+    parser.add_argument("--train-noise-min-m", type=float,
+                        help="lower end of the log-uniform noise draw (default: declared noise; stage 2 onwards)")
+    parser.add_argument("--gain-rate-limit", metavar="KP,KI,KD",
+                        help="scheduler gain rate limit per second (default: half the calibration box range; stage 3 onwards)")
+    parser.add_argument("--train-delay-range-s", metavar="LOW,HIGH",
+                        help="draw training delay uniform in [LOW, HIGH], no declared-severity spike (stage 2 onwards)")
+    args = parser.parse_args()
+    if args.arm is not None and not re.fullmatch(r"ppo_(scheduler|direct)_[a-z0-9_]+", args.arm):
+        parser.error("--arm must look like ppo_scheduler_<name> or ppo_direct_<name>")
+    if args.arm is not None and args.arm.startswith("ppo_scheduler_") != (args.mode == "scheduled"):
+        parser.error("--arm prefix must match --mode")
+    if args.train_noise_min_m is not None and args.train_noise_max_m is None:
+        parser.error("--train-noise-min-m needs --train-noise-max-m")
+    delay_range = None
+    if args.train_delay_range_s is not None:
+        try:
+            delay_range = tuple(float(item) for item in args.train_delay_range_s.split(","))
+        except ValueError:
+            parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
+        if len(delay_range) != 2:
+            parser.error("--train-delay-range-s must be LOW,HIGH in seconds")
+    rate_limit = None
+    if args.gain_rate_limit is not None:
+        try:
+            rate_limit = tuple(float(item) for item in args.gain_rate_limit.split(","))
+        except ValueError:
+            parser.error("--gain-rate-limit must be KP,KI,KD per second")
+        if len(rate_limit) != 3 or args.mode != "scheduled":
+            parser.error("--gain-rate-limit takes three values and applies to --mode scheduled only")
+    profile = profile_for(args.mode)
+    args.timesteps = args.timesteps or profile.default_timesteps
+    args.eval_freq = profile.default_eval_freq if args.eval_freq is None else args.eval_freq
+    if args.timesteps <= 0 or args.eval_freq <= 0:
+        parser.error("timesteps and eval-freq must be positive")
+    torch.set_num_threads(max(1, args.torch_threads))
+
+    default_calibration = (
+        config.CALIBRATION / "blind_ppo.json"
+        if args.mode == "scheduled"
+        else config.CALIBRATION / "calibration.json"
+    )
+    calibration_path = Path(args.calibration or default_calibration).resolve()
+    manifest_path = Path(args.validation_manifest).resolve()
+    calibration = GainCalibration.load(calibration_path)
+    manifest = ScenarioManifest.load(manifest_path)
+    validation = tuple(
+        scenario
+        for scenario in manifest.scenarios
+        if (
+            scenario.evaluation_mode == "stationary"
+            and scenario.condition == "nominal"
+        )
+        or (
+            scenario.evaluation_mode == "transient"
+            and scenario.condition == "combined"
+        )
+    )
+    validation = validation[: args.validation_limit or None]
+    if args.checkpoint_noise_m is not None:
+        validation = tuple(
+            replace(
+                scenario,
+                events=tuple(
+                    replace(event, value=float(args.checkpoint_noise_m))
+                    if event.kind == "noise_step" else event
+                    for event in scenario.events
+                ),
+            )
+            for scenario in validation
+        )
+    if not validation:
+        parser.error("checkpoint scenario selection is empty")
+    arm = args.arm or f"ppo_{'scheduler' if args.mode == 'scheduled' else 'direct'}_{args.regime}"
+    run_dir = Path(args.output).resolve() / arm / f"seed_{args.seed}"
+    stored = config.CHECKPOINTS.resolve()
+    if stored in run_dir.parents:
+        parser.error(f"refusing to train into the stored checkpoints ({stored}); choose another --output")
+    run_dir.mkdir(parents=True, exist_ok=True)
+
+    def make_env(training: bool) -> PathFollowingEnv:
+        return PathFollowingEnv(
+            mode=args.mode,
+            training=training,
+            disturbance_training=args.regime == "disturbed",
+            sampler_profile=args.sampler_profile,
+            calibration=calibration,
+            history_length=args.history_length,
+            train_noise_log_range_m=(
+                None if args.train_noise_max_m is None
+                else (
+                    config.CONFIG.noise_severity_m if args.train_noise_min_m is None else args.train_noise_min_m,
+                    args.train_noise_max_m,
+                )
+            ),
+            train_delay_range_s=delay_range,
+            gain_rate_limit=rate_limit,
+        )
+
+    class ManifestEvalCallback(BaseCallback):
+        def __init__(self) -> None:
+            super().__init__(verbose=1)
+            self.best_key = (-np.inf, -np.inf)
+            self.history_path = run_dir / "validation_history.jsonl"
+            self.last_eval_t = -1
+
+        def _on_step(self) -> bool:
+            if self.num_timesteps % args.eval_freq != 0:
+                return True
+            self._evaluate()
+            return True
+
+        def _on_training_end(self) -> None:
+            if self.last_eval_t != self.num_timesteps:
+                self._evaluate()
+
+        def _evaluate(self) -> None:
+            evaluation_env = make_env(training=False)
+            try:
+                rows = [
+                    run_episode(
+                        evaluation_env,
+                        scenario,
+                        lambda obs: self.model.predict(obs, deterministic=True)[0],
+                    ).metrics
+                    for scenario in validation
+                ]
+            finally:
+                evaluation_env.close()
+            completion = float(np.mean([row["finished"] for row in rows]))
+            adjusted_error = float(np.mean([row["failure_adjusted_error_m"] for row in rows]))
+            key = (completion, -adjusted_error)
+            record = {
+                "timesteps": self.num_timesteps,
+                "completion_rate": completion,
+                "failure_adjusted_error_m": adjusted_error,
+                "episodes": len(rows),
+            }
+            with self.history_path.open("a", encoding="utf-8") as handle:
+                handle.write(json.dumps(record) + "\n")
+            self.last_eval_t = self.num_timesteps
+            if key > self.best_key:
+                self.best_key = key
+                self.model.save(run_dir / "best_model")
+
+    env = Monitor(make_env(training=True), filename=str(run_dir / "monitor.csv"))
+    started = time.time()
+    model = PPO(
+        "MlpPolicy",
+        env,
+        seed=args.seed,
+        tensorboard_log=str(run_dir / "tensorboard"),
+        device="cpu",
+        verbose=1,
+        **profile.ppo_kwargs,
+    )
+    callback = ManifestEvalCallback()
+    try:
+        model.learn(total_timesteps=args.timesteps, callback=callback, progress_bar=True)
+        model.save(run_dir / "final_model")
+        if not (run_dir / "best_model.zip").exists():
+            model.save(run_dir / "best_model")
+    finally:
+        env.close()
+    metadata = {
+        "arm": arm,
+        "mode": args.mode,
+        "regime": args.regime,
+        "sampler_profile": args.sampler_profile,
+        "seed": args.seed,
+        "timesteps": args.timesteps,
+        "wall_time_s": time.time() - started,
+        "validation_manifest": str(manifest_path),
+        "validation_manifest_sha256": manifest.digest(),
+        "checkpoint_scenarios": [scenario.scenario_id for scenario in validation],
+        "posthoc": {
+            "history_length": args.history_length,
+            "train_noise_max_m": args.train_noise_max_m,
+            "checkpoint_noise_m": args.checkpoint_noise_m,
+            "train_noise_min_m": args.train_noise_min_m,
+            "train_delay_range_s": delay_range,
+            "gain_rate_limit_per_s": rate_limit,
+        },
+        "calibration": str(calibration_path),
+        "calibration_sha256": sha256(calibration_path),
+        "python": platform.python_version(),
+        "config": config.CONFIG.to_dict(),
+        "gain_rate_limit_per_s": (
+            (list(rate_limit) if rate_limit is not None
+             else (0.5 * (calibration.upper.as_array() - calibration.lower.as_array())).tolist())
+            if args.mode == "scheduled"
+            else None
+        ),
+        "controller_profile": {
+            "observation_size": len(profile.frame_fields) * (args.history_length or profile.history_length),
+            "action_size": profile.action_size,
+            "tracking_scale_m": profile.tracking_scale_m,
+            "tracking_weight": profile.tracking_weight,
+            "action_smoothness_weight": profile.action_smoothness_weight,
+            "finish_bonus": profile.finish_bonus,
+            "failure_penalty": profile.failure_penalty,
+            "checkpoint_selection": profile.checkpoint_selection,
+        },
+        "ppo": profile.ppo_kwargs,
+        "torch_threads": max(1, args.torch_threads),
+        "parameter_count": sum(parameter.numel() for parameter in model.policy.parameters()),
+        "packages": {name: version(name) for name in ("numpy", "mujoco", "gymnasium", "stable-baselines3", "torch")},
+        "source_sha256": {
+            str(path.relative_to(config.ROOT)): sha256(path)
+            for path in (
+                config.PACKAGE / "training" / "train.py",
+                config.PACKAGE / "env.py",
+                config.PACKAGE / "config.py",
+                config.PACKAGE / "controller_profiles.py",
+                config.PACKAGE / "core" / "dynamics.py",
+                config.PACKAGE / "core" / "paths.py",
+                config.PACKAGE / "core" / "pid.py",
+                config.PACKAGE / "core" / "car_model.xml",
+            )
+        },
+    }
+    (run_dir / "metadata.json").write_text(json.dumps(metadata, indent=2) + "\n", encoding="utf-8")
+    print(f"saved {arm}, seed {args.seed}, to {run_dir}")
+
+
+if __name__ == "__main__":
+    main()

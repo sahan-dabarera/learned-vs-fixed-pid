@@ -1,0 +1,156 @@
+host      : gpunode09.dyn.scc.plus.ac.at
+cpu       : AMD EPYC 9334 32-Core Processor
+job       : 3371665, 32 cores
+commit    : 6fcd779f4eda518ceaf744c2973baa527f6327c5 (posthoc-experiments)
+seeds     : 83,97,109,127,149; tiers: 3
+
+=== parity gate (08:01:53 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : gpunode09.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== Tier 3: direct PPO training (2M) (08:02:54 UTC) ===
+  ppo_direct_nominal -> artifacts/models/posthoc/plan5 (log artifacts/results/posthoc6/training_ppo_direct_nominal.log)
+  ppo_direct_ranged_h10 -> artifacts/models/posthoc/plan5 (log artifacts/results/posthoc6/training_ppo_direct_ranged_h10.log)
+  ppo_direct_disturbed -> artifacts/models/posthoc/plan5 (log artifacts/results/posthoc6/training_ppo_direct_disturbed.log)
+  ppo_direct_disturbed_h1 -> artifacts/models/posthoc/plan5 (log artifacts/results/posthoc6/training_ppo_direct_disturbed_h1.log)
+
+5/5 runs completed in 74.2 min
+
+5/5 runs completed in 73.2 min
+
+5/5 runs completed in 74.2 min
+
+5/5 runs completed in 72.7 min
+
+=== Tier 3: evaluation (09:17:04 UTC) ===
+ppo_direct_nominal                       seed 83  completion 1.000  E_FA 8.96 mm  (validation.json)
+ppo_direct_nominal                       seed 97  completion 1.000  E_FA 9.86 mm  (validation.json)
+ppo_direct_nominal                       seed 109  completion 0.833  E_FA 182.59 mm  (validation.json)
+ppo_direct_nominal                       seed 127  completion 1.000  E_FA 15.97 mm  (validation.json)
+ppo_direct_nominal                       seed 149  completion 1.000  E_FA 10.35 mm  (validation.json)
+ppo_direct_ranged_h10                    seed 83  completion 1.000  E_FA 20.39 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 97  completion 1.000  E_FA 17.00 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 109  completion 1.000  E_FA 16.18 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 127  completion 1.000  E_FA 17.46 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 149  completion 1.000  E_FA 17.28 mm  (validation_ranged.json)
+ppo_direct_disturbed                     seed 83  completion 1.000  E_FA 27.61 mm  (validation.json)
+ppo_direct_disturbed                     seed 97  completion 1.000  E_FA 9.08 mm  (validation.json)
+ppo_direct_disturbed                     seed 109  completion 1.000  E_FA 16.28 mm  (validation.json)
+ppo_direct_disturbed                     seed 127  completion 1.000  E_FA 9.55 mm  (validation.json)
+ppo_direct_disturbed                     seed 149  completion 1.000  E_FA 20.37 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 83  completion 1.000  E_FA 4.44 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 97  completion 1.000  E_FA 7.48 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 109  completion 1.000  E_FA 4.89 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 127  completion 1.000  E_FA 3.63 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 149  completion 1.000  E_FA 4.47 mm  (validation.json)
+controllers: 20  scenarios: 480  episodes: 9600  workers: 32
+  480/9600 episodes, 1.1 min
+  960/9600 episodes, 1.6 min
+  1440/9600 episodes, 2.1 min
+  1920/9600 episodes, 2.7 min
+  2400/9600 episodes, 3.3 min
+  2880/9600 episodes, 3.8 min
+  3360/9600 episodes, 4.4 min
+  3840/9600 episodes, 4.9 min
+  4320/9600 episodes, 5.5 min
+  4800/9600 episodes, 6.1 min
+  5280/9600 episodes, 6.6 min
+  5760/9600 episodes, 7.2 min
+  6240/9600 episodes, 7.8 min
+  6720/9600 episodes, 8.3 min
+  7200/9600 episodes, 8.8 min
+  7680/9600 episodes, 9.4 min
+  8160/9600 episodes, 9.9 min
+  8640/9600 episodes, 10.5 min
+  9120/9600 episodes, 11.1 min
+  9600/9600 episodes, 11.4 min
+9600 episodes in 11.5 min -> /home/user/thesis-experiment/artifacts/results/posthoc6/t3_heldout_ranged
+controllers: 20  scenarios: 480  episodes: 9600  workers: 32
+  480/9600 episodes, 1.0 min
+  960/9600 episodes, 1.7 min
+  1440/9600 episodes, 2.2 min
+  1920/9600 episodes, 2.7 min
+  2400/9600 episodes, 3.3 min
+  2880/9600 episodes, 3.8 min
+  3360/9600 episodes, 4.4 min
+  3840/9600 episodes, 5.0 min
+  4320/9600 episodes, 5.6 min
+  4800/9600 episodes, 6.1 min
+  5280/9600 episodes, 6.7 min
+  5760/9600 episodes, 7.2 min
+  6240/9600 episodes, 7.8 min
+  6720/9600 episodes, 8.4 min
+  7200/9600 episodes, 8.9 min
+  7680/9600 episodes, 9.5 min
+  8160/9600 episodes, 10.0 min
+  8640/9600 episodes, 10.6 min
+  9120/9600 episodes, 11.2 min
+  9600/9600 episodes, 11.5 min
+9600 episodes in 11.5 min -> /home/user/thesis-experiment/artifacts/results/posthoc6/t3_heldout_fixed
+
+=== Tier 3: delay sweep and dynamic delay, point-trained DR-D (one frame) (09:40:05 UTC) ===
+controllers: 5  scenarios: 1320  episodes: 6600  workers: 32
+  336/6600 episodes, 0.5 min
+  660/6600 episodes, 1.0 min
+  996/6600 episodes, 1.8 min
+  1320/6600 episodes, 1.8 min
+  1656/6600 episodes, 2.2 min
+  1980/6600 episodes, 2.6 min
+  2316/6600 episodes, 3.3 min
+  2640/6600 episodes, 3.3 min
+  2976/6600 episodes, 3.7 min
+  3300/6600 episodes, 4.2 min
+  3636/6600 episodes, 4.9 min
+  3960/6600 episodes, 4.9 min
+  4296/6600 episodes, 5.3 min
+  4620/6600 episodes, 5.8 min
+  4956/6600 episodes, 6.4 min
+  5280/6600 episodes, 6.7 min
+  5616/6600 episodes, 6.9 min
+  5940/6600 episodes, 7.4 min
+  6276/6600 episodes, 8.1 min
+  6600/6600 episodes, 8.1 min
+6600 episodes in 8.1 min -> /home/user/thesis-experiment/artifacts/results/posthoc6/t3_delay
+controllers: 5  scenarios: 360  episodes: 1800  workers: 32
+  96/1800 episodes, 0.6 min
+  180/1800 episodes, 0.6 min
+  276/1800 episodes, 0.7 min
+  360/1800 episodes, 0.8 min
+  456/1800 episodes, 1.0 min
+  540/1800 episodes, 1.1 min
+  636/1800 episodes, 1.2 min
+  720/1800 episodes, 1.3 min
+  816/1800 episodes, 1.4 min
+  900/1800 episodes, 1.5 min
+  996/1800 episodes, 1.8 min
+  1080/1800 episodes, 1.8 min
+  1176/1800 episodes, 1.8 min
+  1260/1800 episodes, 2.0 min
+  1356/1800 episodes, 2.3 min
+  1440/1800 episodes, 2.4 min
+  1536/1800 episodes, 2.4 min
+  1620/1800 episodes, 2.4 min
+  1716/1800 episodes, 2.5 min
+  1800/1800 episodes, 2.6 min
+1800 episodes in 2.6 min -> /home/user/thesis-experiment/artifacts/results/posthoc6/t3_dynamic
+
+=== done (09:50:47 UTC) ===
+pack: tar czf plan5_results.tgz --exclude=tensorboard artifacts/results/posthoc6 artifacts/models/posthoc/plan5

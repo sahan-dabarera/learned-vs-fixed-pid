@@ -1,0 +1,16 @@
+{
+  "rows_checked": 10560,
+  "rows_without_sealed_counterpart": 15360,
+  "bit_identical_rows": 10560,
+  "completion_mismatches": [],
+  "max_abs_diff_finished_rows": {
+    "failure_adjusted_error_m": 0.0,
+    "mean_distance_m": 0.0,
+    "wheel_saturation_fraction": 0.0
+  },
+  "max_rel_diff_finished_rows": {
+    "failure_adjusted_error_m": 0.0,
+    "mean_distance_m": 0.0,
+    "wheel_saturation_fraction": 0.0
+  }
+}

@@ -1,0 +1,262 @@
+{
+  "description": "Replays with per-episode |e_ct| statistics and per-step traces (posthoc_traces.py)",
+  "manifest": "/home/user/thesis-experiment/manifests/posthoc/dynamic.json",
+  "trace_patterns": [
+    "*"
+  ],
+  "only": [
+    "held_out-random_curvature_10019-v0.5-*",
+    "held_out-random_curvature_10001-v0.5-*",
+    "held_out-random_curvature_10014-v0.5-*"
+  ],
+  "controllers": [
+    [
+      "pid_global_nominal",
+      null
+    ],
+    [
+      "pid_global_robust",
+      null
+    ],
+    [
+      "pid_global_robust_noise",
+      null
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      11
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      23
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      37
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      53
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      71
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      83
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      97
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      109
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      127
+    ],
+    [
+      "ppo_scheduler_ranged_h1_wide_2m",
+      149
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      11
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      23
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      37
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      53
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      71
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      83
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      97
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      109
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      127
+    ],
+    [
+      "ppo_scheduler_nominal_h1_wide",
+      149
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      11
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      23
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      37
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      53
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      71
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      83
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      97
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      109
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      127
+    ],
+    [
+      "ppo_direct_ranged_h1",
+      149
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      11
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      23
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      37
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      53
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      71
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      83
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      97
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      109
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      127
+    ],
+    [
+      "ppo_direct_nominal_h1",
+      149
+    ]
+  ],
+  "episodes": 774,
+  "trace_rows": 929650,
+  "replay_checks": [
+    {
+      "references": [
+        "artifacts/results/posthoc2/f4_dynamic_existing/episodes.csv",
+        "artifacts/results/posthoc2/f4_dynamic_new/episodes.csv",
+        "artifacts/results/posthoc3/g4_dynamic_g1/episodes.csv",
+        "artifacts/results/posthoc3/g4_dynamic_g2/episodes.csv",
+        "artifacts/results/posthoc4/dynamic/episodes.csv",
+        "artifacts/results/posthoc2/pidrn_f4_dynamic/episodes.csv"
+      ],
+      "rows_checked": 774,
+      "unmatched_rows": 0,
+      "identical_rows": 774,
+      "first_differing": []
+    }
+  ],
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_traces.py",
+    "--manifest",
+    "manifests/posthoc/dynamic.json",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide_2m=artifacts/models/posthoc/plan3:11,23,37,53,71",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide_2m=artifacts/models/posthoc/plan4:83,97,109,127,149",
+    "--arm",
+    "ppo_scheduler_nominal_h1_wide=artifacts/models/posthoc/plan3:11,23,37,53,71",
+    "--arm",
+    "ppo_scheduler_nominal_h1_wide=artifacts/models/posthoc/plan4:83,97,109,127,149",
+    "--arm",
+    "ppo_direct_ranged_h1=artifacts/models/posthoc/plan2:11,23,37,53,71",
+    "--arm",
+    "ppo_direct_ranged_h1=artifacts/models/posthoc/plan4:83,97,109,127,149",
+    "--arm",
+    "ppo_direct_nominal_h1=artifacts/models/posthoc/plan2:11,23,37,53,71",
+    "--arm",
+    "ppo_direct_nominal_h1=artifacts/models/posthoc/plan4:83,97,109,127,149",
+    "--only",
+    "held_out-random_curvature_10019-v0.5-*",
+    "--only",
+    "held_out-random_curvature_10001-v0.5-*",
+    "--only",
+    "held_out-random_curvature_10014-v0.5-*",
+    "--trace",
+    "*",
+    "--reference",
+    "artifacts/results/posthoc2/f4_dynamic_existing/episodes.csv",
+    "--reference",
+    "artifacts/results/posthoc2/f4_dynamic_new/episodes.csv",
+    "--reference",
+    "artifacts/results/posthoc3/g4_dynamic_g1/episodes.csv",
+    "--reference",
+    "artifacts/results/posthoc3/g4_dynamic_g2/episodes.csv",
+    "--reference",
+    "artifacts/results/posthoc4/dynamic/episodes.csv",
+    "--reference",
+    "artifacts/results/posthoc2/pidrn_f4_dynamic/episodes.csv",
+    "--output",
+    "artifacts/results/posthoc5/traces_dynamic"
+  ],
+  "git": {
+    "commit": "112598b0a6707525c4005bd4348456bd8e3ca38a",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode13.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-741.22.1.el9_9.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3366201",
+    "slurm_nodelist": "cpunode13.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 101.40629482269287
+}

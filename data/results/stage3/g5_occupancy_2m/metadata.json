@@ -1,0 +1,30 @@
+{
+  "description": "Applied/target scheduler gains per policy step; edges in action coordinates (|a| >= 0.98)",
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_gain_occupancy.py",
+    "--models-root",
+    "artifacts/models/posthoc/plan3",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide_2m=manifests/posthoc/validation_ranged.json",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide_2m=manifests/posthoc/held_out_ranged.json",
+    "--output",
+    "artifacts/results/posthoc3/g5_occupancy_2m"
+  ],
+  "git": {
+    "commit": "0272ef0e3e9fa7dc6e39aada45575c66ed3d64b1",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode04.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3347265",
+    "slurm_nodelist": "cpunode04.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 693.5161826610565,
+  "jobs": 10
+}

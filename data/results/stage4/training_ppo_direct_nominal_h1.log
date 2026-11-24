@@ -1,0 +1,21 @@
+host          : cpunode13.dyn.scc.plus.ac.at
+slurm job     : 3358307
+granted cores : 64
+runs          : 5 x 1 thread(s) = 5 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan4
+sampler       : dynamic
+seeds         : 83,97,109,127,149
+
+  start ppo_direct_nominal_h1 seed 83 (pid 156745)
+  start ppo_direct_nominal_h1 seed 97 (pid 156747)
+  start ppo_direct_nominal_h1 seed 109 (pid 156750)
+  start ppo_direct_nominal_h1 seed 127 (pid 156753)
+  start ppo_direct_nominal_h1 seed 149 (pid 156756)
+  done  ppo_direct_nominal_h1 seed 127 in 56.1 min: ok
+  done  ppo_direct_nominal_h1 seed 97 in 56.6 min: ok
+  done  ppo_direct_nominal_h1 seed 109 in 57.7 min: ok
+  done  ppo_direct_nominal_h1 seed 149 in 57.8 min: ok
+  done  ppo_direct_nominal_h1 seed 83 in 58.3 min: ok
+
+5/5 runs completed in 58.3 min

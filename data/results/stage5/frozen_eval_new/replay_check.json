@@ -1,0 +1,7 @@
+{
+  "new": "artifacts/results/posthoc5/frozen_eval_new/episodes.csv",
+  "old": "artifacts/results/posthoc4/heldout_ranged/episodes.csv",
+  "rows_checked": 4800,
+  "bit_identical_rows": 4800,
+  "first_differing": []
+}

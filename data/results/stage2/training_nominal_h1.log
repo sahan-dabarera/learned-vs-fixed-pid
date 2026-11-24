@@ -1,0 +1,31 @@
+host          : cpunode13.dyn.scc.plus.ac.at
+slurm job     : 3225586
+granted cores : 64
+runs          : 10 x 1 thread(s) = 10 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan2
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_direct_nominal_h1 seed 11 (pid 189363)
+  start ppo_direct_nominal_h1 seed 23 (pid 189366)
+  start ppo_direct_nominal_h1 seed 37 (pid 189369)
+  start ppo_direct_nominal_h1 seed 53 (pid 189372)
+  start ppo_direct_nominal_h1 seed 71 (pid 189375)
+  start ppo_scheduler_nominal_h1 seed 11 (pid 189378)
+  start ppo_scheduler_nominal_h1 seed 23 (pid 189381)
+  start ppo_scheduler_nominal_h1 seed 37 (pid 189384)
+  start ppo_scheduler_nominal_h1 seed 53 (pid 189387)
+  start ppo_scheduler_nominal_h1 seed 71 (pid 189390)
+  done  ppo_scheduler_nominal_h1 seed 37 in 32.3 min: ok
+  done  ppo_scheduler_nominal_h1 seed 71 in 33.0 min: ok
+  done  ppo_scheduler_nominal_h1 seed 53 in 33.2 min: ok
+  done  ppo_scheduler_nominal_h1 seed 11 in 33.3 min: ok
+  done  ppo_scheduler_nominal_h1 seed 23 in 34.3 min: ok
+  done  ppo_direct_nominal_h1 seed 11 in 91.9 min: ok
+  done  ppo_direct_nominal_h1 seed 23 in 92.6 min: ok
+  done  ppo_direct_nominal_h1 seed 53 in 93.7 min: ok
+  done  ppo_direct_nominal_h1 seed 71 in 94.1 min: ok
+  done  ppo_direct_nominal_h1 seed 37 in 94.5 min: ok
+
+10/10 runs completed in 94.5 min

@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this code or data, please cite the thesis."
+title: "Fixed PID, PPO Gain Scheduling, and Direct Reinforcement Learning for Path Following under Delay and Noise"
+type: software
+authors:
+  - family-names: Dabarera
+    given-names: Sahan
+repository-code: "https://github.com/sahan-dabarera/learned-vs-fixed-pid"
+license: MIT
+preferred-citation:
+  type: thesis
+  thesis-type: "Master's thesis"
+  title: "Fixed PID, PPO Gain Scheduling, and Direct Reinforcement Learning for Path Following under Delay and Noise"
+  authors:
+    - family-names: Dabarera
+      given-names: Sahan
+  institution:
+    name: "Paris Lodron University Salzburg"
+  year: 2026

@@ -1,0 +1,221 @@
+{
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_eval.py",
+    "--no-default",
+    "--seeds",
+    "83,97,109,127,149",
+    "--extra-arm",
+    "ppo_scheduler_ranged_h1=artifacts/models/posthoc/plan5",
+    "--extra-arm",
+    "ppo_scheduler_disturbed_h1=artifacts/models/posthoc/plan5",
+    "--manifest",
+    "manifests/posthoc/delay_wide.json",
+    "--output",
+    "artifacts/results/posthoc6/t2_delay"
+  ],
+  "git": {
+    "commit": "6fcd779f4eda518ceaf744c2973baa527f6327c5",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "gpunode09.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-741.22.1.el9_9.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3374181",
+    "slurm_nodelist": "gpunode09.dyn.scc.plus.ac.at"
+  },
+  "workers": 64,
+  "wall_time_s": 632.7020227909088,
+  "episodes": 13200,
+  "manifests": [
+    {
+      "path": "/home/user/thesis-experiment/manifests/posthoc/delay_wide.json",
+      "sha256_scenarios": "482ad803121a911e9b4ef9accee56d4b3f21e09bb67bb599f355b8eaa6043b2e",
+      "evaluated": 1320
+    }
+  ],
+  "filters": {
+    "condition": [],
+    "mode": [],
+    "limit": 0
+  },
+  "calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+    "sha256": "a94f84a11f4eedf9a49c459b1f79466d95167316ebf0286332ff4ceeb2de239f"
+  },
+  "scheduler_calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+    "sha256": "191e0e1d0d06113c38a175a8d7d235e21390175a2b51ae14c5cb89550435a6ac"
+  },
+  "controllers": [
+    {
+      "name": "ppo_scheduler_ranged_h1",
+      "seed": 83,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_ranged_h1/seed_83/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "b496b4f9f71b099fe29559dc578511edde876c9f1c40e01efc27cc3a63e0959e"
+    },
+    {
+      "name": "ppo_scheduler_ranged_h1",
+      "seed": 97,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_ranged_h1/seed_97/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "ab15162e82fa7fb098178d26ab546cadaa41d2d73d20c9107fa7dd8f61ea8149"
+    },
+    {
+      "name": "ppo_scheduler_ranged_h1",
+      "seed": 109,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_ranged_h1/seed_109/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "b57095ba6b06a7de10f89d5a89583924bc655f59f4d497db1d1af044301b2804"
+    },
+    {
+      "name": "ppo_scheduler_ranged_h1",
+      "seed": 127,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_ranged_h1/seed_127/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "8feb7c323ad6293650d0ca81510228ee40c562e11780e0b6b6be5f7d6595220b"
+    },
+    {
+      "name": "ppo_scheduler_ranged_h1",
+      "seed": 149,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_ranged_h1/seed_149/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "a9190bb85239516f23029be614f7902c20c578df05f825a9a8579a5dc22ce343"
+    },
+    {
+      "name": "ppo_scheduler_disturbed_h1",
+      "seed": 83,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_disturbed_h1/seed_83/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "d400ef1fd364a0fb7baf39766052569c990db7b23fcfbf64eb8519c999863714"
+    },
+    {
+      "name": "ppo_scheduler_disturbed_h1",
+      "seed": 97,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_disturbed_h1/seed_97/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "1b9f22b9fda8149afb76e4efc7827e610eacb571799f637f29fce7c93c20df8d"
+    },
+    {
+      "name": "ppo_scheduler_disturbed_h1",
+      "seed": 109,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_disturbed_h1/seed_109/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "d56c63ce5bdfefd8c5bce7463df071ad38e9b2268f2ad7091d08cbeaec62ddc2"
+    },
+    {
+      "name": "ppo_scheduler_disturbed_h1",
+      "seed": 127,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_disturbed_h1/seed_127/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "fdaf7f121e3f285ca1564fb0a5ad0b29d7c8d89b51756b4b2b2c2c61fb42cae5"
+    },
+    {
+      "name": "ppo_scheduler_disturbed_h1",
+      "seed": 149,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/plan5/ppo_scheduler_disturbed_h1/seed_149/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "gain_rate_limit": null,
+      "model_sha256": "6eecf774f06ed83fabff6a0eb828bbbc5d20ca6f1eaedfcac68d8ffe5708cbf1"
+    }
+  ],
+  "frozen_gains": null,
+  "frozen_statistic": null,
+  "config": {
+    "physics_hz": 500,
+    "policy_hz": 50,
+    "history_length": 10,
+    "target_speeds": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "max_time_factor": 2.0,
+    "max_time_margin_s": 5.0,
+    "corridor_m": 1.0,
+    "runaway_m": 20.0,
+    "derivative_filter_tau_s": 0.01,
+    "actuator_limit": 1.0,
+    "delay_severity_s": 0.15,
+    "noise_severity_m": 0.0003,
+    "transient_start_s": 6.0,
+    "final_training_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "development_seed": 11
+  },
+  "packages": {
+    "numpy": "2.2.6",
+    "mujoco": "3.9.0",
+    "gymnasium": "1.3.0",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.13.0"
+  }
+}

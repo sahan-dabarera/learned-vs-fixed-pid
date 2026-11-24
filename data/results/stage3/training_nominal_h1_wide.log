@@ -1,0 +1,21 @@
+host          : cpunode13.dyn.scc.plus.ac.at
+slurm job     : 3281395
+granted cores : 64
+runs          : 5 x 1 thread(s) = 5 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan3
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_scheduler_nominal_h1_wide seed 11 (pid 1556023)
+  start ppo_scheduler_nominal_h1_wide seed 23 (pid 1556025)
+  start ppo_scheduler_nominal_h1_wide seed 37 (pid 1556030)
+  start ppo_scheduler_nominal_h1_wide seed 53 (pid 1556033)
+  start ppo_scheduler_nominal_h1_wide seed 71 (pid 1556037)
+  done  ppo_scheduler_nominal_h1_wide seed 71 in 20.2 min: ok
+  done  ppo_scheduler_nominal_h1_wide seed 53 in 20.5 min: ok
+  done  ppo_scheduler_nominal_h1_wide seed 37 in 21.0 min: ok
+  done  ppo_scheduler_nominal_h1_wide seed 11 in 21.5 min: ok
+  done  ppo_scheduler_nominal_h1_wide seed 23 in 22.3 min: ok
+
+5/5 runs completed in 22.3 min

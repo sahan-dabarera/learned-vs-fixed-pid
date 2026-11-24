@@ -1,0 +1,31 @@
+host          : cpunode39.dyn.scc.plus.ac.at
+slurm job     : 3188678
+granted cores : 64
+runs          : 10 x 1 thread(s) = 10 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/e5_history
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_direct_disturbed_h1 seed 11 (pid 288883)
+  start ppo_direct_disturbed_h1 seed 23 (pid 288884)
+  start ppo_direct_disturbed_h1 seed 37 (pid 288885)
+  start ppo_direct_disturbed_h1 seed 53 (pid 288886)
+  start ppo_direct_disturbed_h1 seed 71 (pid 288887)
+  start ppo_scheduler_disturbed_h1 seed 11 (pid 288888)
+  start ppo_scheduler_disturbed_h1 seed 23 (pid 288889)
+  start ppo_scheduler_disturbed_h1 seed 37 (pid 288890)
+  start ppo_scheduler_disturbed_h1 seed 53 (pid 288891)
+  start ppo_scheduler_disturbed_h1 seed 71 (pid 288892)
+  done  ppo_scheduler_disturbed_h1 seed 23 in 28.7 min: ok
+  done  ppo_scheduler_disturbed_h1 seed 71 in 28.8 min: ok
+  done  ppo_scheduler_disturbed_h1 seed 53 in 28.9 min: ok
+  done  ppo_scheduler_disturbed_h1 seed 37 in 29.7 min: ok
+  done  ppo_scheduler_disturbed_h1 seed 11 in 32.8 min: ok
+  done  ppo_direct_disturbed_h1 seed 71 in 101.8 min: ok
+  done  ppo_direct_disturbed_h1 seed 53 in 102.4 min: ok
+  done  ppo_direct_disturbed_h1 seed 11 in 104.5 min: ok
+  done  ppo_direct_disturbed_h1 seed 37 in 104.6 min: ok
+  done  ppo_direct_disturbed_h1 seed 23 in 104.7 min: ok
+
+10/10 runs completed in 104.7 min

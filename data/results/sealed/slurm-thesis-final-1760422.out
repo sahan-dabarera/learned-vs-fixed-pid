@@ -1,0 +1,88 @@
+host      : cpunode13.dyn.scc.plus.ac.at
+job       : 1760422 on base
+cores     : 20 allocated
+python    : Python 3.12.13
+venv      : .venv
+output    : artifacts/models/final
+
+=== parity check: the plant must match the declared machine ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode13.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== training matrix ===
+host          : cpunode13.dyn.scc.plus.ac.at
+slurm job     : 1760422
+granted cores : 20
+runs          : 20 x 1 thread(s) = 20 threads
+concurrency   : 20 at a time
+output        : /home/user/thesis-experiment/artifacts/models/final
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_direct_nominal seed 11 (pid 2655138)
+  start ppo_direct_nominal seed 23 (pid 2655139)
+  start ppo_direct_nominal seed 37 (pid 2655140)
+  start ppo_direct_nominal seed 53 (pid 2655141)
+  start ppo_direct_nominal seed 71 (pid 2655142)
+  start ppo_direct_disturbed seed 11 (pid 2655143)
+  start ppo_direct_disturbed seed 23 (pid 2655144)
+  start ppo_direct_disturbed seed 37 (pid 2655145)
+  start ppo_direct_disturbed seed 53 (pid 2655146)
+  start ppo_direct_disturbed seed 71 (pid 2655147)
+  start ppo_scheduler_nominal seed 11 (pid 2655148)
+  start ppo_scheduler_nominal seed 23 (pid 2655149)
+  start ppo_scheduler_nominal seed 37 (pid 2655150)
+  start ppo_scheduler_nominal seed 53 (pid 2655151)
+  start ppo_scheduler_nominal seed 71 (pid 2655152)
+  start ppo_scheduler_disturbed seed 11 (pid 2655153)
+  start ppo_scheduler_disturbed seed 23 (pid 2655154)
+  start ppo_scheduler_disturbed seed 37 (pid 2655155)
+  start ppo_scheduler_disturbed seed 53 (pid 2655156)
+  start ppo_scheduler_disturbed seed 71 (pid 2655157)
+  done  ppo_scheduler_disturbed seed 37 in 30.2 min: ok
+  done  ppo_scheduler_disturbed seed 71 in 31.1 min: ok
+  done  ppo_scheduler_disturbed seed 23 in 32.4 min: ok
+  done  ppo_scheduler_disturbed seed 53 in 32.5 min: ok
+  done  ppo_scheduler_nominal seed 53 in 33.0 min: ok
+  done  ppo_scheduler_disturbed seed 11 in 34.0 min: ok
+  done  ppo_scheduler_nominal seed 37 in 34.2 min: ok
+  done  ppo_scheduler_nominal seed 71 in 34.5 min: ok
+  done  ppo_scheduler_nominal seed 23 in 34.6 min: ok
+  done  ppo_scheduler_nominal seed 11 in 35.7 min: ok
+  done  ppo_direct_disturbed seed 71 in 87.0 min: ok
+  done  ppo_direct_nominal seed 53 in 89.9 min: ok
+  done  ppo_direct_nominal seed 23 in 91.1 min: ok
+  done  ppo_direct_disturbed seed 11 in 91.7 min: ok
+  done  ppo_direct_nominal seed 11 in 92.3 min: ok
+  done  ppo_direct_nominal seed 37 in 92.5 min: ok
+  done  ppo_direct_nominal seed 71 in 93.1 min: ok
+  done  ppo_direct_disturbed seed 37 in 93.4 min: ok
+  done  ppo_direct_disturbed seed 23 in 94.5 min: ok
+  done  ppo_direct_disturbed seed 53 in 95.9 min: ok
+
+20/20 runs completed in 95.9 min
+
+=== held-out evaluation ===
+evaluated 22 controllers on 480 paired scenarios
+results saved to /home/user/thesis-experiment/artifacts/results/final
+
+done. Copy artifacts/results/final and the metadata.json files back to the laptop.
+Model zips are ~1 MB each; tensorboard directories are the bulk and rarely worth moving.

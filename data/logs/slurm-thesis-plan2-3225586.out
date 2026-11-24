@@ -1,0 +1,324 @@
+host      : cpunode13.dyn.scc.plus.ac.at
+cpu       : AMD EPYC 9334 32-Core Processor
+job       : 3225586, 64 cores
+commit    : 578dda6d3661650d2670e7525451ba76ccf86d33 (posthoc-experiments)
+
+=== parity gate (23:45:52 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode13.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== training in the background (23:46:51 UTC) ===
+  nominal_h1 -> artifacts/models/posthoc/plan2 (log artifacts/results/posthoc2/training_nominal_h1.log)
+  ranged_h1 -> artifacts/models/posthoc/plan2 (log artifacts/results/posthoc2/training_ranged_h1.log)
+  ranged_h10 -> artifacts/models/posthoc/plan2 (log artifacts/results/posthoc2/training_ranged_h10.log)
+
+=== PID-RN retune on the ranged validation subset (beside the training) (23:46:51 UTC) ===
+WARNING: selection sits on the grid edge in ['kp']; report it
+PID-RN at manifest noise: Kp 4.0 Ki 0.5 Kd 3.0 tau_d 0.02
+  selected E_FA 15.16 mm, completion 1.00
+  sealed PID-R E_FA 23.18 mm, completion 0.82
+--pid pid_global_robust_noise=4.0,0.5,3.0,0.02
+  pid_global_robust_noise=4.0,0.5,3.0,0.02
+
+=== F3 wide delay sweep, existing arms (beside the training) (23:55:40 UTC) ===
+controllers: 33  scenarios: 1320  episodes: 43560  workers: 30
+  2184/43560 episodes, 4.5 min
+  4356/43560 episodes, 8.4 min
+  6540/43560 episodes, 12.9 min
+  8712/43560 episodes, 16.9 min
+  10896/43560 episodes, 21.0 min
+  13068/43560 episodes, 24.9 min
+  15252/43560 episodes, 27.4 min
+  17424/43560 episodes, 30.0 min
+  19608/43560 episodes, 32.8 min
+  21780/43560 episodes, 35.0 min
+  23964/43560 episodes, 37.3 min
+  26136/43560 episodes, 39.9 min
+  28320/43560 episodes, 41.9 min
+  30492/43560 episodes, 44.6 min
+  32676/43560 episodes, 47.4 min
+  34848/43560 episodes, 49.7 min
+  37032/43560 episodes, 52.2 min
+  39204/43560 episodes, 54.8 min
+  41388/43560 episodes, 56.7 min
+  43560/43560 episodes, 58.8 min
+43560 episodes in 58.8 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f3_delay_existing
+f3_delay_existing: 2640 rows checked, 2640 bit-identical, 0 completion mismatches, max |dE_FA| on finished rows 0.0000 mm (0.00 %)
+
+=== F4 dynamic delay, existing arms (beside the training) (00:54:33 UTC) ===
+controllers: 33  scenarios: 360  episodes: 11880  workers: 30
+  600/11880 episodes, 1.2 min
+  1188/11880 episodes, 2.2 min
+  1788/11880 episodes, 3.5 min
+  2376/11880 episodes, 4.3 min
+  2976/11880 episodes, 5.2 min
+  3564/11880 episodes, 6.1 min
+  4164/11880 episodes, 6.9 min
+  4752/11880 episodes, 7.4 min
+  5352/11880 episodes, 8.2 min
+  5940/11880 episodes, 8.8 min
+  6540/11880 episodes, 9.4 min
+  7128/11880 episodes, 10.2 min
+  7728/11880 episodes, 10.8 min
+  8316/11880 episodes, 11.7 min
+  8916/11880 episodes, 12.3 min
+  9504/11880 episodes, 13.3 min
+  10104/11880 episodes, 14.0 min
+  10692/11880 episodes, 14.5 min
+  11292/11880 episodes, 15.2 min
+  11880/11880 episodes, 15.6 min
+11880 episodes in 15.7 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f4_dynamic_existing
+
+=== waiting for training (01:10:13 UTC) ===
+--- artifacts/results/posthoc2/training_nominal_h1.log
+  done  ppo_direct_nominal_h1 seed 37 in 94.5 min: ok
+
+10/10 runs completed in 94.5 min
+--- artifacts/results/posthoc2/training_ranged_h10.log
+  done  ppo_direct_ranged_h10 seed 53 in 96.0 min: ok
+
+10/10 runs completed in 96.0 min
+--- artifacts/results/posthoc2/training_ranged_h1.log
+  done  ppo_direct_ranged_h1 seed 11 in 94.4 min: ok
+
+10/10 runs completed in 94.4 min
+
+=== F0 validation scores of the selected checkpoints (01:22:49 UTC) ===
+ppo_scheduler_disturbed                  seed 11  completion 1.000  E_FA 5.63 mm  (validation.json)
+ppo_scheduler_disturbed                  seed 23  completion 1.000  E_FA 8.64 mm  (validation.json)
+ppo_scheduler_disturbed                  seed 37  completion 1.000  E_FA 4.54 mm  (validation.json)
+ppo_scheduler_disturbed                  seed 53  completion 1.000  E_FA 5.31 mm  (validation.json)
+ppo_scheduler_disturbed                  seed 71  completion 1.000  E_FA 6.03 mm  (validation.json)
+ppo_direct_disturbed                     seed 11  completion 1.000  E_FA 10.31 mm  (validation.json)
+ppo_direct_disturbed                     seed 23  completion 1.000  E_FA 19.86 mm  (validation.json)
+ppo_direct_disturbed                     seed 37  completion 1.000  E_FA 13.93 mm  (validation.json)
+ppo_direct_disturbed                     seed 53  completion 1.000  E_FA 10.12 mm  (validation.json)
+ppo_direct_disturbed                     seed 71  completion 1.000  E_FA 12.51 mm  (validation.json)
+ppo_scheduler_nominal                    seed 11  completion 0.667  E_FA 58.31 mm  (validation.json)
+ppo_scheduler_nominal                    seed 23  completion 1.000  E_FA 10.70 mm  (validation.json)
+ppo_scheduler_nominal                    seed 37  completion 1.000  E_FA 15.61 mm  (validation.json)
+ppo_scheduler_nominal                    seed 53  completion 1.000  E_FA 11.44 mm  (validation.json)
+ppo_scheduler_nominal                    seed 71  completion 0.875  E_FA 27.40 mm  (validation.json)
+ppo_direct_nominal                       seed 11  completion 1.000  E_FA 10.33 mm  (validation.json)
+ppo_direct_nominal                       seed 23  completion 1.000  E_FA 9.49 mm  (validation.json)
+ppo_direct_nominal                       seed 37  completion 1.000  E_FA 13.19 mm  (validation.json)
+ppo_direct_nominal                       seed 53  completion 1.000  E_FA 13.38 mm  (validation.json)
+ppo_direct_nominal                       seed 71  completion 1.000  E_FA 15.28 mm  (validation.json)
+ppo_scheduler_disturbed_h1               seed 11  completion 1.000  E_FA 4.31 mm  (validation.json)
+ppo_scheduler_disturbed_h1               seed 23  completion 1.000  E_FA 5.53 mm  (validation.json)
+ppo_scheduler_disturbed_h1               seed 37  completion 1.000  E_FA 4.90 mm  (validation.json)
+ppo_scheduler_disturbed_h1               seed 53  completion 1.000  E_FA 5.29 mm  (validation.json)
+ppo_scheduler_disturbed_h1               seed 71  completion 1.000  E_FA 5.37 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 11  completion 1.000  E_FA 3.85 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 23  completion 1.000  E_FA 6.71 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 37  completion 1.000  E_FA 4.80 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 53  completion 1.000  E_FA 11.59 mm  (validation.json)
+ppo_direct_disturbed_h1                  seed 71  completion 1.000  E_FA 5.52 mm  (validation.json)
+ppo_scheduler_nominal_h1                 seed 11  completion 1.000  E_FA 12.21 mm  (validation.json)
+ppo_scheduler_nominal_h1                 seed 23  completion 0.667  E_FA 74.85 mm  (validation.json)
+ppo_scheduler_nominal_h1                 seed 37  completion 1.000  E_FA 12.01 mm  (validation.json)
+ppo_scheduler_nominal_h1                 seed 53  completion 0.833  E_FA 27.89 mm  (validation.json)
+ppo_scheduler_nominal_h1                 seed 71  completion 1.000  E_FA 15.90 mm  (validation.json)
+ppo_direct_nominal_h1                    seed 11  completion 1.000  E_FA 9.93 mm  (validation.json)
+ppo_direct_nominal_h1                    seed 23  completion 1.000  E_FA 10.49 mm  (validation.json)
+ppo_direct_nominal_h1                    seed 37  completion 1.000  E_FA 5.26 mm  (validation.json)
+ppo_direct_nominal_h1                    seed 53  completion 1.000  E_FA 8.65 mm  (validation.json)
+ppo_direct_nominal_h1                    seed 71  completion 1.000  E_FA 12.19 mm  (validation.json)
+ppo_scheduler_ranged_h1                  seed 11  completion 0.792  E_FA 25.49 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h1                  seed 23  completion 0.833  E_FA 19.73 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h1                  seed 37  completion 0.833  E_FA 24.47 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h1                  seed 53  completion 0.750  E_FA 43.58 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h1                  seed 71  completion 1.000  E_FA 14.29 mm  (validation_ranged.json)
+ppo_direct_ranged_h1                     seed 11  completion 1.000  E_FA 9.92 mm  (validation_ranged.json)
+ppo_direct_ranged_h1                     seed 23  completion 1.000  E_FA 21.08 mm  (validation_ranged.json)
+ppo_direct_ranged_h1                     seed 37  completion 1.000  E_FA 14.11 mm  (validation_ranged.json)
+ppo_direct_ranged_h1                     seed 53  completion 1.000  E_FA 12.17 mm  (validation_ranged.json)
+ppo_direct_ranged_h1                     seed 71  completion 1.000  E_FA 12.05 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h10                 seed 11  completion 0.833  E_FA 58.71 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h10                 seed 23  completion 0.792  E_FA 42.37 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h10                 seed 37  completion 0.917  E_FA 23.17 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h10                 seed 53  completion 0.833  E_FA 17.97 mm  (validation_ranged.json)
+ppo_scheduler_ranged_h10                 seed 71  completion 0.875  E_FA 25.57 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 11  completion 1.000  E_FA 14.94 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 23  completion 1.000  E_FA 17.85 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 37  completion 0.875  E_FA 205.19 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 53  completion 1.000  E_FA 42.59 mm  (validation_ranged.json)
+ppo_direct_ranged_h10                    seed 71  completion 1.000  E_FA 17.06 mm  (validation_ranged.json)
+
+=== F2 held-out, ranged (main table): every arm, one job (01:22:50 UTC) ===
+controllers: 63  scenarios: 480  episodes: 30240  workers: 64
+  1512/30240 episodes, 1.8 min
+  3024/30240 episodes, 3.0 min
+  4536/30240 episodes, 4.1 min
+  6048/30240 episodes, 5.1 min
+  7560/30240 episodes, 6.1 min
+  9072/30240 episodes, 7.1 min
+  10584/30240 episodes, 8.0 min
+  12096/30240 episodes, 9.1 min
+  13608/30240 episodes, 10.1 min
+  15120/30240 episodes, 11.2 min
+  16632/30240 episodes, 12.5 min
+  18144/30240 episodes, 13.5 min
+  19656/30240 episodes, 14.4 min
+  21168/30240 episodes, 15.5 min
+  22680/30240 episodes, 16.5 min
+  24192/30240 episodes, 17.5 min
+  25704/30240 episodes, 18.7 min
+  27216/30240 episodes, 19.8 min
+  28728/30240 episodes, 20.7 min
+  30240/30240 episodes, 21.3 min
+30240 episodes in 21.3 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f2_heldout_ranged
+
+=== F2 held-out, fixed severities (comparison + sealed replay check) (01:44:09 UTC) ===
+controllers: 63  scenarios: 480  episodes: 30240  workers: 64
+  1512/30240 episodes, 1.8 min
+  3024/30240 episodes, 2.8 min
+  4536/30240 episodes, 3.8 min
+  6048/30240 episodes, 4.8 min
+  7560/30240 episodes, 5.7 min
+  9072/30240 episodes, 6.7 min
+  10584/30240 episodes, 7.7 min
+  12096/30240 episodes, 8.7 min
+  13608/30240 episodes, 9.6 min
+  15120/30240 episodes, 10.6 min
+  16632/30240 episodes, 11.7 min
+  18144/30240 episodes, 12.8 min
+  19656/30240 episodes, 13.7 min
+  21168/30240 episodes, 14.7 min
+  22680/30240 episodes, 15.7 min
+  24192/30240 episodes, 16.6 min
+  25704/30240 episodes, 17.7 min
+  27216/30240 episodes, 18.7 min
+  28728/30240 episodes, 19.6 min
+  30240/30240 episodes, 20.3 min
+30240 episodes in 20.3 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f2_heldout_fixed
+f2_heldout_fixed: 10560 rows checked, 10560 bit-identical, 0 completion mismatches, max |dE_FA| on finished rows 0.0000 mm (0.00 %)
+
+=== F3 wide delay sweep, new arms (02:04:29 UTC) ===
+controllers: 30  scenarios: 1320  episodes: 39600  workers: 64
+  1980/39600 episodes, 2.6 min
+  3960/39600 episodes, 4.3 min
+  5940/39600 episodes, 6.2 min
+  7920/39600 episodes, 7.7 min
+  9900/39600 episodes, 9.0 min
+  11880/39600 episodes, 10.3 min
+  13860/39600 episodes, 11.6 min
+  15840/39600 episodes, 13.2 min
+  17820/39600 episodes, 14.8 min
+  19800/39600 episodes, 16.6 min
+  21780/39600 episodes, 17.9 min
+  23760/39600 episodes, 19.4 min
+  25740/39600 episodes, 20.7 min
+  27720/39600 episodes, 22.5 min
+  29700/39600 episodes, 24.0 min
+  31680/39600 episodes, 25.8 min
+  33660/39600 episodes, 27.2 min
+  35640/39600 episodes, 28.6 min
+  37620/39600 episodes, 29.6 min
+  39600/39600 episodes, 31.0 min
+39600 episodes in 31.0 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f3_delay_new
+
+=== F4 dynamic delay, new arms (02:35:31 UTC) ===
+controllers: 30  scenarios: 360  episodes: 10800  workers: 64
+  540/10800 episodes, 1.3 min
+  1080/10800 episodes, 2.1 min
+  1620/10800 episodes, 2.4 min
+  2160/10800 episodes, 2.8 min
+  2700/10800 episodes, 3.1 min
+  3240/10800 episodes, 3.5 min
+  3780/10800 episodes, 3.9 min
+  4320/10800 episodes, 4.7 min
+  4860/10800 episodes, 5.0 min
+  5400/10800 episodes, 5.5 min
+  5940/10800 episodes, 5.6 min
+  6480/10800 episodes, 6.1 min
+  7020/10800 episodes, 6.4 min
+  7560/10800 episodes, 7.2 min
+  8100/10800 episodes, 7.5 min
+  8640/10800 episodes, 8.0 min
+  9180/10800 episodes, 8.4 min
+  9720/10800 episodes, 8.8 min
+  10260/10800 episodes, 9.0 min
+  10800/10800 episodes, 9.2 min
+10800 episodes in 9.2 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f4_dynamic_new
+
+=== F6 frozen gains of the H = 1 schedulers (validation manifest) (02:44:47 UTC) ===
+ppo_scheduler_nominal_h1 seed 11  clean: Kp 23.4 Ki 0.28 Kd 4.41  delay: Kp 22.6 Ki 0.27 Kd 4.45
+ppo_scheduler_nominal_h1 seed 23  clean: Kp 207.3 Ki 1.31 Kd 2.64  delay: Kp 52.9 Ki 0.64 Kd 3.56
+ppo_scheduler_nominal_h1 seed 37  clean: Kp 18.2 Ki 0.42 Kd 5.28  delay: Kp 30.3 Ki 0.41 Kd 5.12
+ppo_scheduler_nominal_h1 seed 53  clean: Kp 39.5 Ki 0.42 Kd 5.09  delay: Kp 33.4 Ki 0.39 Kd 4.93
+ppo_scheduler_nominal_h1 seed 71  clean: Kp 23.1 Ki 0.01 Kd 4.81  delay: Kp 23.4 Ki 0.26 Kd 4.25
+ppo_scheduler_ranged_h1 seed 11  clean: Kp 5.1 Ki 1.46 Kd 5.59  delay: Kp 5.1 Ki 1.31 Kd 5.43
+ppo_scheduler_ranged_h1 seed 23  clean: Kp 8.8 Ki 0.01 Kd 4.47  delay: Kp 10.5 Ki 0.31 Kd 4.66
+ppo_scheduler_ranged_h1 seed 37  clean: Kp 5.9 Ki 0.31 Kd 5.80  delay: Kp 6.1 Ki 0.34 Kd 5.60
+ppo_scheduler_ranged_h1 seed 53  clean: Kp 5.1 Ki 0.01 Kd 2.55  delay: Kp 5.5 Ki 0.06 Kd 2.56
+ppo_scheduler_ranged_h1 seed 71  clean: Kp 11.8 Ki 0.01 Kd 2.56  delay: Kp 9.5 Ki 0.03 Kd 2.56
+saved /home/user/thesis-experiment/artifacts/results/posthoc2/f6_frozen_gains/frozen_gains.json
+controllers: 30  scenarios: 480  episodes: 14400  workers: 64
+  720/14400 episodes, 0.9 min
+  1440/14400 episodes, 1.6 min
+  2160/14400 episodes, 2.1 min
+  2880/14400 episodes, 2.6 min
+  3600/14400 episodes, 3.2 min
+  4320/14400 episodes, 3.6 min
+  5040/14400 episodes, 4.1 min
+  5760/14400 episodes, 4.5 min
+  6480/14400 episodes, 5.0 min
+  7200/14400 episodes, 5.4 min
+  7920/14400 episodes, 5.9 min
+  8640/14400 episodes, 6.3 min
+  9360/14400 episodes, 6.8 min
+  10080/14400 episodes, 7.4 min
+  10800/14400 episodes, 8.1 min
+  11520/14400 episodes, 8.6 min
+  12240/14400 episodes, 9.2 min
+  12960/14400 episodes, 9.6 min
+  13680/14400 episodes, 10.2 min
+  14400/14400 episodes, 10.4 min
+14400 episodes in 10.4 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f6_frozen_eval
+
+=== F5 noise sweeps (coarse + fine), new arms and PID-RN (02:57:25 UTC) ===
+controllers: 31  scenarios: 4320  episodes: 133920  workers: 64
+  6696/133920 episodes, 7.6 min
+  13392/133920 episodes, 14.8 min
+  20088/133920 episodes, 22.0 min
+  26784/133920 episodes, 27.0 min
+  33480/133920 episodes, 31.3 min
+  40176/133920 episodes, 35.7 min
+  46872/133920 episodes, 41.4 min
+  53568/133920 episodes, 48.0 min
+  60264/133920 episodes, 55.0 min
+  66960/133920 episodes, 60.6 min
+  73656/133920 episodes, 65.1 min
+  80352/133920 episodes, 69.3 min
+  87048/133920 episodes, 73.7 min
+  93744/133920 episodes, 80.7 min
+  100440/133920 episodes, 87.7 min
+  107136/133920 episodes, 94.6 min
+  113832/133920 episodes, 99.1 min
+  120528/133920 episodes, 103.2 min
+  127224/133920 episodes, 107.5 min
+  133920/133920 episodes, 112.4 min
+133920 episodes in 112.5 min -> /home/user/thesis-experiment/artifacts/results/posthoc2/f5_noise_sweep
+
+=== done (04:49:58 UTC) ===
+copy back: scp -r <account>@<login>:thesis-experiment/artifacts/results/posthoc2 artifacts/results/
+           and artifacts/models/posthoc/plan2/*/seed_*/{metadata.json,validation_history.jsonl,train.log}

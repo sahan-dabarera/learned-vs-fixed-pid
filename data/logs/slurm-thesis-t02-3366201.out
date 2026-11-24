@@ -1,0 +1,77 @@
+host      : cpunode13.dyn.scc.plus.ac.at
+cpu       : AMD EPYC 9334 32-Core Processor
+job       : 3366201, 64 cores
+commit    : 112598b0a6707525c4005bd4348456bd8e3ca38a (posthoc-experiments)
+
+=== parity gate (15:02:27 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode13.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== T07: gain occupancy, new seeds (15:03:29 UTC) ===
+80 rows -> /home/user/thesis-experiment/artifacts/results/posthoc5/occupancy_gsd_new
+80 rows -> /home/user/thesis-experiment/artifacts/results/posthoc5/occupancy_gsn_new
+
+=== T07: frozen gains, new seeds (validation.json) (15:28:33 UTC) ===
+ppo_scheduler_ranged_h1_wide_2m seed 83  clean: Kp 100.3 Ki 1.47 Kd 3.02  delay: Kp 20.5 Ki 0.77 Kd 3.55
+ppo_scheduler_ranged_h1_wide_2m seed 97  clean: Kp 1.1 Ki 0.31 Kd 0.62  delay: Kp 1.1 Ki 0.27 Kd 0.83
+ppo_scheduler_ranged_h1_wide_2m seed 109  clean: Kp 1.1 Ki 0.20 Kd 4.95  delay: Kp 1.5 Ki 0.06 Kd 4.71
+ppo_scheduler_ranged_h1_wide_2m seed 127  clean: Kp 1.1 Ki 1.41 Kd 4.23  delay: Kp 1.1 Ki 1.20 Kd 2.93
+ppo_scheduler_ranged_h1_wide_2m seed 149  clean: Kp 16.0 Ki 1.47 Kd 0.28  delay: Kp 8.2 Ki 1.45 Kd 0.32
+ppo_scheduler_nominal_h1_wide seed 83  clean: Kp 17.4 Ki 0.81 Kd 4.00  delay: Kp 19.0 Ki 0.78 Kd 4.23
+ppo_scheduler_nominal_h1_wide seed 97  clean: Kp 14.6 Ki 0.48 Kd 4.64  delay: Kp 19.3 Ki 0.57 Kd 4.58
+ppo_scheduler_nominal_h1_wide seed 109  clean: Kp 19.0 Ki 0.51 Kd 4.75  delay: Kp 53.4 Ki 0.42 Kd 4.35
+ppo_scheduler_nominal_h1_wide seed 127  clean: Kp 65.6 Ki 0.43 Kd 4.83  delay: Kp 72.8 Ki 0.39 Kd 4.73
+ppo_scheduler_nominal_h1_wide seed 149  clean: Kp 23.1 Ki 0.65 Kd 4.00  delay: Kp 41.6 Ki 0.57 Kd 4.35
+saved /home/user/thesis-experiment/artifacts/results/posthoc5/frozen_gains_new/frozen_gains.json
+controllers: 30  scenarios: 480  episodes: 14400  workers: 64
+  720/14400 episodes, 1.0 min
+  1440/14400 episodes, 1.5 min
+  2160/14400 episodes, 2.1 min
+  2880/14400 episodes, 2.6 min
+  3600/14400 episodes, 3.2 min
+  4320/14400 episodes, 3.6 min
+  5040/14400 episodes, 4.3 min
+  5760/14400 episodes, 4.8 min
+  6480/14400 episodes, 5.2 min
+  7200/14400 episodes, 5.5 min
+  7920/14400 episodes, 6.0 min
+  8640/14400 episodes, 6.5 min
+  9360/14400 episodes, 7.1 min
+  10080/14400 episodes, 7.6 min
+  10800/14400 episodes, 8.3 min
+  11520/14400 episodes, 8.7 min
+  12240/14400 episodes, 9.5 min
+  12960/14400 episodes, 9.8 min
+  13680/14400 episodes, 10.5 min
+  14400/14400 episodes, 10.8 min
+14400 episodes in 10.8 min -> /home/user/thesis-experiment/artifacts/results/posthoc5/frozen_eval_new
+replay check: 4800 rows checked, 4800 bit-identical
+
+=== W17 b/c + W18: ranged held-out, all 480 scenarios, traces on three paths (15:41:38 UTC) ===
+20640 episodes, 489135 trace rows in 15.7 min -> /home/user/thesis-experiment/artifacts/results/posthoc5/traces_heldout
+replay check: 20640 rows checked (0 without a reference), 20640 identical
+
+=== W17 c: dynamic delay on the three paths, all traced (15:57:20 UTC) ===
+774 episodes, 929650 trace rows in 1.7 min -> /home/user/thesis-experiment/artifacts/results/posthoc5/traces_dynamic
+replay check: 774 rows checked (0 without a reference), 774 identical
+
+=== done (15:59:03 UTC) ===
+pack: tar czf t02_results.tgz artifacts/results/posthoc5 slurm-thesis-t02-3366201.out

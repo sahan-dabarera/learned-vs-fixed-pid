@@ -1,0 +1,106 @@
+{
+  "breaking_points": {
+    "pid_global_nominal|combined": {
+      "breaks_at_m": 0.0003,
+      "bracket_m": null,
+      "baseline_e_fa_m": 0.21404584575297597
+    },
+    "pid_global_nominal|noise": {
+      "breaks_at_m": 0.01,
+      "bracket_m": [
+        0.003,
+        0.01
+      ],
+      "baseline_e_fa_m": 0.001165572806135559
+    },
+    "pid_global_robust|combined": {
+      "breaks_at_m": 0.01,
+      "bracket_m": [
+        0.003,
+        0.01
+      ],
+      "baseline_e_fa_m": 0.01117950946941052
+    },
+    "pid_global_robust|noise": {
+      "breaks_at_m": 0.003,
+      "bracket_m": [
+        0.001,
+        0.003
+      ],
+      "baseline_e_fa_m": 0.002287742917057665
+    },
+    "ppo_direct_disturbed|combined": {
+      "breaks_at_m": 0.03,
+      "bracket_m": [
+        0.01,
+        0.03
+      ],
+      "baseline_e_fa_m": 0.015682963597963645
+    },
+    "ppo_direct_disturbed|noise": {
+      "breaks_at_m": 0.1,
+      "bracket_m": [
+        0.03,
+        0.1
+      ],
+      "baseline_e_fa_m": 0.009535160085699884
+    },
+    "ppo_direct_nominal|combined": {
+      "breaks_at_m": 0.0003,
+      "bracket_m": null,
+      "baseline_e_fa_m": 0.02044000425376064
+    },
+    "ppo_direct_nominal|noise": {
+      "breaks_at_m": 0.03,
+      "bracket_m": [
+        0.01,
+        0.03
+      ],
+      "baseline_e_fa_m": 0.007117732398528408
+    },
+    "ppo_scheduler_disturbed|combined": {
+      "breaks_at_m": 0.01,
+      "bracket_m": [
+        0.003,
+        0.01
+      ],
+      "baseline_e_fa_m": 0.012529736449633516
+    },
+    "ppo_scheduler_disturbed|noise": {
+      "breaks_at_m": 0.003,
+      "bracket_m": [
+        0.001,
+        0.003
+      ],
+      "baseline_e_fa_m": 0.001507766825131894
+    },
+    "ppo_scheduler_nominal|combined": {
+      "breaks_at_m": 0.0003,
+      "bracket_m": null,
+      "baseline_e_fa_m": 0.05213143969012093
+    },
+    "ppo_scheduler_nominal|noise": {
+      "breaks_at_m": 0.003,
+      "bracket_m": [
+        0.001,
+        0.003
+      ],
+      "baseline_e_fa_m": 0.0013895405712323623
+    }
+  },
+  "fine_candidates_m": [
+    0.001316,
+    0.001732,
+    0.00228,
+    0.004054,
+    0.005477,
+    0.007401,
+    0.013161,
+    0.017321,
+    0.022795,
+    0.040536,
+    0.054772,
+    0.074008
+  ],
+  "sigma_star_m": 0.003
+}

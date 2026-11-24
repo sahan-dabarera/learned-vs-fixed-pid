@@ -1,0 +1,602 @@
+{
+  "description": "Time-averaged applied scheduler gains on the validation manifest",
+  "variants": {
+    "clean": [
+      "nominal"
+    ],
+    "delay": [
+      "delay",
+      "combined"
+    ]
+  },
+  "gains": {
+    "ppo_scheduler_ranged_h1_wide_2m": {
+      "83": {
+        "clean": {
+          "mean": {
+            "kp": 100.25873789427042,
+            "ki": 1.4665432622909045,
+            "kd": 3.0171654294870534
+          },
+          "median": {
+            "kp": 93.93884372711182,
+            "ki": 1.5,
+            "kd": 3.6999999999999975
+          },
+          "std": {
+            "kp": 15.200177680627375,
+            "ki": 0.14497149371735135,
+            "kd": 1.1198132314869138
+          },
+          "policy_steps": 23554,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 20.5252903548179,
+            "ki": 0.7697067442057464,
+            "kd": 3.552565597556621
+          },
+          "median": {
+            "kp": 6.033837258815765,
+            "ki": 0.7080534964799882,
+            "kd": 3.742904772758485
+          },
+          "std": {
+            "kp": 34.51770063026621,
+            "ki": 0.38478696926285116,
+            "kd": 0.711220217490615
+          },
+          "policy_steps": 55748,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "97": {
+        "clean": {
+          "mean": {
+            "kp": 1.0936595107338987,
+            "ki": 0.3117825266651663,
+            "kd": 0.6221156266660537
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.3175005614757538,
+            "kd": 0.3370311498641967
+          },
+          "std": {
+            "kp": 1.20596153465167,
+            "ki": 0.05991881163501369,
+            "kd": 0.7744220835805027
+          },
+          "policy_steps": 24036,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 1.078207399687338,
+            "ki": 0.2654503461389898,
+            "kd": 0.8341535446588367
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.2622544538974762,
+            "kd": 0.718185076713562
+          },
+          "std": {
+            "kp": 1.1025477703748527,
+            "ki": 0.09040302793633141,
+            "kd": 0.6550074954113878
+          },
+          "policy_steps": 57570,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "109": {
+        "clean": {
+          "mean": {
+            "kp": 1.0951479289940822,
+            "ki": 0.20448991711187037,
+            "kd": 4.954466765608912
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.2011285275220871,
+            "kd": 4.9733463525772095
+          },
+          "std": {
+            "kp": 1.2154479567278929,
+            "ki": 0.03319360345150315,
+            "kd": 0.12737584150322623
+          },
+          "policy_steps": 23660,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 1.5157874521540566,
+            "ki": 0.05506689518111686,
+            "kd": 4.708038246619812
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 0.020890622735023498,
+            "kd": 4.741264910697938
+          },
+          "std": {
+            "kp": 1.7941558377508975,
+            "ki": 0.08040465015070711,
+            "kd": 0.24846926592980226
+          },
+          "policy_steps": 52736,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "127": {
+        "clean": {
+          "mean": {
+            "kp": 1.0948672566371676,
+            "ki": 1.4081867019642864,
+            "kd": 4.231709531401494
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 1.434470772743225,
+            "kd": 4.365
+          },
+          "std": {
+            "kp": 1.2136649061839442,
+            "ki": 0.1314317740774446,
+            "kd": 0.3594168173087502
+          },
+          "policy_steps": 23730,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 1.080551872098142,
+            "ki": 1.2045842602487982,
+            "kd": 2.929267807614443
+          },
+          "median": {
+            "kp": 1.0,
+            "ki": 1.219534800052643,
+            "kd": 2.733865678310396
+          },
+          "std": {
+            "kp": 1.1043192515104274,
+            "ki": 0.1507441888137444,
+            "kd": 0.6498847423404357
+          },
+          "policy_steps": 57533,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "149": {
+        "clean": {
+          "mean": {
+            "kp": 15.95806690968485,
+            "ki": 1.4665829870239997,
+            "kd": 0.27923840217114726
+          },
+          "median": {
+            "kp": 15.566776901483536,
+            "ki": 1.5,
+            "kd": 0.0
+          },
+          "std": {
+            "kp": 2.1998628089614836,
+            "ki": 0.14488998354485552,
+            "kd": 0.8589859400033255
+          },
+          "policy_steps": 23582,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 8.22779517774281,
+            "ki": 1.4466275554270764,
+            "kd": 0.3196821478041239
+          },
+          "median": {
+            "kp": 4.936719131469727,
+            "ki": 1.5,
+            "kd": 0.0
+          },
+          "std": {
+            "kp": 8.593175819853586,
+            "ki": 0.12497321549560558,
+            "kd": 0.7082104839783693
+          },
+          "policy_steps": 85361,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      }
+    },
+    "ppo_scheduler_nominal_h1_wide": {
+      "83": {
+        "clean": {
+          "mean": {
+            "kp": 17.40129973718932,
+            "ki": 0.8078126398772557,
+            "kd": 4.001876557774708
+          },
+          "median": {
+            "kp": 17.47343896329403,
+            "ki": 0.8082962036132812,
+            "kd": 3.9939042359590533
+          },
+          "std": {
+            "kp": 2.042216406913363,
+            "ki": 0.07111751065087239,
+            "kd": 0.03307481076971963
+          },
+          "policy_steps": 23576,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 18.963877788255942,
+            "ki": 0.7807448318816872,
+            "kd": 4.22695032765707
+          },
+          "median": {
+            "kp": 17.60742796957493,
+            "ki": 0.7834291703999043,
+            "kd": 4.259065297394991
+          },
+          "std": {
+            "kp": 8.26955075454376,
+            "ki": 0.09721039947468277,
+            "kd": 0.13565867713242571
+          },
+          "policy_steps": 60246,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "97": {
+        "clean": {
+          "mean": {
+            "kp": 14.586023554348957,
+            "ki": 0.47807722313621226,
+            "kd": 4.639338972934562
+          },
+          "median": {
+            "kp": 14.714731484651566,
+            "ki": 0.4751374972984195,
+            "kd": 4.637890541553498
+          },
+          "std": {
+            "kp": 0.9793985708908697,
+            "ki": 0.013180058824882454,
+            "kd": 0.022880863822995624
+          },
+          "policy_steps": 23580,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 19.345497146844586,
+            "ki": 0.5660470863423253,
+            "kd": 4.583495034537114
+          },
+          "median": {
+            "kp": 15.159871637821198,
+            "ki": 0.5476092785596849,
+            "kd": 4.621698164939881
+          },
+          "std": {
+            "kp": 7.589854875415519,
+            "ki": 0.10837292999167836,
+            "kd": 0.12705050688746422
+          },
+          "policy_steps": 58463,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "109": {
+        "clean": {
+          "mean": {
+            "kp": 18.95724506054524,
+            "ki": 0.5119677530106765,
+            "kd": 4.746573135147048
+          },
+          "median": {
+            "kp": 19.371808528900146,
+            "ki": 0.5171811319887638,
+            "kd": 4.744609785079956
+          },
+          "std": {
+            "kp": 1.7314765003496606,
+            "ki": 0.014737287614354605,
+            "kd": 0.07496883374969499
+          },
+          "policy_steps": 23574,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 53.35229473367603,
+            "ki": 0.4201648894821978,
+            "kd": 4.348052691106615
+          },
+          "median": {
+            "kp": 47.842146503925335,
+            "ki": 0.4058501347899437,
+            "kd": 4.424563302993774
+          },
+          "std": {
+            "kp": 32.037642452835726,
+            "ki": 0.04277007676716449,
+            "kd": 0.3215761659107069
+          },
+          "policy_steps": 78739,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "127": {
+        "clean": {
+          "mean": {
+            "kp": 65.6258192903894,
+            "ki": 0.4303019280602755,
+            "kd": 4.8258629867996055
+          },
+          "median": {
+            "kp": 64.04169790446758,
+            "ki": 0.43319176137447357,
+            "kd": 4.806579399108887
+          },
+          "std": {
+            "kp": 18.136056281436563,
+            "ki": 0.025279965722964565,
+            "kd": 0.1402135237049998
+          },
+          "policy_steps": 23556,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 72.78551319469805,
+            "ki": 0.38546181716476036,
+            "kd": 4.731309985099072
+          },
+          "median": {
+            "kp": 70.70572141408924,
+            "ki": 0.38403530418872833,
+            "kd": 4.743886421322826
+          },
+          "std": {
+            "kp": 35.69324807673384,
+            "ki": 0.028321430253144507,
+            "kd": 0.5165666245166594
+          },
+          "policy_steps": 89685,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      },
+      "149": {
+        "clean": {
+          "mean": {
+            "kp": 23.077413651837993,
+            "ki": 0.6506845016520801,
+            "kd": 4.004360946059206
+          },
+          "median": {
+            "kp": 23.29481004178524,
+            "ki": 0.6527000144124031,
+            "kd": 4.008560086786748
+          },
+          "std": {
+            "kp": 0.9574809093393607,
+            "ki": 0.06665933042857577,
+            "kd": 0.08727515134119936
+          },
+          "policy_steps": 23572,
+          "scenarios": 24,
+          "conditions": [
+            "nominal"
+          ]
+        },
+        "delay": {
+          "mean": {
+            "kp": 41.60250758670875,
+            "ki": 0.5682706697643299,
+            "kd": 4.352264414632907
+          },
+          "median": {
+            "kp": 35.645850121974945,
+            "ki": 0.5576990433037281,
+            "kd": 4.323897169828416
+          },
+          "std": {
+            "kp": 21.84741679343049,
+            "ki": 0.05067746110558072,
+            "kd": 0.239180106374018
+          },
+          "policy_steps": 82227,
+          "scenarios": 48,
+          "conditions": [
+            "delay",
+            "combined"
+          ]
+        }
+      }
+    }
+  },
+  "boxes": {
+    "ppo_scheduler_ranged_h1_wide_2m": {
+      "83": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "97": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "109": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "127": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "149": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      }
+    },
+    "ppo_scheduler_nominal_h1_wide": {
+      "83": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "97": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "109": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "127": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      },
+      "149": {
+        "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo_wide.json",
+        "gain_rate_limit_per_s": [
+          147.5,
+          0.75,
+          1.75
+        ]
+      }
+    }
+  },
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_frozen_gains.py",
+    "--models-root",
+    "artifacts/models/posthoc/plan4",
+    "--seeds",
+    "83,97,109,127,149",
+    "--arm",
+    "ppo_scheduler_ranged_h1_wide_2m",
+    "--arm",
+    "ppo_scheduler_nominal_h1_wide",
+    "--output",
+    "artifacts/results/posthoc5/frozen_gains_new"
+  ],
+  "git": {
+    "commit": "112598b0a6707525c4005bd4348456bd8e3ca38a",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode13.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-741.22.1.el9_9.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3366201",
+    "slurm_nodelist": "cpunode13.dyn.scc.plus.ac.at"
+  },
+  "wall_time_s": 135.77052998542786
+}

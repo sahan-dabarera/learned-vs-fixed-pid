@@ -1,0 +1,70 @@
+host      : cpunode39.dyn.scc.plus.ac.at
+job       : 3188678, 64 cores
+commit    : 9b72c947d0a9d085b767e46d1c57f10f6a8671ec (posthoc-experiments)
+sigma*    : 0.003 0.01
+
+=== parity gate (19:52:07 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode39.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== training in the background (19:53:06 UTC) ===
+  E5 history H=1 -> artifacts/models/posthoc/e5_history
+  E4 sigma*=3mm -> artifacts/models/posthoc/e4_noise_3mm
+  E4 sigma*=10mm -> artifacts/models/posthoc/e4_noise_10mm
+
+=== E4 PID-RN retune at sigma*=3mm (beside the training) (19:53:07 UTC) ===
+PID-RN at sigma*=3 mm: Kp 6.0 Ki 0.5 Kd 2.0 tau_d 0.02
+  selected E_FA 3.16 mm, completion 1.00
+  sealed PID-R E_FA 5.96 mm, completion 1.00
+--pid pid_global_robust_noise=6.0,0.5,2.0,0.02
+
+=== E4 PID-RN retune at sigma*=10mm (beside the training) (20:01:18 UTC) ===
+PID-RN at sigma*=10 mm: Kp 6.0 Ki 0.5 Kd 1.0 tau_d 0.02
+  selected E_FA 3.43 mm, completion 1.00
+  sealed PID-R E_FA 49.00 mm, completion 0.57
+--pid pid_global_robust_noise=6.0,0.5,1.0,0.02
+
+=== E1 fine sweep (beside the training) (20:10:16 UTC) ===
+controllers: 22  scenarios: 2880  episodes: 63360  workers: 32
+  3168/63360 episodes, 6.3 min
+  6336/63360 episodes, 12.3 min
+  9504/63360 episodes, 18.5 min
+  12672/63360 episodes, 23.8 min
+  15840/63360 episodes, 29.0 min
+  19008/63360 episodes, 34.5 min
+  22176/63360 episodes, 39.3 min
+  25344/63360 episodes, 44.4 min
+  28512/63360 episodes, 49.2 min
+  31680/63360 episodes, 54.2 min
+  34848/63360 episodes, 58.8 min
+  38016/63360 episodes, 61.9 min
+  41184/63360 episodes, 65.0 min
+  44352/63360 episodes, 68.0 min
+  47520/63360 episodes, 71.0 min
+  50688/63360 episodes, 74.0 min
+  53856/63360 episodes, 77.0 min
+  57024/63360 episodes, 80.0 min
+  60192/63360 episodes, 83.0 min
+  63360/63360 episodes, 85.7 min
+63360 episodes in 85.8 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e1_noise_fine
+
+=== waiting for training (21:36:03 UTC) ===
+tail: option used in invalid context -- 3

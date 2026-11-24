@@ -1,0 +1,31 @@
+host          : cpunode39.dyn.scc.plus.ac.at
+slurm job     : 3188678
+granted cores : 64
+runs          : 10 x 1 thread(s) = 10 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_direct_noisetrained_3mm seed 11 (pid 288895)
+  start ppo_direct_noisetrained_3mm seed 23 (pid 288896)
+  start ppo_direct_noisetrained_3mm seed 37 (pid 288897)
+  start ppo_direct_noisetrained_3mm seed 53 (pid 288898)
+  start ppo_direct_noisetrained_3mm seed 71 (pid 288899)
+  start ppo_scheduler_noisetrained_3mm seed 11 (pid 288900)
+  start ppo_scheduler_noisetrained_3mm seed 23 (pid 288901)
+  start ppo_scheduler_noisetrained_3mm seed 37 (pid 288902)
+  start ppo_scheduler_noisetrained_3mm seed 53 (pid 288903)
+  start ppo_scheduler_noisetrained_3mm seed 71 (pid 288904)
+  done  ppo_scheduler_noisetrained_3mm seed 23 in 29.7 min: ok
+  done  ppo_scheduler_noisetrained_3mm seed 71 in 29.8 min: ok
+  done  ppo_scheduler_noisetrained_3mm seed 11 in 31.0 min: ok
+  done  ppo_scheduler_noisetrained_3mm seed 37 in 31.1 min: ok
+  done  ppo_scheduler_noisetrained_3mm seed 53 in 31.1 min: ok
+  done  ppo_direct_noisetrained_3mm seed 53 in 101.2 min: ok
+  done  ppo_direct_noisetrained_3mm seed 37 in 101.3 min: ok
+  done  ppo_direct_noisetrained_3mm seed 11 in 101.9 min: ok
+  done  ppo_direct_noisetrained_3mm seed 23 in 102.5 min: ok
+  done  ppo_direct_noisetrained_3mm seed 71 in 105.1 min: ok
+
+10/10 runs completed in 105.1 min

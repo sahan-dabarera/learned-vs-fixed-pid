@@ -1,0 +1,31 @@
+host          : cpunode13.dyn.scc.plus.ac.at
+slurm job     : 3225586
+granted cores : 64
+runs          : 10 x 1 thread(s) = 10 threads
+concurrency   : 64 at a time
+output        : /home/user/thesis-experiment/artifacts/models/posthoc/plan2
+sampler       : dynamic
+seeds         : 11,23,37,53,71
+
+  start ppo_direct_ranged_h10 seed 11 (pid 189365)
+  start ppo_direct_ranged_h10 seed 23 (pid 189368)
+  start ppo_direct_ranged_h10 seed 37 (pid 189371)
+  start ppo_direct_ranged_h10 seed 53 (pid 189374)
+  start ppo_direct_ranged_h10 seed 71 (pid 189377)
+  start ppo_scheduler_ranged_h10 seed 11 (pid 189380)
+  start ppo_scheduler_ranged_h10 seed 23 (pid 189383)
+  start ppo_scheduler_ranged_h10 seed 37 (pid 189386)
+  start ppo_scheduler_ranged_h10 seed 53 (pid 189389)
+  start ppo_scheduler_ranged_h10 seed 71 (pid 189392)
+  done  ppo_scheduler_ranged_h10 seed 71 in 32.7 min: ok
+  done  ppo_scheduler_ranged_h10 seed 11 in 32.9 min: ok
+  done  ppo_scheduler_ranged_h10 seed 37 in 33.0 min: ok
+  done  ppo_scheduler_ranged_h10 seed 23 in 33.1 min: ok
+  done  ppo_scheduler_ranged_h10 seed 53 in 33.6 min: ok
+  done  ppo_direct_ranged_h10 seed 37 in 91.2 min: ok
+  done  ppo_direct_ranged_h10 seed 11 in 92.2 min: ok
+  done  ppo_direct_ranged_h10 seed 71 in 93.7 min: ok
+  done  ppo_direct_ranged_h10 seed 23 in 94.9 min: ok
+  done  ppo_direct_ranged_h10 seed 53 in 96.0 min: ok
+
+10/10 runs completed in 96.0 min

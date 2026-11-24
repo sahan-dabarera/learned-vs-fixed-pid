@@ -1,0 +1,65 @@
+host      : cpunode04.dyn.scc.plus.ac.at
+cpu       : AMD EPYC 9334 32-Core Processor
+job       : 3347265, 16 cores
+commit    : 0272ef0e3e9fa7dc6e39aada45575c66ed3d64b1 (posthoc-experiments)
+
+=== parity gate (00:21:06 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode04.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+
+=== gain occupancy, GS-D-W 2M (00:22:07 UTC) ===
+80 rows -> /home/user/thesis-experiment/artifacts/results/posthoc3/g5_occupancy_2m
+
+=== frozen gains, GS-D-W 2M (validation.json) (00:33:41 UTC) ===
+ppo_scheduler_ranged_h1_wide_2m seed 11  clean: Kp 7.5 Ki 0.04 Kd 2.71  delay: Kp 7.3 Ki 0.08 Kd 2.72
+ppo_scheduler_ranged_h1_wide_2m seed 23  clean: Kp 4.7 Ki 1.11 Kd 2.52  delay: Kp 3.4 Ki 1.15 Kd 1.77
+ppo_scheduler_ranged_h1_wide_2m seed 37  clean: Kp 53.5 Ki 0.01 Kd 0.29  delay: Kp 19.5 Ki 0.03 Kd 2.13
+ppo_scheduler_ranged_h1_wide_2m seed 53  clean: Kp 10.6 Ki 1.17 Kd 5.57  delay: Kp 4.0 Ki 0.50 Kd 4.65
+ppo_scheduler_ranged_h1_wide_2m seed 71  clean: Kp 16.9 Ki 1.37 Kd 3.27  delay: Kp 12.6 Ki 1.21 Kd 2.37
+saved /home/user/thesis-experiment/artifacts/results/posthoc3/g5_frozen_gains_2m/frozen_gains.json
+
+=== frozen variants and dynamic arm on the ranged held-out set (00:35:25 UTC) ===
+controllers: 15  scenarios: 480  episodes: 7200  workers: 16
+  360/7200 episodes, 1.0 min
+  720/7200 episodes, 1.8 min
+  1080/7200 episodes, 2.6 min
+  1440/7200 episodes, 3.2 min
+  1800/7200 episodes, 4.0 min
+  2160/7200 episodes, 4.9 min
+  2520/7200 episodes, 5.8 min
+  2880/7200 episodes, 6.6 min
+  3240/7200 episodes, 7.3 min
+  3600/7200 episodes, 8.1 min
+  3960/7200 episodes, 8.9 min
+  4320/7200 episodes, 9.7 min
+  4680/7200 episodes, 10.5 min
+  5040/7200 episodes, 11.3 min
+  5400/7200 episodes, 12.2 min
+  5760/7200 episodes, 13.0 min
+  6120/7200 episodes, 13.9 min
+  6480/7200 episodes, 14.7 min
+  6840/7200 episodes, 15.6 min
+  7200/7200 episodes, 16.3 min
+7200 episodes in 16.3 min -> /home/user/thesis-experiment/artifacts/results/posthoc3/g5_frozen_eval_2m
+replay check: 2400 rows checked, 2400 bit-identical
+
+=== done (00:51:45 UTC) ===
+pack: tar czf plan3b_results.tgz artifacts/results/posthoc3/g5_occupancy_2m artifacts/results/posthoc3/g5_frozen_gains_2m artifacts/results/posthoc3/g5_frozen_eval_2m slurm-thesis-plan3b-3347265.out

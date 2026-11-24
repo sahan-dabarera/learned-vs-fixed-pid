@@ -1,0 +1,103 @@
+{
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_eval.py",
+    "--no-default",
+    "--manifest",
+    "manifests/held_out.json",
+    "--pid",
+    "pid_global_robust_noise=2.0,0.5,0.5,0.01",
+    "--output",
+    "artifacts/results/posthoc2/pidrn_f2_heldout_fixed_fine"
+  ],
+  "git": {
+    "commit": "e89cec0e6efd09bdb3c8bd3e511be023091beffc",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode13.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3281375",
+    "slurm_nodelist": "cpunode13.dyn.scc.plus.ac.at"
+  },
+  "workers": 64,
+  "wall_time_s": 30.91765022277832,
+  "episodes": 480,
+  "manifests": [
+    {
+      "path": "/home/user/thesis-experiment/manifests/held_out.json",
+      "sha256_scenarios": "6e55b9ab846d6cc6e341bc2552a9fbeb2d967a7907a9352491e7cc94f8b53b13",
+      "evaluated": 480
+    }
+  ],
+  "filters": {
+    "condition": [],
+    "mode": [],
+    "limit": 0
+  },
+  "calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+    "sha256": "a94f84a11f4eedf9a49c459b1f79466d95167316ebf0286332ff4ceeb2de239f"
+  },
+  "scheduler_calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+    "sha256": "191e0e1d0d06113c38a175a8d7d235e21390175a2b51ae14c5cb89550435a6ac"
+  },
+  "controllers": [
+    {
+      "name": "pid_global_robust_noise",
+      "seed": null,
+      "mode": "fixed",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": [
+        2.0,
+        0.5,
+        0.5
+      ],
+      "model_path": null,
+      "constant_gains": null,
+      "derivative_filter_tau_s": 0.01,
+      "history_length": null,
+      "model_sha256": null
+    }
+  ],
+  "frozen_gains": null,
+  "frozen_statistic": null,
+  "config": {
+    "physics_hz": 500,
+    "policy_hz": 50,
+    "history_length": 10,
+    "target_speeds": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "max_time_factor": 2.0,
+    "max_time_margin_s": 5.0,
+    "corridor_m": 1.0,
+    "runaway_m": 20.0,
+    "derivative_filter_tau_s": 0.01,
+    "actuator_limit": 1.0,
+    "delay_severity_s": 0.15,
+    "noise_severity_m": 0.0003,
+    "transient_start_s": 6.0,
+    "final_training_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "development_seed": 11
+  },
+  "packages": {
+    "numpy": "2.2.6",
+    "mujoco": "3.9.0",
+    "gymnasium": "1.3.0",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.13.0"
+  }
+}

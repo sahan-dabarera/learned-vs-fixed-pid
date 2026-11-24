@@ -1,0 +1,3757 @@
+{
+  "schema_version": 1,
+  "name": "posthoc_validation_ranged",
+  "split": "validation",
+  "posthoc": {
+    "source": {
+      "sweep": "ranged",
+      "seed": 20261117,
+      "delay_s": [
+        0.0,
+        0.3
+      ],
+      "noise_m": [
+        0.0001,
+        0.01
+      ],
+      "sealed_manifest": "validation.json",
+      "sealed_manifest_sha256": "d11131ff160b8c6e38824746d37ae008888e32ca77dad52066663f325a728e0f"
+    },
+    "scenarios": {
+      "validation-sinusoid-v0.3-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.3-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-stationary-delay",
+        "delay_s": 0.153141122465004,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.3-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.009738615584012294
+      },
+      "validation-sinusoid-v0.3-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-stationary-combined",
+        "delay_s": 0.1837468862021829,
+        "noise_m": 0.0016817814659201528
+      },
+      "validation-sinusoid-v0.3-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.3-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-transient-delay",
+        "delay_s": 0.019354882666234363,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.3-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0035221080908925916
+      },
+      "validation-sinusoid-v0.3-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.3-transient-combined",
+        "delay_s": 0.044435752533912784,
+        "noise_m": 0.007564246444658085
+      },
+      "validation-sinusoid-v0.5-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.5-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-stationary-delay",
+        "delay_s": 0.16474732248334237,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.5-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.002007570245835601
+      },
+      "validation-sinusoid-v0.5-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-stationary-combined",
+        "delay_s": 0.27560890537155985,
+        "noise_m": 0.0010665940814362646
+      },
+      "validation-sinusoid-v0.5-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.5-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-transient-delay",
+        "delay_s": 0.2252776703506926,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.5-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0015831792961824576
+      },
+      "validation-sinusoid-v0.5-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.5-transient-combined",
+        "delay_s": 0.24997650870688792,
+        "noise_m": 0.006028423744936392
+      },
+      "validation-sinusoid-v0.7-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.7-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-stationary-delay",
+        "delay_s": 0.0062546975719024785,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.7-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.003100614468923179
+      },
+      "validation-sinusoid-v0.7-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-stationary-combined",
+        "delay_s": 0.032958891577664184,
+        "noise_m": 0.0001576764742009344
+      },
+      "validation-sinusoid-v0.7-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.7-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-transient-delay",
+        "delay_s": 0.12844383855174316,
+        "noise_m": 0.0
+      },
+      "validation-sinusoid-v0.7-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0002949569980614184
+      },
+      "validation-sinusoid-v0.7-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-sinusoid-v0.7-transient-combined",
+        "delay_s": 0.29692928520946266,
+        "noise_m": 0.00047083198260681574
+      },
+      "validation-lane_change-v0.3-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.3-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-stationary-delay",
+        "delay_s": 0.11200333330054907,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.3-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0006887143125234194
+      },
+      "validation-lane_change-v0.3-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-stationary-combined",
+        "delay_s": 0.03795759109538983,
+        "noise_m": 0.0017496440509747726
+      },
+      "validation-lane_change-v0.3-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.3-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-transient-delay",
+        "delay_s": 0.18968037065465,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.3-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.00705181547191118
+      },
+      "validation-lane_change-v0.3-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.3-transient-combined",
+        "delay_s": 0.06319548189177511,
+        "noise_m": 0.0046424837819629425
+      },
+      "validation-lane_change-v0.5-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.5-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-stationary-delay",
+        "delay_s": 0.2581982222065486,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.5-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.004993918955886713
+      },
+      "validation-lane_change-v0.5-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-stationary-combined",
+        "delay_s": 0.2736117925829195,
+        "noise_m": 0.0003048279109648284
+      },
+      "validation-lane_change-v0.5-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.5-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-transient-delay",
+        "delay_s": 0.27544126887920795,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.5-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.004539702894640916
+      },
+      "validation-lane_change-v0.5-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.5-transient-combined",
+        "delay_s": 0.06671632294050356,
+        "noise_m": 0.001533769275637947
+      },
+      "validation-lane_change-v0.7-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.7-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-stationary-delay",
+        "delay_s": 0.026510228232351628,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.7-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.001360507960096263
+      },
+      "validation-lane_change-v0.7-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-stationary-combined",
+        "delay_s": 0.036386847440692816,
+        "noise_m": 0.0002893464511116379
+      },
+      "validation-lane_change-v0.7-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.7-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-transient-delay",
+        "delay_s": 0.2220291750231065,
+        "noise_m": 0.0
+      },
+      "validation-lane_change-v0.7-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.004722136343199386
+      },
+      "validation-lane_change-v0.7-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-lane_change-v0.7-transient-combined",
+        "delay_s": 0.12301224183711072,
+        "noise_m": 0.007881528969103479
+      },
+      "validation-random_curvature_5000-v0.3-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.3-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-stationary-delay",
+        "delay_s": 0.02738275534829997,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.3-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0006073269747501384
+      },
+      "validation-random_curvature_5000-v0.3-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-stationary-combined",
+        "delay_s": 0.2761268857372032,
+        "noise_m": 0.005020343417362583
+      },
+      "validation-random_curvature_5000-v0.3-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.3-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-transient-delay",
+        "delay_s": 0.24109044145548064,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.3-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0003024202190617286
+      },
+      "validation-random_curvature_5000-v0.3-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.3-transient-combined",
+        "delay_s": 0.2858428763992197,
+        "noise_m": 0.002376672593553227
+      },
+      "validation-random_curvature_5000-v0.5-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.5-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-stationary-delay",
+        "delay_s": 0.2920093774100103,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.5-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0008296254996133277
+      },
+      "validation-random_curvature_5000-v0.5-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-stationary-combined",
+        "delay_s": 0.14349541366093535,
+        "noise_m": 0.00043457143509430506
+      },
+      "validation-random_curvature_5000-v0.5-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.5-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-transient-delay",
+        "delay_s": 0.05987060062433214,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.5-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.007680562142740344
+      },
+      "validation-random_curvature_5000-v0.5-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.5-transient-combined",
+        "delay_s": 0.2942117813466063,
+        "noise_m": 0.006483998525779566
+      },
+      "validation-random_curvature_5000-v0.7-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.7-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-stationary-delay",
+        "delay_s": 0.15885635695067535,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.7-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0033136674691510394
+      },
+      "validation-random_curvature_5000-v0.7-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-stationary-combined",
+        "delay_s": 0.009388880224737616,
+        "noise_m": 0.0006148567063567625
+      },
+      "validation-random_curvature_5000-v0.7-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.7-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-transient-delay",
+        "delay_s": 0.180419716539099,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5000-v0.7-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.000872407027794615
+      },
+      "validation-random_curvature_5000-v0.7-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5000-v0.7-transient-combined",
+        "delay_s": 0.11049056587970395,
+        "noise_m": 0.0035419932507854716
+      },
+      "validation-random_curvature_5001-v0.3-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.3-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-stationary-delay",
+        "delay_s": 0.14584211988349127,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.3-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.007014714169697119
+      },
+      "validation-random_curvature_5001-v0.3-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-stationary-combined",
+        "delay_s": 0.19637830269724438,
+        "noise_m": 0.00020494833114997993
+      },
+      "validation-random_curvature_5001-v0.3-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.3-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-transient-delay",
+        "delay_s": 0.21751434579010026,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.3-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0005074624470789533
+      },
+      "validation-random_curvature_5001-v0.3-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.3-transient-combined",
+        "delay_s": 0.21977448277172087,
+        "noise_m": 0.00010585647631336405
+      },
+      "validation-random_curvature_5001-v0.5-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.5-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-stationary-delay",
+        "delay_s": 0.24479226923816205,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.5-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.006653550750198171
+      },
+      "validation-random_curvature_5001-v0.5-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-stationary-combined",
+        "delay_s": 0.10939897709030412,
+        "noise_m": 0.0015149452096834602
+      },
+      "validation-random_curvature_5001-v0.5-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.5-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-transient-delay",
+        "delay_s": 0.01521720121947585,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.5-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0006004635813633961
+      },
+      "validation-random_curvature_5001-v0.5-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.5-transient-combined",
+        "delay_s": 0.19646782888490358,
+        "noise_m": 0.008248736625159042
+      },
+      "validation-random_curvature_5001-v0.7-stationary-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-stationary-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.7-stationary-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-stationary-delay",
+        "delay_s": 0.09455257350569153,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.7-stationary-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-stationary-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.0011218470546006133
+      },
+      "validation-random_curvature_5001-v0.7-stationary-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-stationary-combined",
+        "delay_s": 0.18670086628369423,
+        "noise_m": 0.0064152773925372905
+      },
+      "validation-random_curvature_5001-v0.7-transient-nominal-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-transient-nominal",
+        "delay_s": 0.0,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.7-transient-delay-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-transient-delay",
+        "delay_s": 0.26391713693529706,
+        "noise_m": 0.0
+      },
+      "validation-random_curvature_5001-v0.7-transient-noise-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-transient-noise",
+        "delay_s": 0.0,
+        "noise_m": 0.000734770790826076
+      },
+      "validation-random_curvature_5001-v0.7-transient-combined-ranged": {
+        "sweep": "ranged",
+        "base_scenario_id": "validation-random_curvature_5001-v0.7-transient-combined",
+        "delay_s": 0.0348466924837999,
+        "noise_m": 0.005665776827891136
+      }
+    }
+  },
+  "scenarios": [
+    {
+      "scenario_id": "validation-sinusoid-v0.3-stationary-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260819,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-stationary-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260820,
+      "initial_delay_s": 0.153141122465004,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-stationary-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260821,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.009738615584012294,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-stationary-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260822,
+      "initial_delay_s": 0.1837468862021829,
+      "initial_noise_std_m": 0.0016817814659201528,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-transient-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260823,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-transient-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260824,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.019354882666234363,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-transient-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260825,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0035221080908925916,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.3-transient-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260826,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.044435752533912784,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.007564246444658085,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-stationary-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260827,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-stationary-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260828,
+      "initial_delay_s": 0.16474732248334237,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-stationary-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260829,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.002007570245835601,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-stationary-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260830,
+      "initial_delay_s": 0.27560890537155985,
+      "initial_noise_std_m": 0.0010665940814362646,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-transient-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260831,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-transient-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260832,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.2252776703506926,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-transient-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260833,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0015831792961824576,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.5-transient-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260834,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.24997650870688792,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.006028423744936392,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-stationary-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260835,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-stationary-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260836,
+      "initial_delay_s": 0.0062546975719024785,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-stationary-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260837,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.003100614468923179,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-stationary-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260838,
+      "initial_delay_s": 0.032958891577664184,
+      "initial_noise_std_m": 0.0001576764742009344,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-transient-nominal-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260839,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-transient-delay-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260840,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.12844383855174316,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-transient-noise-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260841,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0002949569980614184,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-sinusoid-v0.7-transient-combined-ranged",
+      "path": {
+        "kind": "sinusoid"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260842,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.29692928520946266,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.00047083198260681574,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 9.555587686446387,
+        "max_abs_curvature": 1.486485080691998,
+        "rms_curvature": 0.7905299553974493,
+        "curvature_total_variation": 11.86765808008528,
+        "max_abs_curvature_rate": 3.307134203286189,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-stationary-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260843,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-stationary-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260844,
+      "initial_delay_s": 0.11200333330054907,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-stationary-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260845,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0006887143125234194,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-stationary-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260846,
+      "initial_delay_s": 0.03795759109538983,
+      "initial_noise_std_m": 0.0017496440509747726,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-transient-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260847,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-transient-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260848,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.18968037065465,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-transient-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260849,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.00705181547191118,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.3-transient-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260850,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.06319548189177511,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0046424837819629425,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-stationary-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260851,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-stationary-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260852,
+      "initial_delay_s": 0.2581982222065486,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-stationary-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260853,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.004993918955886713,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-stationary-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260854,
+      "initial_delay_s": 0.2736117925829195,
+      "initial_noise_std_m": 0.0003048279109648284,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-transient-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260855,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-transient-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260856,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.27544126887920795,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-transient-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260857,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.004539702894640916,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.5-transient-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260858,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.06671632294050356,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.001533769275637947,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-stationary-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260859,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-stationary-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260860,
+      "initial_delay_s": 0.026510228232351628,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-stationary-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260861,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.001360507960096263,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-stationary-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260862,
+      "initial_delay_s": 0.036386847440692816,
+      "initial_noise_std_m": 0.0002893464511116379,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-transient-nominal-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260863,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-transient-delay-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260864,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.2220291750231065,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-transient-noise-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260865,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.004722136343199386,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-lane_change-v0.7-transient-combined-ranged",
+      "path": {
+        "kind": "lane_change"
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260866,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.12301224183711072,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.007881528969103479,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.446500756186473,
+        "max_abs_curvature": 0.5919350489266145,
+        "rms_curvature": 0.3653279525759751,
+        "curvature_total_variation": 5.050172164745101,
+        "max_abs_curvature_rate": 2.1786102509316234,
+        "curvature_sign_reversals": 78
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260867,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260868,
+      "initial_delay_s": 0.02738275534829997,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260869,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0006073269747501384,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260870,
+      "initial_delay_s": 0.2761268857372032,
+      "initial_noise_std_m": 0.005020343417362583,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260871,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260872,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.24109044145548064,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260873,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0003024202190617286,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.3-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260874,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.2858428763992197,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.002376672593553227,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260875,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260876,
+      "initial_delay_s": 0.2920093774100103,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260877,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0008296254996133277,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260878,
+      "initial_delay_s": 0.14349541366093535,
+      "initial_noise_std_m": 0.00043457143509430506,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260879,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260880,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.05987060062433214,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260881,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.007680562142740344,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.5-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260882,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.2942117813466063,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.006483998525779566,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260883,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260884,
+      "initial_delay_s": 0.15885635695067535,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260885,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0033136674691510394,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260886,
+      "initial_delay_s": 0.009388880224737616,
+      "initial_noise_std_m": 0.0006148567063567625,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260887,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260888,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.180419716539099,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260889,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.000872407027794615,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5000-v0.7-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5000,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260890,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.11049056587970395,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0035419932507854716,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 8.000000000000007,
+        "max_abs_curvature": 1.499948208107503,
+        "rms_curvature": 0.6771150964962372,
+        "curvature_total_variation": 5.778864050898548,
+        "max_abs_curvature_rate": 1.8047421886455124,
+        "curvature_sign_reversals": 2
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260891,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260892,
+      "initial_delay_s": 0.14584211988349127,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260893,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.007014714169697119,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260894,
+      "initial_delay_s": 0.19637830269724438,
+      "initial_noise_std_m": 0.00020494833114997993,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260895,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260896,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.21751434579010026,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260897,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0005074624470789533,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.3-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.3,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260898,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.21977448277172087,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.00010585647631336405,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260899,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260900,
+      "initial_delay_s": 0.24479226923816205,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260901,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.006653550750198171,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260902,
+      "initial_delay_s": 0.10939897709030412,
+      "initial_noise_std_m": 0.0015149452096834602,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260903,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260904,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.01521720121947585,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260905,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.0006004635813633961,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.5-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.5,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260906,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.19646782888490358,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.008248736625159042,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-stationary-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "nominal",
+      "noise_seed": 20260907,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-stationary-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "delay",
+      "noise_seed": 20260908,
+      "initial_delay_s": 0.09455257350569153,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-stationary-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "noise",
+      "noise_seed": 20260909,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0011218470546006133,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-stationary-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "stationary",
+      "condition": "combined",
+      "noise_seed": 20260910,
+      "initial_delay_s": 0.18670086628369423,
+      "initial_noise_std_m": 0.0064152773925372905,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-transient-nominal-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "nominal",
+      "noise_seed": 20260911,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-transient-delay-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "delay",
+      "noise_seed": 20260912,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.26391713693529706,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-transient-noise-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "noise",
+      "noise_seed": 20260913,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.000734770790826076,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    },
+    {
+      "scenario_id": "validation-random_curvature_5001-v0.7-transient-combined-ranged",
+      "path": {
+        "kind": "random_curvature",
+        "params": {
+          "seed": 5001,
+          "length": 8.0,
+          "knots": 8,
+          "curvature_max": 1.5,
+          "curvature_rate_max": 2.5
+        }
+      },
+      "target_speed": 0.7,
+      "evaluation_mode": "transient",
+      "condition": "combined",
+      "noise_seed": 20260914,
+      "initial_delay_s": 0.0,
+      "initial_noise_std_m": 0.0,
+      "initial_pose": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "events": [
+        {
+          "kind": "delay_step",
+          "start_s": 6.0,
+          "value": 0.0348466924837999,
+          "end_s": null
+        },
+        {
+          "kind": "noise_step",
+          "start_s": 6.0,
+          "value": 0.005665776827891136,
+          "end_s": null
+        }
+      ],
+      "geometry": {
+        "length_m": 7.999999999999999,
+        "max_abs_curvature": 1.4999552972025363,
+        "rms_curvature": 0.5772993005001935,
+        "curvature_total_variation": 5.88917979925475,
+        "max_abs_curvature_rate": 2.020805342265516,
+        "curvature_sign_reversals": 3
+      }
+    }
+  ]
+}

@@ -1,0 +1,407 @@
+{
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_eval.py",
+    "--manifest",
+    "manifests/held_out.json",
+    "--no-default",
+    "--frozen-gains",
+    "artifacts/results/posthoc/e3_frozen_gains/frozen_gains.json",
+    "--output",
+    "artifacts/results/posthoc/e3_frozen_eval"
+  ],
+  "git": {
+    "commit": "479afe53d692845e2c2c17711c5aabd89381bdce",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode39.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3187230",
+    "slurm_nodelist": "cpunode39.dyn.scc.plus.ac.at"
+  },
+  "workers": 64,
+  "wall_time_s": 374.8600082397461,
+  "episodes": 9600,
+  "manifests": [
+    {
+      "path": "/home/user/thesis-experiment/manifests/held_out.json",
+      "sha256_scenarios": "6e55b9ab846d6cc6e341bc2552a9fbeb2d967a7907a9352491e7cc94f8b53b13",
+      "evaluated": 480
+    }
+  ],
+  "filters": {
+    "condition": [],
+    "mode": [],
+    "limit": 0
+  },
+  "calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+    "sha256": "a94f84a11f4eedf9a49c459b1f79466d95167316ebf0286332ff4ceeb2de239f"
+  },
+  "scheduler_calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+    "sha256": "191e0e1d0d06113c38a175a8d7d235e21390175a2b51ae14c5cb89550435a6ac"
+  },
+  "controllers": [
+    {
+      "name": "ppo_scheduler_disturbed_frozen_clean",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        7.847398206566352,
+        1.4666141331977616,
+        2.5765335887872474
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_delay",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        10.527266737171336,
+        1.438829438582396,
+        2.6068710100967527
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_clean",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        227.38829867560293,
+        0.017597389821944785,
+        4.1416027589300475
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_delay",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        47.28661417485768,
+        0.5635541540167855,
+        4.256446159199521
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_clean",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        41.06772519789008,
+        0.812060186516761,
+        4.606272025650787
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_delay",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        11.142552383245961,
+        0.8589042146618784,
+        3.8259816600912275
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_clean",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        33.40900393538175,
+        0.6971140239503029,
+        4.653514378673277
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_delay",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        11.418986463994997,
+        1.0382772355662155,
+        3.816884062346359
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_clean",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        30.584621540209863,
+        0.657262562219309,
+        4.05647940261783
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_disturbed_frozen_delay",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        17.461683962159203,
+        0.8018955133468693,
+        4.869468431396349
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_clean",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        17.56634760865766,
+        0.8508426083308278,
+        3.9822425207057313
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_delay",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        101.04527344978673,
+        0.45102906386555824,
+        3.945048182070116
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_clean",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        22.539295283914008,
+        0.21466432824813045,
+        5.040234442967413
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_delay",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        26.980221931130643,
+        0.1901194013682451,
+        5.293006456414025
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_clean",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        21.825308296939845,
+        0.5740548521739322,
+        4.062400580321588
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_delay",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        25.599202795796547,
+        0.4486785237184046,
+        4.707647821386971
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_clean",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        51.084623588176626,
+        1.232092911698738,
+        4.36406583671497
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_delay",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        29.237999597836133,
+        0.737211946545512,
+        4.689944177927679
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_clean",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        110.96689104222631,
+        0.5660363538263542,
+        5.092775050526383
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "ppo_scheduler_nominal_frozen_delay",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": null,
+      "constant_gains": [
+        45.48592560554217,
+        0.649238322598544,
+        4.634933192596709
+      ],
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": null
+    }
+  ],
+  "frozen_gains": "artifacts/results/posthoc/e3_frozen_gains/frozen_gains.json",
+  "frozen_statistic": "mean",
+  "config": {
+    "physics_hz": 500,
+    "policy_hz": 50,
+    "history_length": 10,
+    "target_speeds": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "max_time_factor": 2.0,
+    "max_time_margin_s": 5.0,
+    "corridor_m": 1.0,
+    "runaway_m": 20.0,
+    "derivative_filter_tau_s": 0.01,
+    "actuator_limit": 1.0,
+    "delay_severity_s": 0.15,
+    "noise_severity_m": 0.0003,
+    "transient_start_s": 6.0,
+    "final_training_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "development_seed": 11
+  },
+  "packages": {
+    "numpy": "2.2.6",
+    "mujoco": "3.9.0",
+    "gymnasium": "1.3.0",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.13.0"
+  }
+}

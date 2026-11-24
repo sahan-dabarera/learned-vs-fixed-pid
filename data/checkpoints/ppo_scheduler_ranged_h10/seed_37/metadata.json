@@ -1,0 +1,129 @@
+{
+  "arm": "ppo_scheduler_ranged_h10",
+  "mode": "scheduled",
+  "regime": "disturbed",
+  "sampler_profile": "dynamic",
+  "seed": 37,
+  "timesteps": 300000,
+  "wall_time_s": 1963.6792109012604,
+  "validation_manifest": "/home/user/thesis-experiment/manifests/posthoc/validation_ranged.json",
+  "validation_manifest_sha256": "a49ce939c0a2029d05947012ab6492eb5f781b94eab18b31b7921cb35f247668",
+  "checkpoint_scenarios": [
+    "validation-sinusoid-v0.3-stationary-nominal-ranged",
+    "validation-sinusoid-v0.3-transient-combined-ranged",
+    "validation-sinusoid-v0.5-stationary-nominal-ranged",
+    "validation-sinusoid-v0.5-transient-combined-ranged",
+    "validation-sinusoid-v0.7-stationary-nominal-ranged",
+    "validation-sinusoid-v0.7-transient-combined-ranged",
+    "validation-lane_change-v0.3-stationary-nominal-ranged",
+    "validation-lane_change-v0.3-transient-combined-ranged",
+    "validation-lane_change-v0.5-stationary-nominal-ranged",
+    "validation-lane_change-v0.5-transient-combined-ranged",
+    "validation-lane_change-v0.7-stationary-nominal-ranged",
+    "validation-lane_change-v0.7-transient-combined-ranged",
+    "validation-random_curvature_5000-v0.3-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.3-transient-combined-ranged",
+    "validation-random_curvature_5000-v0.5-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.5-transient-combined-ranged",
+    "validation-random_curvature_5000-v0.7-stationary-nominal-ranged",
+    "validation-random_curvature_5000-v0.7-transient-combined-ranged",
+    "validation-random_curvature_5001-v0.3-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.3-transient-combined-ranged",
+    "validation-random_curvature_5001-v0.5-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.5-transient-combined-ranged",
+    "validation-random_curvature_5001-v0.7-stationary-nominal-ranged",
+    "validation-random_curvature_5001-v0.7-transient-combined-ranged"
+  ],
+  "posthoc": {
+    "history_length": null,
+    "train_noise_max_m": 0.01,
+    "checkpoint_noise_m": null,
+    "train_noise_min_m": 0.0001,
+    "train_delay_range_s": [
+      0.0,
+      0.3
+    ]
+  },
+  "calibration": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+  "calibration_sha256": "191e0e1d0d06113c38a175a8d7d235e21390175a2b51ae14c5cb89550435a6ac",
+  "python": "3.12.13",
+  "config": {
+    "physics_hz": 500,
+    "policy_hz": 50,
+    "history_length": 10,
+    "target_speeds": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "max_time_factor": 2.0,
+    "max_time_margin_s": 5.0,
+    "corridor_m": 1.0,
+    "runaway_m": 20.0,
+    "derivative_filter_tau_s": 0.01,
+    "actuator_limit": 1.0,
+    "delay_severity_s": 0.15,
+    "noise_severity_m": 0.0003,
+    "transient_start_s": 6.0,
+    "final_training_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "development_seed": 11
+  },
+  "gain_rate_limit_per_s": [
+    147.5,
+    0.75,
+    1.75
+  ],
+  "controller_profile": {
+    "observation_size": 170,
+    "action_size": 3,
+    "tracking_scale_m": 0.02,
+    "tracking_weight": 0.035,
+    "action_smoothness_weight": 0.01,
+    "finish_bonus": 20.0,
+    "failure_penalty": 60.0,
+    "checkpoint_selection": "manifest_completion_then_failure_adjusted_error"
+  },
+  "ppo": {
+    "learning_rate": 0.0003,
+    "n_steps": 2048,
+    "batch_size": 64,
+    "n_epochs": 10,
+    "gae_lambda": 0.95,
+    "clip_range": 0.2,
+    "ent_coef": 0.0,
+    "vf_coef": 0.5,
+    "max_grad_norm": 0.5,
+    "policy_kwargs": {
+      "net_arch": [
+        64,
+        64
+      ]
+    },
+    "gamma": 0.99
+  },
+  "torch_threads": 1,
+  "parameter_count": 30471,
+  "packages": {
+    "numpy": "2.2.6",
+    "mujoco": "3.9.0",
+    "gymnasium": "1.3.0",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.13.0"
+  },
+  "source_sha256": {
+    "train.py": "aa9236d680c7c5cd42fe39cb77f37928fb8d68bdb154f3813b684ab81b96475d",
+    "env.py": "241ed5dceaef9f9a0c886a50040ad1f944e44285f7f64026850cc1ee7bf16af6",
+    "config.py": "7af1c63dec6c671fabee2338eeecdbbc0da144e2e1dfab22c9afa073015e2c72",
+    "controller_profiles.py": "0ced099607a1df0bc928bec9d4a63b821ce0c2e00f1006f7ed5fee1162186a88",
+    "core/dynamics.py": "e7c29e57cc8c44c47c2bc3e8817aa2fc1c3076f015484fc31c5d622ee82d82b5",
+    "core/paths.py": "158634ee653532cb1234fbd5399044b997ad68534b499aa576be458690c0a73a",
+    "core/pid.py": "358e6cb9a4a848f3e8528cc2550223e641db6ecfa9b052ee076345ac33168aeb",
+    "core/car_model.xml": "634061e0feaaa96150a7e6fa45fe1c7f170f16995c365479b5fa63d076d4a8f1"
+  }
+}

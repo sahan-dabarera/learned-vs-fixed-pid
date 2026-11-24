@@ -1,0 +1,90 @@
+host      : cpunode04.dyn.scc.plus.ac.at
+job       : 3189024, 64 cores
+commit    : 561e425f5141ade37623ec625b9c9c5115ebd775 (posthoc-experiments)
+sigma*    : 0.003 0.01
+
+=== inputs from job 3188678 (00:36:35 UTC) ===
+--- artifacts/results/posthoc/e4_training_10mm.log
+
+10/10 runs completed in 106.6 min
+--- artifacts/results/posthoc/e4_training_3mm.log
+
+10/10 runs completed in 105.1 min
+--- artifacts/results/posthoc/e5_training.log
+
+10/10 runs completed in 104.7 min
+
+=== parity gate (00:36:38 UTC) ===
+arm                   gains                 condition     compl   J_FA mm
+pid_global_nominal    (250, 4.54544, 0.396728)nominal        1.00    1.1601
+pid_global_nominal    (250, 4.54544, 0.396728)combined       0.00  157.5235
+pid_global_robust     (8, 0.5, 4.4)         nominal        1.00    2.3623
+pid_global_robust     (8, 0.5, 4.4)         combined       1.00    9.3790
+
+reference machine: sahan_laptop
+this machine     : cpunode04.dyn.scc.plus.ac.at
+tolerance        : 1.00% relative on completed arms
+  note: pid_global_nominal/nominal/failure_adjusted_error_m: 0.129% drift, within tolerance
+  note: pid_global_nominal/nominal/mean_distance_m: 0.117% drift, within tolerance
+  note: pid_global_nominal/combined: completion-only (failed arms: J_FA is dominated by exit-time padding)
+  note: pid_global_robust/nominal/failure_adjusted_error_m: 0.344% drift, within tolerance
+  note: pid_global_robust/nominal/mean_distance_m: 0.358% drift, within tolerance
+  note: pid_global_robust/combined/failure_adjusted_error_m: 0.012% drift, within tolerance
+  note: pid_global_robust/combined/mean_distance_m: 0.082% drift, within tolerance
+
+PARITY OK: completion is identical and the continuous metrics agree
+within tolerance. Remember that PLAN.md requires every final result,
+fixed PID included, to come from one declared machine.
+  pid_global_robust_noise_3mm=6.0,0.5,2.0,0.02
+  pid_global_robust_noise_10mm=6.0,0.5,1.0,0.02
+
+=== held-out 480: sealed instances on this node + every new arm (00:37:36 UTC) ===
+controllers: 54  scenarios: 480  episodes: 25920  workers: 64
+  1296/25920 episodes, 1.9 min
+  2592/25920 episodes, 2.6 min
+  3888/25920 episodes, 3.6 min
+  5184/25920 episodes, 4.5 min
+  6480/25920 episodes, 5.2 min
+  7776/25920 episodes, 6.1 min
+  9072/25920 episodes, 6.9 min
+  10368/25920 episodes, 7.7 min
+  11664/25920 episodes, 8.7 min
+  12960/25920 episodes, 9.4 min
+  14256/25920 episodes, 10.3 min
+  15552/25920 episodes, 11.2 min
+  16848/25920 episodes, 12.0 min
+  18144/25920 episodes, 12.8 min
+  19440/25920 episodes, 13.7 min
+  20736/25920 episodes, 14.6 min
+  22032/25920 episodes, 15.5 min
+  23328/25920 episodes, 16.4 min
+  24624/25920 episodes, 17.2 min
+  25920/25920 episodes, 17.7 min
+25920 episodes in 17.7 min -> /home/user/thesis-experiment/artifacts/results/posthoc/heldout_rerun
+heldout_rerun: 10560 rows checked, 10560 bit-identical, 0 completion mismatches, max |dE_FA| on finished rows 0.0000 mm (0.00 %)
+
+=== E4 new arms on the coarse and fine noise sweeps (00:55:22 UTC) ===
+controllers: 22  scenarios: 4320  episodes: 95040  workers: 64
+  4752/95040 episodes, 5.3 min
+  9504/95040 episodes, 10.2 min
+  14256/95040 episodes, 14.9 min
+  19008/95040 episodes, 19.4 min
+  23760/95040 episodes, 23.3 min
+  28512/95040 episodes, 26.3 min
+  33264/95040 episodes, 29.5 min
+  38016/95040 episodes, 32.6 min
+  42768/95040 episodes, 35.7 min
+  47520/95040 episodes, 40.7 min
+  52272/95040 episodes, 44.9 min
+  57024/95040 episodes, 50.0 min
+  61776/95040 episodes, 55.2 min
+  66528/95040 episodes, 59.5 min
+  71280/95040 episodes, 62.5 min
+  76032/95040 episodes, 65.6 min
+  80784/95040 episodes, 68.7 min
+  85536/95040 episodes, 71.7 min
+  90288/95040 episodes, 75.2 min
+  95040/95040 episodes, 78.6 min
+95040 episodes in 78.6 min -> /home/user/thesis-experiment/artifacts/results/posthoc/e4_noise_sweep
+
+=== done (02:14:02 UTC) ===

@@ -1,0 +1,17 @@
+# Versions pinned to those recorded by every cluster job (thesis, Appendix D).
+numpy==2.2.6
+scipy==1.18.0
+mujoco==3.9.0
+gymnasium==1.3.0
+stable-baselines3==2.9.0
+torch==2.13.0
+# Training progress and logs
+tensorboard>=2.20,<3
+tqdm>=4.67,<5
+rich>=14,<15
+# Tables and figures
+matplotlib>=3.10,<4
+pandas>=2.2,<4
+pillow>=11
+# Tests
+pytest>=9,<10

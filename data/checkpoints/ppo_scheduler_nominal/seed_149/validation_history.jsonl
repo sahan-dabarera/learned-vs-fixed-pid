@@ -1,0 +1,13 @@
+{"timesteps": 25000, "completion_rate": 0.7916666666666666, "failure_adjusted_error_m": 0.04002887784499006, "episodes": 24}
+{"timesteps": 50000, "completion_rate": 0.6666666666666666, "failure_adjusted_error_m": 0.04835590365684688, "episodes": 24}
+{"timesteps": 75000, "completion_rate": 0.5416666666666666, "failure_adjusted_error_m": 0.06493088669121733, "episodes": 24}
+{"timesteps": 100000, "completion_rate": 0.6666666666666666, "failure_adjusted_error_m": 0.06016861177356133, "episodes": 24}
+{"timesteps": 125000, "completion_rate": 0.6666666666666666, "failure_adjusted_error_m": 0.06180131786402429, "episodes": 24}
+{"timesteps": 150000, "completion_rate": 0.8333333333333334, "failure_adjusted_error_m": 0.037237396218265405, "episodes": 24}
+{"timesteps": 175000, "completion_rate": 0.875, "failure_adjusted_error_m": 0.032689441054359954, "episodes": 24}
+{"timesteps": 200000, "completion_rate": 0.9583333333333334, "failure_adjusted_error_m": 0.028702763317189007, "episodes": 24}
+{"timesteps": 225000, "completion_rate": 1.0, "failure_adjusted_error_m": 0.025391198748445986, "episodes": 24}
+{"timesteps": 250000, "completion_rate": 0.9583333333333334, "failure_adjusted_error_m": 0.02827928732714736, "episodes": 24}
+{"timesteps": 275000, "completion_rate": 1.0, "failure_adjusted_error_m": 0.026363184469620788, "episodes": 24}
+{"timesteps": 300000, "completion_rate": 1.0, "failure_adjusted_error_m": 0.02302987029803268, "episodes": 24}
+{"timesteps": 301056, "completion_rate": 1.0, "failure_adjusted_error_m": 0.022494236339633728, "episodes": 24}

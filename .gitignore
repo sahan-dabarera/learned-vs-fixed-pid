@@ -1,0 +1,18 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+*.egg-info/
+.venv/
+venv/
+.env
+.env.*
+.idea/
+.vscode/
+
+# New runs (training, evaluation) go here; the thesis data lives in data/.
+runs/
+/slurm-*.out
+tensorboard/
+
+# Exploratory figures of the stage scripts (not thesis figures)
+data/results/*/figures/

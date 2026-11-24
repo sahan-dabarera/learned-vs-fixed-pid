@@ -1,0 +1,376 @@
+{
+  "command": [
+    "/home/user/thesis-experiment/.venv/bin/python",
+    "posthoc_eval.py",
+    "--no-default",
+    "--manifest",
+    "manifests/posthoc/noise_coarse.json",
+    "--manifest",
+    "manifests/posthoc/noise_fine.json",
+    "--extra-arm",
+    "ppo_scheduler_noisetrained_3mm=artifacts/models/posthoc/e4_noise_3mm",
+    "--extra-arm",
+    "ppo_direct_noisetrained_3mm=artifacts/models/posthoc/e4_noise_3mm",
+    "--pid",
+    "pid_global_robust_noise_3mm=6.0,0.5,2.0,0.02",
+    "--extra-arm",
+    "ppo_scheduler_noisetrained_10mm=artifacts/models/posthoc/e4_noise_10mm",
+    "--extra-arm",
+    "ppo_direct_noisetrained_10mm=artifacts/models/posthoc/e4_noise_10mm",
+    "--pid",
+    "pid_global_robust_noise_10mm=6.0,0.5,1.0,0.02",
+    "--output",
+    "artifacts/results/posthoc/e4_noise_sweep"
+  ],
+  "git": {
+    "commit": "561e425f5141ade37623ec625b9c9c5115ebd775",
+    "branch": "posthoc-experiments",
+    "dirty": false
+  },
+  "machine": {
+    "node": "cpunode04.dyn.scc.plus.ac.at",
+    "platform": "Linux-5.14.0-687.66.1.el9_8.x86_64-x86_64-with-glibc2.34",
+    "processor": "AMD EPYC 9334 32-Core Processor",
+    "python": "3.12.13",
+    "slurm_job_id": "3189024",
+    "slurm_nodelist": "cpunode04.dyn.scc.plus.ac.at"
+  },
+  "workers": 64,
+  "wall_time_s": 4718.117246389389,
+  "episodes": 95040,
+  "manifests": [
+    {
+      "path": "/home/user/thesis-experiment/manifests/posthoc/noise_coarse.json",
+      "sha256_scenarios": "298fc62b5696e0d0ee865c275129981fb466f7c0c28176c30124c27c5eb48cce",
+      "evaluated": 1440
+    },
+    {
+      "path": "/home/user/thesis-experiment/manifests/posthoc/noise_fine.json",
+      "sha256_scenarios": "2492f35c6304a04937e50a88614eca73feab1aefc9d33fabe5f60d9b9da4996e",
+      "evaluated": 2880
+    }
+  ],
+  "filters": {
+    "condition": [],
+    "mode": [],
+    "limit": 0
+  },
+  "calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+    "sha256": "a94f84a11f4eedf9a49c459b1f79466d95167316ebf0286332ff4ceeb2de239f"
+  },
+  "scheduler_calibration": {
+    "path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+    "sha256": "191e0e1d0d06113c38a175a8d7d235e21390175a2b51ae14c5cb89550435a6ac"
+  },
+  "controllers": [
+    {
+      "name": "ppo_scheduler_noisetrained_3mm",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_scheduler_noisetrained_3mm/seed_11/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "222d75f15adaf24e6fc6063bffdf404b22552b80ea98d3df8cee9f450889e785"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_3mm",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_scheduler_noisetrained_3mm/seed_23/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "2ed5f32762bd4e5e4943f8b65369c5bd5669e870b839c280a21da0c50157d7a7"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_3mm",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_scheduler_noisetrained_3mm/seed_37/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "63f32a0b119dd4850f06e97e1e3c77afcc1b273723cf15d0976be28cc51b3886"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_3mm",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_scheduler_noisetrained_3mm/seed_53/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "246b88dc3e17977f175d66e6b2a1043a24610b467c855276a36317c5590ce869"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_3mm",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_scheduler_noisetrained_3mm/seed_71/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "47ae898d8e9ee59fbe62c900efef442ea95b006ee1e308f63f8bd10167c7a480"
+    },
+    {
+      "name": "ppo_direct_noisetrained_3mm",
+      "seed": 11,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_direct_noisetrained_3mm/seed_11/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "78e369ef466c1d0d5c9fe26880176ece3a9a88c5b169b2ec69ca9a45d97e13b7"
+    },
+    {
+      "name": "ppo_direct_noisetrained_3mm",
+      "seed": 23,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_direct_noisetrained_3mm/seed_23/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "9a1a0075c0f52ad0a15c03ead25fa4e6fb7a50c68ec83f16d7d25de0ba9efd99"
+    },
+    {
+      "name": "ppo_direct_noisetrained_3mm",
+      "seed": 37,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_direct_noisetrained_3mm/seed_37/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "13e4f5172dc79ea17885a5b0b3df74f44f80f0195f6103dcdde764a27264ea8b"
+    },
+    {
+      "name": "ppo_direct_noisetrained_3mm",
+      "seed": 53,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_direct_noisetrained_3mm/seed_53/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "aab76f1ba26e41ec9932ca965a2d45544bc3d612383cb686b9a31bb8e7842e43"
+    },
+    {
+      "name": "ppo_direct_noisetrained_3mm",
+      "seed": 71,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_3mm/ppo_direct_noisetrained_3mm/seed_71/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "86646a3526ccf288dd9a39880a929144d61f8633a6b1edfa141937cef965e172"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_10mm",
+      "seed": 11,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_scheduler_noisetrained_10mm/seed_11/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "6054fc0da94f5387731bdd58e00a05f984f3c9c0d20e53cead011e4cf3b460d1"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_10mm",
+      "seed": 23,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_scheduler_noisetrained_10mm/seed_23/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "081fc7200ace3e7e8a9446a385ce545d385a2e400ded3142962820fd9ce2a8ef"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_10mm",
+      "seed": 37,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_scheduler_noisetrained_10mm/seed_37/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "57473339e77816f265d79266b8ac8ebeaac541254db895a5fa8631da83c3edf3"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_10mm",
+      "seed": 53,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_scheduler_noisetrained_10mm/seed_53/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "2e0d528a407c1824f175a727ac34194d9d59bfc711e3738ac6c8e76622c8e58c"
+    },
+    {
+      "name": "ppo_scheduler_noisetrained_10mm",
+      "seed": 71,
+      "mode": "scheduled",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/blind_ppo.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_scheduler_noisetrained_10mm/seed_71/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "2bb641ab5671dd2cd9ee6ebc2d1ff409fc7cb7f5123c743402789199583e587e"
+    },
+    {
+      "name": "ppo_direct_noisetrained_10mm",
+      "seed": 11,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_direct_noisetrained_10mm/seed_11/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "398e92bf0d613e80c85e2e49d55577467ef7709d0a508167e5918bf3d2091179"
+    },
+    {
+      "name": "ppo_direct_noisetrained_10mm",
+      "seed": 23,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_direct_noisetrained_10mm/seed_23/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "b6e3873e958e6e26860f8315338a57fd899e17798499ee016f345d722952cf92"
+    },
+    {
+      "name": "ppo_direct_noisetrained_10mm",
+      "seed": 37,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_direct_noisetrained_10mm/seed_37/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "4d19e1ec493f566aaafcc068f4abafff3c3471c776994c41420f4e5c81849207"
+    },
+    {
+      "name": "ppo_direct_noisetrained_10mm",
+      "seed": 53,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_direct_noisetrained_10mm/seed_53/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "d79bc74dc0bc4780d27874427929ee694fd37cf5be4b91561b9b673433e5e1ec"
+    },
+    {
+      "name": "ppo_direct_noisetrained_10mm",
+      "seed": 71,
+      "mode": "direct",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": null,
+      "model_path": "/home/user/thesis-experiment/artifacts/models/posthoc/e4_noise_10mm/ppo_direct_noisetrained_10mm/seed_71/best_model.zip",
+      "constant_gains": null,
+      "derivative_filter_tau_s": null,
+      "history_length": null,
+      "model_sha256": "fa654715f50d3b541dbb60f1327bd547726dbd9d0e010567565dbc381ab01f5d"
+    },
+    {
+      "name": "pid_global_robust_noise_3mm",
+      "seed": null,
+      "mode": "fixed",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": [
+        6.0,
+        0.5,
+        2.0
+      ],
+      "model_path": null,
+      "constant_gains": null,
+      "derivative_filter_tau_s": 0.02,
+      "history_length": null,
+      "model_sha256": null
+    },
+    {
+      "name": "pid_global_robust_noise_10mm",
+      "seed": null,
+      "mode": "fixed",
+      "calibration_path": "/home/user/thesis-experiment/artifacts/calibration/calibration.json",
+      "fixed_gains": [
+        6.0,
+        0.5,
+        1.0
+      ],
+      "model_path": null,
+      "constant_gains": null,
+      "derivative_filter_tau_s": 0.02,
+      "history_length": null,
+      "model_sha256": null
+    }
+  ],
+  "frozen_gains": null,
+  "frozen_statistic": null,
+  "config": {
+    "physics_hz": 500,
+    "policy_hz": 50,
+    "history_length": 10,
+    "target_speeds": [
+      0.3,
+      0.5,
+      0.7
+    ],
+    "max_time_factor": 2.0,
+    "max_time_margin_s": 5.0,
+    "corridor_m": 1.0,
+    "runaway_m": 20.0,
+    "derivative_filter_tau_s": 0.01,
+    "actuator_limit": 1.0,
+    "delay_severity_s": 0.15,
+    "noise_severity_m": 0.0003,
+    "transient_start_s": 6.0,
+    "final_training_seeds": [
+      11,
+      23,
+      37,
+      53,
+      71
+    ],
+    "development_seed": 11
+  },
+  "packages": {
+    "numpy": "2.2.6",
+    "mujoco": "3.9.0",
+    "gymnasium": "1.3.0",
+    "stable-baselines3": "2.9.0",
+    "torch": "2.13.0"
+  }
+}

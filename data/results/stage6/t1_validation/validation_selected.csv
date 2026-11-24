@@ -1,0 +1,6 @@
+controller,seed,selected_timesteps,completion_rate,failure_adjusted_error_m,episodes,validation_manifest,history_length
+ppo_scheduler_ranged_h1_wide,83,150000,1.0,0.01145921397259888,24,validation_ranged.json,1
+ppo_scheduler_ranged_h1_wide,97,301056,0.9166666666666666,0.031385458245288635,24,validation_ranged.json,1
+ppo_scheduler_ranged_h1_wide,109,175000,0.8333333333333334,0.03969386321558947,24,validation_ranged.json,1
+ppo_scheduler_ranged_h1_wide,127,150000,1.0,0.01309272167504561,24,validation_ranged.json,1
+ppo_scheduler_ranged_h1_wide,149,25000,0.7916666666666666,0.07526448802943746,24,validation_ranged.json,1

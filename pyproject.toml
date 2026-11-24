@@ -1,0 +1,22 @@
+[project]
+name = "pathfollow"
+version = "1.0.0"
+description = "Fixed PID, PPO gain scheduling and direct PPO for path following under delay and noise (MSc thesis code)"
+readme = "README.md"
+requires-python = ">=3.12"
+license = { file = "LICENSE" }
+authors = [{ name = "Sahan Dabarera" }]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["pathfollow*"]
+
+[tool.setuptools.package-data]
+pathfollow = ["core/car_model.xml", "analysis/notes/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

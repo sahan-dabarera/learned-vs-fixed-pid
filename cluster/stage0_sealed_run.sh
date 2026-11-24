@@ -1,0 +1,78 @@
+#!/bin/bash
+# Frozen five-seed PPO matrix as a SLURM batch job.
+#
+#   sbatch cluster/stage0_sealed_run.sh
+#   sbatch --export=ALL,VENV=$HOME/venv312,OUTPUT=runs/checkpoints cluster/stage0_sealed_run.sh
+#
+# One process per (arm, seed), one thread each: 4 arms x 5 seeds = 20 runs.
+# Env stepping and the serial PPO gradient update split training wall time
+# roughly evenly, so parallel environments inside one run saturate quickly
+# while independent runs scale close to linearly.
+#
+# 20 cores of a 128-core node: one per run, so the batch takes about the wall
+# time of a single direct run, roughly 2.5 hours. Asking for more would idle.
+# Dropping to 6 still works and takes about 5.5 hours.
+#
+# constraint=compute_nodes_cpu keeps every run on the CPU nodes. The gpunodes
+# report the same core count but may carry a different CPU model, and two CPUs
+# produce slightly different trajectories -- see check_parity.py.
+
+#SBATCH --job-name=thesis-final
+#SBATCH --partition=base
+#SBATCH --nodes=1
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=20
+#SBATCH --mem=40G
+#SBATCH --constraint=compute_nodes_cpu
+#SBATCH --time=12:00:00
+#SBATCH --output=slurm-%x-%j.out
+#SBATCH --mail-type=END,FAIL
+
+set -euo pipefail
+
+VENV="${VENV:-.venv}"
+OUTPUT="${OUTPUT:-runs/checkpoints}"
+SAMPLER="${SAMPLER:-dynamic}"
+PHASE="${PHASE:-final}"
+
+cd "${SLURM_SUBMIT_DIR:-$(dirname "$0")/..}"
+# shellcheck disable=SC1091
+source "${VENV}/bin/activate"
+
+# run_seeds.py exports these to its children too; setting them here covers
+# anything that reads them before the launcher starts. MUJOCO_GL is left unset
+# deliberately: training never renders, and mujoco only needs a backend when a
+# rendering context is actually created.
+export OMP_NUM_THREADS=1
+export MKL_NUM_THREADS=1
+export OPENBLAS_NUM_THREADS=1
+
+echo "host      : $(hostname)"
+echo "job       : ${SLURM_JOB_ID:-none} on ${SLURM_JOB_PARTITION:-none}"
+echo "cores     : ${SLURM_CPUS_PER_TASK:-unknown} allocated"
+echo "python    : $(python -V 2>&1)"
+echo "venv      : ${VENV}"
+echo "output    : ${OUTPUT}"
+echo
+
+echo "=== parity check: the plant must match the declared machine ==="
+python -m pathfollow.evaluation.check_parity
+echo
+
+echo "=== training matrix ==="
+python -m pathfollow.training.run_seeds \
+  --phase "${PHASE}" \
+  --output "${OUTPUT}" \
+  --sampler-profile "${SAMPLER}" \
+  --threads-per-job 1
+
+echo
+echo "=== held-out evaluation ==="
+python -m pathfollow.evaluation.evaluate_reference \
+  --manifest data/scenarios/held_out.json \
+  --models-root "${OUTPUT}" \
+  --run-id final
+
+echo
+echo "done. Copy the results and the metadata.json files back to your workstation."
+echo "Model zips are ~1 MB each; tensorboard directories are the bulk and rarely worth moving."

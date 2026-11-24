@@ -1,0 +1,7 @@
+{
+  "new": "artifacts/results/posthoc3/replay_plan2/episodes.csv",
+  "old": "artifacts/results/posthoc2/f2_heldout_ranged/episodes.csv",
+  "rows_checked": 7200,
+  "bit_identical_rows": 7200,
+  "first_differing": []
+}
