@@ -34,6 +34,8 @@ pathfollow/            Python package
   evaluation/          test-set builders, parallel evaluator, parity and replay checks,
                        gain records, frozen gains, per-step traces
   analysis/            bootstrap statistics and the six result reports
+  dashboard.py         interactive comparison of the controllers in the browser
+  replay.py            3D playback of one run in the MuJoCo viewer
 thesis_figures/        scripts for the figures in the thesis, and their output
 cluster/               the SLURM job scripts, one per stage of the study
 data/
@@ -191,6 +193,43 @@ python -m pathfollow.training.train --mode scheduled --regime disturbed --seed 1
 The settings of each arm, and the batches of seeds, are in the `cluster/` scripts
 (`python -m pathfollow.training.run_seeds`); each script states its run time. Training refuses to
 write into `data/checkpoints`, and new runs go to `runs/` by default.
+
+## Interactive dashboard
+
+```bash
+python -m pathfollow.dashboard                 # then open http://127.0.0.1:8050
+python -m pathfollow.dashboard --all-arms      # also offers the ablation controllers
+```
+
+![Dashboard: PID-RN, GS-D and DR-D under dynamic delay and noise](docs/dashboard.png)
+
+The dashboard runs the stored controllers on a scenario chosen in the browser and shows them
+side by side.
+
+- **Scenario** (left panel). Any training, validation or test path, the three speeds, and the
+  disturbance: none, delay, noise, or both. The disturbance can hold for the whole run
+  (stationary), step in at a chosen time (transient), or be redrawn every 1 to 3 s (dynamic, as
+  in the dynamic-delay test). Delay up to 500 ms, noise up to 100 mm; the learned controllers
+  were trained up to 300 ms and 10 mm.
+- **Controllers.** PID-N, PID-R, PID-RN and a hand-tuned PID; GS-N and GS-D; DR-N and DR-D, each
+  with any of its ten training seeds. The page opens with PID-RN, GS-D (seed 53) and DR-D
+  (seed 37). The noise seed and the gains of the hand-tuned PID are under *Advanced*.
+- **Results.** A table with completion, E_FA, mean and maximum error, steering and gain
+  activity, then three tabs: *Overview* (trajectory, tracking error, the disturbance when it
+  changes over time, and Kp), *Steering and wheels*, and *Per controller*.
+- **3D view.** The `MuJoCo` button in each table row replays that run in the MuJoCo viewer,
+  with a ghost robot at the position the noisy measurement reports. The same viewer runs on its
+  own: `python -m pathfollow.replay --controller ppo_scheduler_ranged_h1_wide_2m:53
+  --condition combined --delay-ms 150 --noise-mm 3` (`--playback 2` for double speed, `--loop`
+  to repeat).
+
+The first run takes a few seconds while the checkpoints are loaded; repeated runs of the same
+scenario are cached.
+
+Controllers are built by the same code as in the batch evaluator, and a test checks that a
+dashboard run equals the evaluator's row. The page writes nothing to `data/`. As with any
+re-evaluation, numbers on other hardware than the cluster can differ slightly from the thesis
+tables.
 
 ## Stages of the study
 

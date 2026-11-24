@@ -15,7 +15,7 @@ build-backend = "setuptools.build_meta"
 include = ["pathfollow*"]
 
 [tool.setuptools.package-data]
-pathfollow = ["core/car_model.xml", "analysis/notes/*.md"]
+pathfollow = ["core/car_model.xml", "analysis/notes/*.md", "dashboard_assets/*.css"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

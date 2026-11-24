@@ -1,0 +1,397 @@
+"""Dashboard tests.
+
+The important ones are the two `..._matches_the_batch_evaluator` tests: the
+dashboard must reproduce the batch evaluator for the same scenario. It holds
+only because the dashboard runs the SAME `Scenario` through
+the SAME `rollout.run_episode` the evaluator uses; the test is what stops a
+future shortcut (a private episode loop, a quietly different reset seed) from
+breaking that silently.
+"""
+
+from __future__ import annotations
+
+from dataclasses import asdict
+import json
+from pathlib import Path
+
+import pytest
+
+from pathfollow import config, dashboard
+from pathfollow.calibration import GainCalibration
+from pathfollow.evaluation import evaluate
+from pathfollow.env import PathFollowingEnv
+from pathfollow.rollout import run_episode
+from pathfollow.scenarios import Scenario, build_manifest
+
+
+@pytest.fixture(scope="module")
+def runner(tmp_path_factory: pytest.TempPathFactory) -> dashboard.InteractiveRunner:
+    calibration_path = tmp_path_factory.mktemp("dashboard") / "calibration.json"
+    GainCalibration.development_default().save(calibration_path)
+    return dashboard.InteractiveRunner(calibration_path=calibration_path)
+
+
+@pytest.fixture(scope="module")
+def scenario(runner: dashboard.InteractiveRunner) -> Scenario:
+    return runner.scenario_from_controls(
+        dashboard.path_value({"kind": "arc"}),
+        target_speed=0.5,
+        condition="combined",
+        evaluation_mode="transient",
+        delay_ms=60.0,
+        noise_mm=0.3,
+        event_time=3.0,
+        noise_seed=12345,
+    )
+
+
+def test_scenario_matches_manifest_construction() -> None:
+    """A hand-built scenario is field-for-field a manifest scenario.
+
+    Only the id may differ: interactive ones are prefixed so nothing downstream
+    can mistake one for a frozen manifest entry.
+    """
+    manifest = build_manifest("train", speeds=(0.5,))
+    reference = next(
+        s
+        for s in manifest.scenarios
+        if s.path["kind"] == "arc"
+        and s.evaluation_mode == "transient"
+        and s.condition == "combined"
+    )
+    built = dashboard.InteractiveRunner().scenario_from_controls(
+        dashboard.path_value({"kind": "arc"}),
+        target_speed=0.5,
+        condition="combined",
+        evaluation_mode="transient",
+        delay_ms=1000.0 * reference.events[0].value,
+        noise_mm=1000.0 * reference.events[1].value,
+        event_time=reference.events[0].start_s,
+        noise_seed=reference.noise_seed,
+    )
+    assert built.scenario_id.startswith("interactive-")
+    assert built.path == reference.path
+    assert built.target_speed == reference.target_speed
+    assert built.evaluation_mode == reference.evaluation_mode
+    assert built.condition == reference.condition
+    assert built.noise_seed == reference.noise_seed
+    assert built.initial_delay_s == reference.initial_delay_s
+    assert built.initial_noise_std_m == reference.initial_noise_std_m
+    assert built.events == reference.events
+    assert built.geometry == reference.geometry
+
+
+def test_interactive_run_matches_the_batch_evaluator(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    """The replay-equivalence gate: same scenario, same trace, sample for sample."""
+    calibration = GainCalibration.development_default()
+    env = PathFollowingEnv(
+        mode="fixed", training=False, calibration=calibration, fixed_gains=calibration.nominal
+    )
+    try:
+        expected = run_episode(env, scenario)
+    finally:
+        env.close()
+
+    result = runner.run(scenario, ["pid_global_nominal"], (26.0, 0.5, 4.4))[0]
+
+    # Wall-clock inference timings are measurements of this machine, not of the
+    # episode, and differ run to run by design. Everything else must match.
+    timing = {"mean_inference_ms", "p99_inference_ms"}
+    produced_metrics = {k: v for k, v in result["metrics"].items() if k not in timing}
+    expected_metrics = {k: v for k, v in expected.metrics.items() if k not in timing}
+    assert produced_metrics == expected_metrics
+    assert len(result["trace"]) == len(expected.trace)
+    for produced, reference in zip(result["trace"], expected.trace):
+        assert produced == reference
+
+
+def test_gain_sliders_do_not_disturb_the_other_arms(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    """Moving a gain slider re-runs only the drawer arm.
+
+    If the cache key ever picks up the gains for every controller, the panels
+    would silently be comparing against different episodes.
+    """
+    first = runner.run(scenario, ["pid_global_nominal", "pid_custom"], (26.0, 0.5, 4.4))
+    second = runner.run(scenario, ["pid_global_nominal", "pid_custom"], (40.0, 0.5, 4.4))
+
+    assert first[0]["metrics"] == second[0]["metrics"]
+    assert first[1]["metrics"] != second[1]["metrics"]
+
+
+def test_gains_outside_the_calibrated_box_are_rejected(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    with pytest.raises(ValueError, match="outside the range"):
+        runner.run(scenario, ["pid_custom"], (500.0, 0.5, 4.4))
+
+
+def test_no_controller_selected_is_an_error(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    with pytest.raises(ValueError, match="at least one controller"):
+        runner.run(scenario, [], (26.0, 0.5, 4.4))
+
+
+@pytest.mark.parametrize("bad", ["", "not json", json.dumps({"nokind": 1}), json.dumps(["arc"])])
+def test_bad_path_specification_is_rejected(
+    runner: dashboard.InteractiveRunner, bad: str
+) -> None:
+    with pytest.raises(ValueError, match="valid path"):
+        runner.scenario_from_controls(bad, 0.5, "nominal", "stationary", 0.0, 0.0, 3.0, 1)
+
+
+def test_allocation_spans_are_merged() -> None:
+    rows = [
+        {"t": 0.00, "u_left": 0.5, "u_left_applied": 0.5, "u_right": 0.5, "u_right_applied": 0.5},
+        {"t": 0.02, "u_left": 1.5, "u_left_applied": 1.0, "u_right": 0.5, "u_right_applied": 0.5},
+        {"t": 0.04, "u_left": 1.5, "u_left_applied": 1.0, "u_right": 0.5, "u_right_applied": 0.5},
+        {"t": 0.06, "u_left": 0.5, "u_left_applied": 0.5, "u_right": 0.5, "u_right_applied": 0.5},
+        {"t": 0.50, "u_left": 0.5, "u_left_applied": 0.5, "u_right": 1.5, "u_right_applied": 1.0},
+    ]
+    spans = dashboard._allocation_spans(rows)
+    assert len(spans) == 2
+    assert spans[0][0] == pytest.approx(0.02)
+
+
+def test_app_builds_without_models_or_calibration() -> None:
+    app = dashboard.create_app()
+    assert app.layout is not None
+
+
+def test_discover_models_rejects_a_mismatched_metadata_mode(tmp_path: Path) -> None:
+    seed_dir = tmp_path / "ppo_scheduler_nominal" / "seed_11"
+    seed_dir.mkdir(parents=True)
+    (seed_dir / "best_model.zip").write_bytes(b"")
+    (seed_dir / "metadata.json").write_text(json.dumps({"mode": "direct"}), encoding="utf-8")
+    with pytest.raises(ValueError, match="disagree"):
+        dashboard.discover_models(tmp_path)
+
+
+# --- three-method comparison ------------------------------------------------
+
+
+@pytest.mark.parametrize(
+    ("key", "expected"),
+    (
+        ("pid_global_robust", "pid"),
+        ("pid_custom", "pid"),
+        ("ppo_scheduler_disturbed:11", "scheduled"),
+        ("ppo_direct_nominal:71", "direct"),
+    ),
+)
+def test_method_is_derived_from_the_controller_key(key: str, expected: str) -> None:
+    assert dashboard.method_of(key) == expected
+
+
+def test_an_unknown_controller_key_has_no_method() -> None:
+    with pytest.raises(ValueError, match="no known method"):
+        dashboard.method_of("something_else")
+
+
+def test_results_come_back_in_method_order_whatever_order_was_ticked(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    """Selection order must not reorder the legend.
+
+    The charts overlay every controller on one axis, so a legend that reshuffles
+    when a checkbox is re-ticked makes two screenshots of the same comparison
+    disagree about which line is which.
+    """
+    results = runner.run(scenario, ["pid_custom", "pid_global_robust"], (26.0, 0.5, 4.4))
+    assert [result["method"] for result in results] == ["pid", "pid"]
+    assert [result["color"] for result in results] == list(
+        dashboard.METHOD_COLORS["pid"][:2]
+    )
+
+
+def test_every_method_keeps_its_own_hue(
+    runner: dashboard.InteractiveRunner, scenario: Scenario
+) -> None:
+    results = runner.run(scenario, ["pid_global_nominal", "pid_global_robust"], (26.0, 0.5, 4.4))
+    for result in results:
+        assert result["color"] in dashboard.METHOD_COLORS[result["method"]]
+        assert result["label"] in dashboard.PID_LABELS.values()
+
+
+def test_the_default_selection_offers_the_plain_pid_baseline() -> None:
+    selection = dashboard.InteractiveRunner().default_selection()
+    assert selection["pid"] == ["pid_global_robust_noise"]
+    assert set(selection) == set(dashboard.METHOD_ORDER)
+    stored = (config.CHECKPOINTS / "ppo_scheduler_ranged_h1_wide_2m" / "seed_53" / "best_model.zip").is_file()
+    if stored:
+        assert selection["scheduled"] == ["ppo_scheduler_ranged_h1_wide_2m:53"]
+        assert selection["direct"] == ["ppo_direct_ranged_h1:37"]
+
+
+def test_direct_rl_is_not_credited_with_a_steady_gain() -> None:
+    """env.py records gain_total_variation_per_s as 0.0 for direct mode.
+
+    Printed as a number that reads as perfect gain discipline, which inverts the
+    truth: the arm schedules no gain at all.
+    """
+    table = dashboard.scoreboard(
+        [
+            {
+                "method": "direct",
+                "label": "Direct RL — disturbed · seed 11",
+                "color": "#c792ea",
+                "metrics": {
+                    "finished": True,
+                    "failure_adjusted_error_m": 0.0066,
+                    "mean_distance_m": 0.012,
+                    "max_distance_m": 0.03,
+                    "steer_total_variation_per_s": 1.04,
+                    "gain_total_variation_per_s": 0.0,
+                },
+            }
+        ]
+    )
+    cells = [cell.children for cell in table.children[1].children[0].children]
+    assert "n/a" in cells
+    assert "6.60" in cells  # J_FA reported in millimetres, not metres
+
+
+def test_the_steering_differential_is_derived_from_the_applied_commands() -> None:
+    rows = [
+        {"t": 0.0, "u_left_applied": 0.4, "u_right_applied": 0.1},
+        {"t": 0.02, "u_left_applied": -0.2, "u_right_applied": 0.3},
+    ]
+    assert dashboard._derive(rows, "steer_differential") == pytest.approx([0.3, -0.5])
+    assert dashboard._derive([{"actuator_delay_s": 0.15}], "delay_ms") == pytest.approx([150.0])
+
+
+def test_the_gain_chart_skips_arms_that_have_no_gains() -> None:
+    """A direct-mode trace carries no kp column and must not fake one."""
+    scenario_stub = Scenario(
+        scenario_id="stub", path={"kind": "arc"}, target_speed=0.5,
+        evaluation_mode="stationary", condition="nominal", noise_seed=0,
+    )
+    results = [
+        {
+            "method": "scheduled",
+            "label": "Scheduled PPO — disturbed · seed 11",
+            "color": "#4fc3f7",
+            "trace": [{"t": 0.0, "kp": 26.0}, {"t": 0.02, "kp": 30.0}],
+        },
+        {
+            "method": "direct",
+            "label": "Direct RL — disturbed · seed 11",
+            "color": "#c792ea",
+            "trace": [{"t": 0.0}, {"t": 0.02}],
+        },
+    ]
+    figure = dashboard.comparison_figure(results, scenario_stub, "kp", "gains", "Kp")
+    assert [trace.name for trace in figure.data] == ["Scheduled PPO — disturbed · seed 11"]
+
+
+def test_every_slider_accepts_its_own_full_track(
+    runner: dashboard.InteractiveRunner,
+) -> None:
+    """The slider bound and the validator behind it must be the same number.
+
+    They were not: the dead-time track ran to 300 ms while the validator
+    rejected anything over 200, so the top third of the track raised an error
+    instead of running an episode.
+    """
+    bounds = {control[0]: (control[2], control[3]) for control in dashboard.SCENARIO_CONTROLS}
+    scenario = runner.scenario_from_controls(
+        dashboard.path_value({"kind": "arc"}),
+        0.5,
+        "combined",
+        "transient",
+        bounds["delay"][1],
+        bounds["noise"][1],
+        bounds["event-time"][1],
+        bounds["seed"][1],
+    )
+    assert scenario.events[0].value == pytest.approx(0.001 * bounds["delay"][1])
+    assert scenario.events[1].value == pytest.approx(0.001 * bounds["noise"][1])
+
+
+@pytest.mark.parametrize(
+    ("field", "over"),
+    (("delay", dashboard.DELAY_MAX_MS + 1.0), ("noise", dashboard.NOISE_MAX_MM + 1.0)),
+)
+def test_past_the_track_is_still_rejected(
+    runner: dashboard.InteractiveRunner, field: str, over: float
+) -> None:
+    values = {"delay": 0.0, "noise": 0.0}
+    values[field] = over
+    with pytest.raises(ValueError):
+        runner.scenario_from_controls(
+            dashboard.path_value({"kind": "arc"}), 0.5, "combined", "transient",
+            values["delay"], values["noise"], 3.0, 1,
+        )
+
+
+def test_the_declared_severity_is_marked_on_a_long_track() -> None:
+    marks = dashboard._declared_mark(0.0, dashboard.NOISE_MAX_MM, 0.3)
+    assert list(marks) == [0.3]
+    # A default sitting on a bound would only restate the label already there.
+    assert dashboard._declared_mark(0.0, 200.0, 0.0) == {}
+
+
+# --- thesis controllers -----------------------------------------------------
+
+STORED = (config.CHECKPOINTS / "ppo_scheduler_ranged_h1_wide_2m" / "seed_53" / "best_model.zip").is_file()
+
+
+@pytest.mark.skipif(not STORED, reason="stored checkpoints not present")
+def test_learned_controllers_match_the_batch_evaluator() -> None:
+    """GS-D, DR-D and PID-RN in the dashboard give the evaluator's row, value for value."""
+    runner = dashboard.InteractiveRunner()
+    scenario = runner.scenario_from_controls(
+        dashboard.path_value({"kind": "sinusoid"}), 0.5, "combined", "stationary", 150.0, 0.3, 6.0, 7,
+    )
+    keys = ["pid_global_robust_noise", "ppo_scheduler_ranged_h1_wide_2m:53", "ppo_direct_ranged_h1:37"]
+    results = {result["key"]: result for result in runner.run(scenario, keys, (8.0, 0.5, 4.4))}
+    calibration, box = str(runner.calibration_path), str(runner.scheduler_calibration_path)
+    specs = {
+        keys[0]: evaluate.ControllerSpec(
+            keys[0], None, "fixed", calibration, dashboard.PID_RN[:3], derivative_filter_tau_s=dashboard.PID_RN[3]
+        ),
+        **{
+            key: evaluate._scheduler_spec(
+                key.split(":")[0], int(key.split(":")[1]),
+                config.CHECKPOINTS / key.split(":")[0] / f"seed_{key.split(':')[1]}" / "best_model.zip",
+                calibration, box,
+            )
+            for key in keys[1:]
+        },
+    }
+    for key, spec in specs.items():
+        row = evaluate._run_chunk(spec, [asdict(scenario)])[0]
+        for name, value in results[key]["metrics"].items():
+            if "inference" not in name:
+                assert row[name] == value, (key, name)
+    # The scheduler is drawn against the gain range of its own checkpoint (wide: Kp from 1).
+    assert results[keys[1]]["calibration"].lower.kp == 1.0
+
+
+def test_only_the_main_controllers_are_offered_by_default() -> None:
+    arms = {entry["arm"] for entry in dashboard.InteractiveRunner().models}
+    assert arms <= set(dashboard.MAIN_ARMS)
+    every = {entry["arm"] for entry in dashboard.InteractiveRunner(all_arms=True).models}
+    assert arms <= every
+
+
+def test_dynamic_mode_redraws_the_delay_within_the_slider_value(
+    runner: dashboard.InteractiveRunner,
+) -> None:
+    args = (dashboard.path_value({"kind": "sinusoid"}), 0.5, "combined", "dynamic", 300.0, 3.0, 6.0, 99)
+    scenario = runner.scenario_from_controls(*args)
+    delays = [event for event in scenario.events if event.kind == "delay_step"]
+    noises = [event for event in scenario.events if event.kind == "noise_step"]
+    assert len(delays) > 2 and len(noises) > 2
+    assert all(0.0 <= event.value <= 0.3 for event in delays)
+    assert all(0.0001 <= event.value <= 0.003 for event in noises)
+    gaps = [b.start_s - a.start_s for a, b in zip(delays, delays[1:])]
+    assert all(1.0 <= gap <= 3.0 for gap in gaps)
+    assert scenario.evaluation_mode == "stationary"
+    # The noise seed fixes the schedule.
+    assert runner.scenario_from_controls(*args) == scenario
+    assert runner.scenario_from_controls(*args[:-1], 100).events != scenario.events
